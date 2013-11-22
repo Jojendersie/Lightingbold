@@ -18,6 +18,9 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{59436b62-5b76-4538-b9ba-ca28b2da7717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ai">
+      <UniqueIdentifier>{a5316a51-be59-4524-a2b7-292e840680c0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\utilities">
       <UniqueIdentifier>{abaa5bd3-e17d-45cb-a6a7-d65b293bd9c7}</UniqueIdentifier>
     </Filter>
@@ -40,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="src\sound\sound.cpp">
       <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ai\GameObject.cpp">
+      <Filter>Source Files\ai</Filter>
     </ClCompile>
     <ClCompile Include="src\graphic\device.cpp">
       <Filter>Source Files\graphic</Filter>
@@ -69,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="src\math\math.hpp">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ai\GameObject.hpp">
+      <Filter>Source Files\ai</Filter>
     </ClInclude>
     <ClInclude Include="src\utilities\smalldynarray.hpp">
       <Filter>Source Files\utilities</Filter>

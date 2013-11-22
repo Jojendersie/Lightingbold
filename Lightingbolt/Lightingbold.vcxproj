@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ai\GameObject.cpp" />
     <ClCompile Include="src\gamestates\Menu.cpp" />
     <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -20,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gamestates\GameState.hpp" />
+    <ClInclude Include="src\ai\GameObject.hpp" />
     <ClInclude Include="src\gamestates\Menu.hpp" />
     <ClInclude Include="src\graphic\device.hpp" />
     <ClInclude Include="src\map\map.hpp" />

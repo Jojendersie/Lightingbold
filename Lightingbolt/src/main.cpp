@@ -116,10 +116,7 @@ int main()
 
 	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
 	Sound::Source source(sound, 0.2f, 5);
-	Math::Vec3 position;
-	position.x=0;
-	position.y=0;
-	position.z=0;
+	Math::Vec3 position(0, 0, 0);
 	source.SetPosition(position);
 
 	source.Play();

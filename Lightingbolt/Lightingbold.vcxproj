@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ai\GameObject.cpp" />
+    <ClCompile Include="src\gamestates\Menu.cpp" />
     <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />

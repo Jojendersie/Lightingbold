@@ -15,7 +15,7 @@ namespace Math {
 		/// \brief Set all two components
 		Vec2(float _x, float _y) : x(_x), y(_y)	{}
 
-		Vec2& operator=(const Vec2& _v)			{ x=_v.x; y=_v.y; }
+		Vec2& operator=(const Vec2& _v)			{ x=_v.x; y=_v.y; return *this; }
 
 		Vec2 operator+(const Vec2& _v) const	{ return Vec2(x+_v.x, y+_v.y); }
 		Vec2 operator-(const Vec2& _v) const	{ return Vec2(x-_v.x, y-_v.y); }

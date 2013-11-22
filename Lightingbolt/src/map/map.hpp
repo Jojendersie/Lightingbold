@@ -24,7 +24,7 @@ namespace Map {
 		int m_width;
 		float *m_densityMap;
 		Utilities::DynArray *m_objects;
-		void* m_player;
+		Ai::GameObject* m_player;
 	};
 
 } // namespace Map

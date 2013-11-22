@@ -49,6 +49,10 @@ namespace Utilities {
 	class DynArray;
 } // namespace Utilities
 
+namespace Ai {
+	class GameObject;
+} // namespace Ai
+
 namespace GameStates {
 	class IGameState;
 	class Menu;

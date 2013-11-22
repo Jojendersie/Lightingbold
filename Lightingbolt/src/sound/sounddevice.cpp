@@ -1,7 +1,6 @@
 #include "sounddevice.hpp"
 #include <alc.h>
 #include <al.h>
-#include <cassert>
 #include "../math/math.hpp"
 
 namespace Sound {
@@ -9,11 +8,11 @@ namespace Sound {
 	Device::Device()
 	{
 		m_device = alcOpenDevice( nullptr );
-		assert(m_device);
+		Assert(m_device);
 		if( m_device )
 		{
 			m_context = alcCreateContext( m_device, nullptr );
-			assert(m_context);
+			Assert(m_context);
 			if( m_context )
 			{
 				alcMakeContextCurrent( m_context );

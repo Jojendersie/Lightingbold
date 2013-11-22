@@ -8,17 +8,17 @@ namespace Sound {
 
 	Device::Device()
 	{
-		m_pDevice = alcOpenDevice( nullptr );
-		assert(m_pDevice);
-		if( m_pDevice )
+		m_device = alcOpenDevice( nullptr );
+		assert(m_device);
+		if( m_device )
 		{
-			m_pContext = alcCreateContext( m_pDevice, nullptr );
+			m_pContext = alcCreateContext( m_device, nullptr );
 			assert(m_pContext);
 			if( m_pContext )
 			{
 				alcMakeContextCurrent( m_pContext );
 			} else {
-				alcCloseDevice( m_pDevice );
+				alcCloseDevice( m_device );
 			}
 		}
 
@@ -30,7 +30,7 @@ namespace Sound {
 	{
 		alcMakeContextCurrent( nullptr );
 		alcDestroyContext( m_pContext );
-		alcCloseDevice( m_pDevice );
+		alcCloseDevice( m_device );
 	}
 
 	Device& Device::UseOpenAL()

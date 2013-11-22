@@ -18,6 +18,12 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{59436b62-5b76-4538-b9ba-ca28b2da7717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\graphic">
+      <UniqueIdentifier>{a45268dc-8c10-4b2b-bc27-75e26e7390c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gamestates">
+      <UniqueIdentifier>{f1a7ff58-6a35-4f6d-b221-851d6188af4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -31,6 +37,12 @@
     </ClCompile>
     <ClCompile Include="src\sound\sound.cpp">
       <Filter>Source Files\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\device.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamestates\Menu.cpp">
+      <Filter>Source Files\gamestates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +66,12 @@
     </ClInclude>
     <ClInclude Include="src\math\math.hpp">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\device.hpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamestates\Menu.hpp">
+      <Filter>Source Files\gamestates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,6 +18,9 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{59436b62-5b76-4538-b9ba-ca28b2da7717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{abaa5bd3-e17d-45cb-a6a7-d65b293bd9c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -54,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="src\math\math.hpp">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\smalldynarray.hpp">
+      <Filter>Source Files\utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

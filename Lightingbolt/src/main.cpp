@@ -13,6 +13,7 @@
 #include "gamestates/menu.hpp"
 #include "graphic/device.hpp"
 #include "graphic/RenderTarget.hpp"
+#include "graphic/Shader.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -42,6 +43,8 @@ int main()
 	window->OnKeyUp = KeyUp;
 	window->OnScroll = Scroll;
 	CreateRenderTargets();
+
+	Graphic::Shader Test( L"shader/QuadShader.vs", Graphic::Shader::Type::VERTEX );
 
 	double dTime = 0.0;
 	uint64_t uiOldTime, uiNewTime;

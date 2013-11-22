@@ -16,11 +16,15 @@ struct ID3D11RenderTargetView;
 struct D3D11_VIEWPORT;
 struct ID3D11DepthStencilView;
 struct ID3D11Texture2D;
+struct ID3D11VertexShader;
+struct ID3D11GeometryShader;
+struct ID3D11PixelShader;
 
 namespace Graphic {
 	class DX11Window;
 	class RenderTarget;
 	struct RenderTargetList;
+	class Shader;
 
 	namespace Device {
 		extern ID3D11Device* Device;

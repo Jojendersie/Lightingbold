@@ -47,7 +47,7 @@ namespace Graphic {
 					int iCenterY = Device::Window->Y() + Device::Window->Height()/2;
 					if( abs(iX - iCenterX) > 25 || abs(iY- iCenterY) > 25 )
 					{
-						SetCursorPos( iCenterX, iCenterY );
+			//			SetCursorPos( iCenterX, iCenterY );
 						g_iLastX = iCenterX;
 						g_iLastY = iCenterY;
 					} else {
@@ -129,17 +129,17 @@ namespace Graphic {
 		// Show window without cursor
 		ShowWindow( m_HWND, SW_SHOW );
 		UpdateWindow( m_HWND );
-		ShowCursor( FALSE );
+		ShowCursor( TRUE );
 
 		// Catch the cursur
 		GetWindowRect( m_HWND, &Rc );
 		m_posX = Rc.left;
 		m_posY = Rc.top;
-		ClipCursor( &Rc );
+	//	ClipCursor( &Rc );
 
 		int iCenterX = X() + Width()/2;
 		int iCenterY = Y() + Height()/2;
-		SetCursorPos( iCenterX, iCenterY );
+	//	SetCursorPos( iCenterX, iCenterY );
 		g_iLastX = iCenterX;
 		g_iLastY = iCenterY;
 

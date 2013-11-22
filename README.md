@@ -27,7 +27,7 @@ Code Conventions
 3. Code
 ---
 * Everything in english
-* Functions: CamelCase
+* Functions: kleinCamelCase
 * Types: CamelCase
 
 * Variables: smallCamelCase

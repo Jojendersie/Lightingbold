@@ -185,7 +185,7 @@ namespace Graphic {
 		m_swapChainDesc->BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		m_swapChainDesc->OutputWindow = m_HWND;
 		// Enable multisampling
-		m_swapChainDesc->SampleDesc.Count = 4;
+		m_swapChainDesc->SampleDesc.Count = 1;
 		m_swapChainDesc->SampleDesc.Quality = 0;
 		m_swapChainDesc->Windowed = !m_fullScreen;
 		m_swapChainDesc->Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
@@ -197,21 +197,13 @@ namespace Graphic {
 											&m_device, nullptr, &m_devContext );
 		if( FAILED(hr) )
 		{
-			// If failed, try without antialiasing
-			m_swapChainDesc->SampleDesc.Count = 1;
-			hr = D3D11CreateDeviceAndSwapChain( nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, uiCreateDeviceFlags, 
+			// If failed, try to create a reference device
+			hr = D3D11CreateDeviceAndSwapChain( nullptr, D3D_DRIVER_TYPE_REFERENCE, nullptr, uiCreateDeviceFlags, 
 												&FeatureLvl, 1, D3D11_SDK_VERSION, m_swapChainDesc, &m_swapChain, 
 												&m_device, nullptr, &m_devContext);
-			if( FAILED(hr) )
-			{
-				// If failed, try to create a reference device
-				hr = D3D11CreateDeviceAndSwapChain( nullptr, D3D_DRIVER_TYPE_REFERENCE, nullptr, uiCreateDeviceFlags, 
-													&FeatureLvl, 1, D3D11_SDK_VERSION, m_swapChainDesc, &m_swapChain, 
-													&m_device, nullptr, &m_devContext);
 
-				// Your program ends here ... no d3d device found
-				Assert( SUCCEEDED(hr) );
-			}
+			// Your program ends here ... no d3d device found
+			Assert( SUCCEEDED(hr) );
 		}
 
 		Device::Device = m_device;

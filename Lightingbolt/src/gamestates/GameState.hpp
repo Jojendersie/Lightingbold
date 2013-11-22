@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../predecl.hpp"
+
 namespace GameStates {
 	class IGameState
 	{
@@ -9,6 +11,12 @@ namespace GameStates {
 		virtual void KeyUp(int _key)				{}
 		virtual void Scroll(int _delta)				{}
 
-		virtual void Render( double _time, double _deltaTime ) = 0;
+		/// \brief Do the state specific rendering.
+		/// \param [in] _time Absoulte time since game start in seconds.
+		/// \param [in] _deltaTime Time since last frame.
+		/// \param [inout] _renderTargets List of all rendertargets. The state
+		///		can use them as it likes.
+		virtual void Render( double _time, double _deltaTime,
+			Graphic::RenderTargetList& _renderTargets ) = 0;
 	};
 } // namespace GameStates

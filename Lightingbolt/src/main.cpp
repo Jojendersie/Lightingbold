@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <cstdint>
+#include <d3d11.h>
 
 // CRT's memory leak detection
 #if defined(DEBUG) || defined(_DEBUG)
@@ -8,9 +9,13 @@
 #include <crtdbg.h>
 #endif
 
+#include "predecl.hpp"
 #include "gamestates/menu.hpp"
 #include "graphic/device.hpp"
+#include "graphic/RenderTarget.hpp"
 
+// *** FUNCTION DECLARATIONS *********************************************** //
+void CreateRenderTargets();
 
 // *** GLOBAL STUFF main.cpp IS MORE OR LESS THE GAME CLASS **************** //
 GameStates::IGameState* g_State;
@@ -18,6 +23,8 @@ void MouseMove(int _dx, int _dy)	{ g_State->MouseMove(_dx,_dy); }
 void KeyDown(int _key)				{ g_State->KeyDown(_key); }
 void KeyUp(int _key)				{ g_State->KeyUp(_key); }
 void Scroll(int _delta)				{ g_State->Scroll(_delta); }
+Graphic::RenderTargetList* g_RenderTargets;
+
 
 
 int main()
@@ -34,6 +41,7 @@ int main()
 	window->OnKeyDown = KeyDown;
 	window->OnKeyUp = KeyUp;
 	window->OnScroll = Scroll;
+	CreateRenderTargets();
 
 	double dTime = 0.0;
 	uint64_t uiOldTime, uiNewTime;
@@ -62,6 +70,7 @@ int main()
 				dTime += dDeltaTime;
 
 				// Call stuff
+				g_State->Render(dTime, dDeltaTime, *g_RenderTargets);
 				//pGame->Update( dTime, Saga::min(0.05, dDeltaTime) );
 				//pGame->RenderFrame( dTime, Saga::min(0.05, dDeltaTime) );
 			}
@@ -69,7 +78,30 @@ int main()
     }
 
 	// *** SHUTDOWN ******************************************************** //
+	delete g_RenderTargets;
 	delete g_State;
 	delete window;
 	return 0;
+}
+
+
+
+void CreateRenderTargets()
+{
+	g_RenderTargets = new Graphic::RenderTargetList;
+	HRESULT hr;
+
+    // Create the backbuffer render target and depth-stencil view
+    ID3D11Texture2D* txBackBuffer = nullptr;
+	hr = Graphic::Device::Window->GetSwapChain()->GetBuffer( 0, __uuidof(ID3D11Texture2D), (LPVOID*)&txBackBuffer );
+	Assert( SUCCEEDED(hr) );
+
+	ID3D11RenderTargetView* pBackbufferView;
+	hr = Graphic::Device::Device->CreateRenderTargetView( txBackBuffer, nullptr, &pBackbufferView );
+	Assert( SUCCEEDED(hr) );
+
+    txBackBuffer->Release();
+
+	// TODO: due to post process the backbuffer does not need a depth-stencil buffer
+	g_RenderTargets->BackBuffer = new Graphic::RenderTarget( pBackbufferView, nullptr, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH );
 }

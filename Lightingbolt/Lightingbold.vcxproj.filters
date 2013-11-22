@@ -53,6 +53,9 @@
     <ClCompile Include="src\gamestates\Menu.cpp">
       <Filter>Source Files\gamestates</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\RenderTarget.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="src\gamestates\GameState.hpp">
       <Filter>Source Files\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\RenderTarget.hpp">
+      <Filter>Source Files\graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 
 typedef unsigned int uint;
 typedef struct HWND__* HWND;
+typedef enum DXGI_FORMAT;
 
 
 struct DXGI_SWAP_CHAIN_DESC;
@@ -10,9 +11,16 @@ struct DXGI_SAMPLE_DESC;
 struct ID3D11Buffer;
 struct ID3D11Device;
 struct ID3D11DeviceContext;
+struct ID3D11ShaderResourceView;
+struct ID3D11RenderTargetView;
+struct D3D11_VIEWPORT;
+struct ID3D11DepthStencilView;
+struct ID3D11Texture2D;
 
 namespace Graphic {
 	class DX11Window;
+	class RenderTarget;
+	struct RenderTargetList;
 
 	namespace Device {
 		extern ID3D11Device* Device;
@@ -71,3 +79,6 @@ namespace GameStates {
 #define AssertNeq(A,Const) A
 
 #endif // _DEBUG
+
+
+const float CLEAR_COLOR[4] = {1.0f, 0.564705882f, 0.003921569f, 1.0f };

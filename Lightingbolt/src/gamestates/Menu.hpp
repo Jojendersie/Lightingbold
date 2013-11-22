@@ -11,7 +11,8 @@ namespace GameStates {
 		virtual void KeyUp(int _key) override;
 		virtual void Scroll(int _delta) override;
 
-		virtual void Render( double _time, double _deltaTime ) override;
+		virtual void Render( double _time, double _deltaTime,
+			Graphic::RenderTargetList& _renderTargets ) override;
 	};
 
 } // namespace GameStates

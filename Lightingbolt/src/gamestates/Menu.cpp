@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 #include "../graphic/device.hpp"
+#include "../graphic/RenderTarget.hpp"
 
 namespace GameStates {
 
@@ -19,8 +20,10 @@ void Menu::Scroll(int _delta)
 {
 }
 
-void Menu::Render( double _time, double _deltaTime )
+void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _renderTargets )
 {
+	_renderTargets.BackBuffer->SetAsTarget();
+	_renderTargets.BackBuffer->Clear( CLEAR_COLOR );
 	Graphic::Device::Window->Present();
 }
 

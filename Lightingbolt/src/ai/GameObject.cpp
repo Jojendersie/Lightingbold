@@ -2,22 +2,22 @@
 
 using namespace ai;
 
-void GameObject::SetDirection(Vec2 newDirection){
+void GameObject::setDirection(Vec2 _newDirection){
+	m_direction = _newDirection;
+}
+
+void GameObject::setEnergy(float _newEnergy){
+	m_energy = _newEnergy;
+}
+
+void GameObject::setGoal(Vec2 _newGoal){
 
 }
 
-void GameObject::SetEnergy(float newEnergy){
+void GameObject::setPosition(Vec2 _newPosition){
 
 }
 
-void GameObject::SetGoal(Vec2 newGoal){
-
-}
-
-void GameObject::SetPosition(Vec2 newPosition){
-
-}
-
-void GameObject::SetRadius(float newRadius){
+void GameObject::setRadius(float _newRadius){
 
 }

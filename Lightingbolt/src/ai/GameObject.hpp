@@ -9,24 +9,24 @@ namespace ai {
 
 class GameObject{
 public:
-	Vec2 GetPosition();
-    void SetPosition(Vec2 newPosition);
-    Vec2 GetDiretion();
-    void SetDirection(Vec2 newDirection);
-    Vec2 GetGoal();
-    void SetGoal(Vec2 newGoal);
-    float GetRadius();
-    void SetRadius(float newRadius);
-    float GetEnergy();
-    void SetEnergy(float newEnergy);
-    float GetKineticEnegy();
+	Vec2 getPosition();
+    void setPosition(Vec2 _newPosition);
+    Vec2 getDiretion();
+    void setDirection(Vec2 _newDirection);
+    Vec2 getGoal();
+    void setGoal(Vec2 _newGoal);
+    float getRadius();
+    void setRadius(float _newRadius);
+    float getEnergy();
+    void setEnergy(float _newEnergy);
+    float getKineticEnegy();
     void update();
 private:
-    Vec2 position;
-    Vec2 direction;
-    Vec2 goal;
-    float radius;
-    float energy;
+    Vec2 m_position;
+    Vec2 m_direction;
+    Vec2 m_goal;
+    float m_radius;
+    float m_energy;
 };
 
 } // namespace gameObject

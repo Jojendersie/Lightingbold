@@ -11,12 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\gamestates\Menu.cpp" />
+    <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
     <ClCompile Include="src\sound\sound.cpp" />
     <ClCompile Include="src\sound\sounddevice.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gamestates\Menu.hpp" />
+    <ClInclude Include="src\graphic\device.hpp" />
     <ClInclude Include="src\map\map.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\vec2.hpp" />
@@ -69,6 +73,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -91,6 +96,7 @@
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <OpenMPSupport>false</OpenMPSupport>
+      <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

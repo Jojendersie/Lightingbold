@@ -3,6 +3,7 @@
 #include <cmath>
 
 namespace Math {
+
 	class Vec2
 	{
 	public:
@@ -44,7 +45,7 @@ namespace Math {
 		Vec2 perpendicular() const				{ return Vec2(-x, y);}
 
 		/// \brief Reflect this vector at the given normal.
-		Vec2 reflect(const Vec2& _n) const		{ return (2.0f * dot(_n)) * _n - *this; }
+		Vec2 reflect(const Vec2& _n) const		{ return _n * (2.0f * dot(_n)) - (*this); }
 
 		float dot(const Vec2& _v) const			{ return x*_v.x + y*_v.y; }
 	};

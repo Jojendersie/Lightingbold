@@ -14,9 +14,17 @@ namespace Map {
 		/// \brief Computes the gradient of the map at the given position
 		Math::Vec2 Gradient( const Math::Vec2& _position );
 
-		/// \breif Returns the hight of the map at the given position
-		float High( const Math::Vec2& _position);
+		/// \breif Returns the density at the given position
+		float Density( const Math::Vec2& _position);
+
+		/// \brief Updates the map
+		void Update();
 	private:
+		int m_height;
+		int m_width;
+		float *m_densityMap;
+		Utilities::DynArray *m_objects;
+		void* m_player;
 	};
 
 } // namespace Map

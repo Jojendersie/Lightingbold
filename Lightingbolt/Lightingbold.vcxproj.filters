@@ -21,6 +21,15 @@
     <Filter Include="Source Files\ai">
       <UniqueIdentifier>{a5316a51-be59-4524-a2b7-292e840680c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{abaa5bd3-e17d-45cb-a6a7-d65b293bd9c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphic">
+      <UniqueIdentifier>{a45268dc-8c10-4b2b-bc27-75e26e7390c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gamestates">
+      <UniqueIdentifier>{f1a7ff58-6a35-4f6d-b221-851d6188af4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -37,6 +46,12 @@
     </ClCompile>
     <ClCompile Include="src\ai\GameObject.cpp">
       <Filter>Source Files\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphic\device.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamestates\Menu.cpp">
+      <Filter>Source Files\gamestates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +78,15 @@
     </ClInclude>
     <ClInclude Include="src\ai\GameObject.hpp">
       <Filter>Source Files\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\smalldynarray.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\device.hpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamestates\Menu.hpp">
+      <Filter>Source Files\gamestates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

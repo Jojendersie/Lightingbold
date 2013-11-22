@@ -12,17 +12,17 @@ namespace Sound {
 	*****************************************************************************/
 	class Sound
 	{
-		ALuint m_uiBuffer;
-		int	m_iSize;
+		ALuint m_buffer;
+		int	m_size;
 	public:
 
 		/// \brief Create a sound from raw data
-		/// \param [in] _pcData A 20000 frequency sampled sound buffer.
-		Sound( const ALchar* _pcData, int _iSize );
+		/// \param [in] _data A 20000 frequency sampled sound buffer.
+		Sound( const ALchar* _data, int _size );
 
 		~Sound();
 
-		int GetBufferID() const		{ return m_uiBuffer; }
+		int GetBufferID() const		{ return m_buffer; }
 	};
 
 	/**************************************************************************//**
@@ -33,12 +33,12 @@ namespace Sound {
 	{
 		ALuint m_uiSource;
 	public:
-		/// \param [in] _Sound The sound buffer which should be played at this
+		/// \param [in] _sound The sound buffer which should be played at this
 		///		source.
-		/// \param [in] _fVolume The volume at the reference distance.
-		/// \param [in] _fReferenceDistance Up to this distance the sound will
-		///		have _fVolume constantly. Afterwards the sound fades out.
-		Source( const Sound& _Sound, float _fVolume, float _fReferenceDistance );
+		/// \param [in] _volume The volume at the reference distance.
+		/// \param [in] _referenceDistance Up to this distance the sound will
+		///		have _volume constantly. Afterwards the sound fades out.
+		Source( const Sound& _sound, float _volume, float _referenceDistance );
 
 		~Source();
 

@@ -6,30 +6,30 @@ namespace Sound {
 
 	// ********************************************************************* //
 	// Create a sound from raw data
-	Sound::Sound( const ALchar* _pcData, int _iSize ) :
-		m_iSize( _iSize )
+	Sound::Sound( const ALchar* _data, int _size ) :
+		m_size( _size )
 	{
-		alGenBuffers( 1, &m_uiBuffer );
+		alGenBuffers( 1, &m_buffer );
 
-		alBufferData( m_uiBuffer, AL_FORMAT_MONO8, _pcData, _iSize, 20000 );
+		alBufferData( m_buffer, AL_FORMAT_MONO8, _data, _size, 20000 );
 	}
 
 	Sound::~Sound()
 	{
-		alDeleteBuffers( 1, &m_uiBuffer );
+		alDeleteBuffers( 1, &m_buffer );
 	}
 
 	// ********************************************************************* //
-	Source::Source( const Sound& _Sound, float _fVolume, float _fReferenceDistance )
+	Source::Source( const Sound& _sound, float _volume, float _referenceDistance )
 	{
 		alGenSources( 1, &m_uiSource );
 		// Attach the sound to this source
-		alSourcei( m_uiSource, AL_BUFFER, _Sound.GetBufferID() );
+		alSourcei( m_uiSource, AL_BUFFER, _sound.GetBufferID() );
 		// The default setting is just ok.
-		// TODO: max(0.01f, _fReferenceDistance)
-		alSourcef( m_uiSource, AL_REFERENCE_DISTANCE, _fReferenceDistance );
+		// TODO: max(0.01f, _referenceDistance)
+		alSourcef( m_uiSource, AL_REFERENCE_DISTANCE, _referenceDistance );
 		alSourcef( m_uiSource, AL_MAX_DISTANCE, 10000000.0f );
-		alSourcef( m_uiSource, AL_GAIN, _fVolume );
+		alSourcef( m_uiSource, AL_GAIN, _volume );
 	}
 
 	Source::~Source()

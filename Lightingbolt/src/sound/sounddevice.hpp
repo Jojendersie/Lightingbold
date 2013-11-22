@@ -23,8 +23,8 @@ namespace Sound {
 		Device( const Device& );
 		void operator=(const Device&);
 
-		ALCdevice* m_pDevice;
-		ALCcontext* m_pContext;
+		ALCdevice* m_device;
+		ALCcontext* m_context;
 	public:
 
 		/// \brief Singleton access function.
@@ -42,6 +42,6 @@ namespace Sound {
 
 		/// \brief Sets an orthogonal base for the orientation of the listener.
 		///
-		static void SetListenerOrientation( const Math::Vec3& _vAt, const Math::Vec3& _vUp );
+		static void SetListenerOrientation( const Math::Vec3& _at, const Math::Vec3& _up );
 	};
 };

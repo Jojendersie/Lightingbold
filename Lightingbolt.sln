@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lightingbold", "Lightingbolt\Lightingbolt.vcxproj", "{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LightServer", "LightServer\LightServer.vcxproj", "{C3BBB2BA-0689-46C9-BC8E-E73E60F48104}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lightingbold", "Lightingbolt\Lightingbold.vcxproj", "{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Debug|Win32.Build.0 = Debug|Win32
-		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Release|Win32.ActiveCfg = Release|Win32
-		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Release|Win32.Build.0 = Release|Win32
 		{C3BBB2BA-0689-46C9-BC8E-E73E60F48104}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C3BBB2BA-0689-46C9-BC8E-E73E60F48104}.Debug|Win32.Build.0 = Debug|Win32
 		{C3BBB2BA-0689-46C9-BC8E-E73E60F48104}.Release|Win32.ActiveCfg = Release|Win32
 		{C3BBB2BA-0689-46C9-BC8E-E73E60F48104}.Release|Win32.Build.0 = Release|Win32
+		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Debug|Win32.Build.0 = Debug|Win32
+		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Release|Win32.ActiveCfg = Release|Win32
+		{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

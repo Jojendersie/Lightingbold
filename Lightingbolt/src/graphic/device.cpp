@@ -1,5 +1,4 @@
 #include <cstdint>
-#include <cassert>
 #include <d3d11.h>
 #pragma comment(lib, "d3d11.lib")
 
@@ -125,7 +124,7 @@ namespace Graphic {
 							   m_width, m_height, nullptr, nullptr, hInstance, nullptr );
 
 		// Something with the windows window creation went wrong
-		assert( m_HWND );
+		Assert( m_HWND );
 
 		// Show window without cursor
 		ShowWindow( m_HWND, SW_SHOW );
@@ -211,7 +210,7 @@ namespace Graphic {
 													&m_device, nullptr, &m_devContext);
 
 				// Your program ends here ... no d3d device found
-				assert( SUCCEEDED(hr) );
+				Assert( SUCCEEDED(hr) );
 			}
 		}
 
@@ -242,7 +241,7 @@ namespace Graphic {
 
 		ID3D11Buffer* pResult;
 		HRESULT hr = m_device->CreateBuffer( &Desc, &Data, &pResult );
-		assert( SUCCEEDED(hr) );
+		Assert( SUCCEEDED(hr) );
 
 		return pResult;
 	}

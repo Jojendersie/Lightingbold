@@ -35,7 +35,7 @@
     <ClCompile Include="src\sound\sound.cpp">
       <Filter>Source Files\sound</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="src\ai\GameObject.cpp">
       <Filter>Source Files\ai</Filter>
     </ClCompile>
   </ItemGroup>

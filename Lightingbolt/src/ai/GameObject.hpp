@@ -5,7 +5,7 @@
 
 using namespace Math;
 
-namespace GameObject {
+namespace ai {
 
 class GameObject{
 public:

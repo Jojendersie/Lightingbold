@@ -44,7 +44,7 @@ namespace Math {
 		float dot(const Vec3& _v) const			{ return x*_v.x + y*_v.y + z*_v.z; }
 	};
 
-	Vec3 operator*(float _f, const Vec3& _v)	{ return Vec3(_v.x*_f, _v.y*_f, _v.z*_f); }
+	inline Vec3 operator*(float _f, const Vec3& _v)	{ return Vec3(_v.x*_f, _v.y*_f, _v.z*_f); }
 
 	/// \brief Linear interpolation
 	inline Vec3	lerp(const Vec3& v1, const Vec3& v2, const float f)	{return v1 + (v2-v1)*f;}

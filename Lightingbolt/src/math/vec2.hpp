@@ -3,6 +3,7 @@
 #include <cmath>
 
 namespace Math {
+
 	class Vec2
 	{
 	public:
@@ -44,12 +45,12 @@ namespace Math {
 		Vec2 perpendicular() const				{ return Vec2(-x, y);}
 
 		/// \brief Reflect this vector at the given normal.
-		Vec2 reflect(const Vec2& _n) const		{ return (2.0f * dot(_n)) * _n - *this; }
+		Vec2 reflect(const Vec2& _n) const		{ return _n * (2.0f * dot(_n)) - (*this); }
 
 		float dot(const Vec2& _v) const			{ return x*_v.x + y*_v.y; }
 	};
 
-	Vec2 operator*(float _f, const Vec2& _v)	{ return Vec2(_v.x*_f, _v.y*_f); }
+	inline Vec2 operator*(float _f, const Vec2& _v)	{ return Vec2(_v.x*_f, _v.y*_f); }
 
 	/// \brief Linear interpolation
 	inline Vec2	lerp(const Vec2& v1, const Vec2& v2, const float f)	{return v1 + (v2-v1)*f;}

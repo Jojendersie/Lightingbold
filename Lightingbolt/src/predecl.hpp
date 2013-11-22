@@ -36,9 +36,15 @@ namespace Math {
 namespace Map {
 	class Map;
 } // namespace Map
+
 namespace Utilities {
 	class DynArray;
 } // namespace Utilities
+
+namespace GameStates {
+	class IGameState;
+	class Menu;
+} // namespace GameStates
 
 #ifdef _DEBUG
 #include <intrin.h>

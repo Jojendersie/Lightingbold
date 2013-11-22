@@ -1,5 +1,3 @@
-#include "graphic/device.hpp"
-
 #include <Windows.h>
 #include <cstdint>
 
@@ -11,6 +9,16 @@
 #endif
 
 #include "gamestates/menu.hpp"
+#include "graphic/device.hpp"
+
+
+// *** GLOBAL STUFF main.cpp IS MORE OR LESS THE GAME CLASS **************** //
+GameStates::IGameState* g_State;
+void MouseMove(int _dx, int _dy)	{ g_State->MouseMove(_dx,_dy); }
+void KeyDown(int _key)				{ g_State->KeyDown(_key); }
+void KeyUp(int _key)				{ g_State->KeyUp(_key); }
+void Scroll(int _delta)				{ g_State->Scroll(_delta); }
+
 
 int main()
 {
@@ -21,10 +29,11 @@ int main()
 
 	// *** INITIALIZATION ************************************************** //
 	Graphic::DX11Window* window = new Graphic::DX11Window( 1024, 768, false );
-	window->OnMouseMove = GameStates::MenuMouseMove;
-	window->OnKeyDown = GameStates::MenuKeyDown;
-	window->OnKeyUp = GameStates::MenuKeyUp;
-	window->OnScroll = GameStates::MenuScroll;
+	g_State = new GameStates::Menu;
+	window->OnMouseMove = MouseMove;
+	window->OnKeyDown = KeyDown;
+	window->OnKeyUp = KeyUp;
+	window->OnScroll = Scroll;
 
 	double dTime = 0.0;
 	uint64_t uiOldTime, uiNewTime;
@@ -60,6 +69,7 @@ int main()
     }
 
 	// *** SHUTDOWN ******************************************************** //
+	delete g_State;
 	delete window;
 	return 0;
 }

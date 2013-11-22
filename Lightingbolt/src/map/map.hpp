@@ -8,6 +8,13 @@ namespace Map {
 	class Map
 	{
 	public:
+
+		/// \brief constructor
+		Map(int _width, int _height);
+
+		/// \brief destructor
+		~Map();
+
 		/// \brief Computes the position where the ray hits the scene
 		Math::Vec2 RayCast( const Math::Vec2& _position, const Math::Vec2& _direction );
 
@@ -25,6 +32,9 @@ namespace Map {
 		float *m_densityMap;
 		Utilities::DynArray *m_objects;
 		Ai::GameObject* m_player;
+
+		// initialization
+		void initMap();
 	};
 
 } // namespace Map

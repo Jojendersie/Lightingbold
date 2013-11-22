@@ -20,6 +20,7 @@
     <ClCompile Include="src\sound\sounddevice.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gamestates\GameState.hpp" />
     <ClInclude Include="src\ai\GameObject.hpp" />
     <ClInclude Include="src\gamestates\Menu.hpp" />
     <ClInclude Include="src\graphic\device.hpp" />

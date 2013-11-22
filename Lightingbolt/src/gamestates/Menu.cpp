@@ -1,19 +1,27 @@
+#include "Menu.hpp"
+#include "../graphic/device.hpp"
+
 namespace GameStates {
 
-void MenuMouseMove(int _dx, int _dy)
+void Menu::MouseMove(int _dx, int _dy)
 {
 }
 
-void MenuKeyDown(int _key)
+void Menu::KeyDown(int _key)
 {
 }
 
-void MenuKeyUp(int _key)
+void Menu::KeyUp(int _key)
 {
 }
 
-void MenuScroll(int _delta)
+void Menu::Scroll(int _delta)
 {
+}
+
+void Menu::Render( double _time, double _deltaTime )
+{
+	Graphic::Device::Window->Present();
 }
 
 } // namespace GameStates

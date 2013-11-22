@@ -88,5 +88,8 @@
     <ClInclude Include="src\gamestates\Menu.hpp">
       <Filter>Source Files\gamestates</Filter>
     </ClInclude>
+    <ClInclude Include="src\gamestates\GameState.hpp">
+      <Filter>Source Files\gamestates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

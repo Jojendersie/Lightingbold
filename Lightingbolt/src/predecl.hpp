@@ -45,6 +45,11 @@ namespace Ai {
 	class GameObject;
 } // namespace Ai
 
+namespace GameStates {
+	class IGameState;
+	class Menu;
+} // namespace GameStates
+
 #ifdef _DEBUG
 #include <intrin.h>
 

@@ -33,6 +33,9 @@
     <Filter Include="Source Files\generator">
       <UniqueIdentifier>{44d62495-6c73-4fc7-9c2f-03c7a71ebffc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\soundtest">
+      <UniqueIdentifier>{4ba99ff7-9e06-4fb7-906d-124ac762811c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -85,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="src\generator\Random.cpp">
       <Filter>Source Files\generator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundtest\note.cpp">
+      <Filter>Source Files\soundtest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="src\generator\Random.hpp">
       <Filter>Source Files\generator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soundtest\note.hpp">
+      <Filter>Source Files\soundtest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,13 +1,9 @@
-#include <Windows.h>
-#include <cstdint>
-#include <d3d11.h>
 
-// CRT's memory leak detection
-#if defined(DEBUG) || defined(_DEBUG)
-#define _CRTDBG_MAP_ALLOC
-#include <cstdlib>
-#include <crtdbg.h>
-#endif
+#include "math/vec3.hpp"
+#include "soundtest/note.hpp"
+#include "sound/sounddevice.hpp"
+#include "sound/sound.hpp"
+
 
 #include "predecl.hpp"
 #include "gamestates/menu.hpp"
@@ -109,6 +105,29 @@ int main()
 	delete g_StateIngame;
 	delete window;
 	delete g_rand;
+	Sound::Device &device=Sound::Device::UseOpenAL();
+	string soundBuffer;
+	soundBuffer+=Soundtest::Note::getNote(261.63f, 12150);
+	soundBuffer+=Soundtest::Note::getNote(293.66f, 12150);
+	soundBuffer+=Soundtest::Note::getNote(329.63f, 12150);
+	soundBuffer+=Soundtest::Note::getNote(293.66f, 12150);
+	soundBuffer+=Soundtest::Note::getNote(261.63f, 12150*3);
+
+
+	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
+	Sound::Source source(sound, 0.2f, 5);
+	Math::Vec3 position;
+	position.x=0;
+	position.y=0;
+	position.z=0;
+	source.SetPosition(position);
+
+	source.Play();
+	while(source.IsPlaying())
+	{
+		//position.x+=0.00002f;
+		//source.SetPosition(position);
+	}
 	return 0;
 }
 

@@ -26,6 +26,7 @@
     <ClCompile Include="src\graphic\VertexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
+    <ClCompile Include="src\soundtest\note.cpp" />
     <ClCompile Include="src\sound\sound.cpp" />
     <ClCompile Include="src\sound\sounddevice.cpp" />
   </ItemGroup>
@@ -50,6 +51,7 @@
     <ClInclude Include="src\math\vec2.hpp" />
     <ClInclude Include="src\math\vec3.hpp" />
     <ClInclude Include="src\predecl.hpp" />
+    <ClInclude Include="src\soundtest\note.hpp" />
     <ClInclude Include="src\sound\sound.hpp" />
     <ClInclude Include="src\sound\sounddevice.hpp" />
     <ClInclude Include="src\utilities\smalldynarray.hpp" />

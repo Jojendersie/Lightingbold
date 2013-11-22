@@ -24,7 +24,7 @@ namespace Sound {
 		void operator=(const Device&);
 
 		ALCdevice* m_device;
-		ALCcontext* m_pContext;
+		ALCcontext* m_context;
 	public:
 
 		/// \brief Singleton access function.

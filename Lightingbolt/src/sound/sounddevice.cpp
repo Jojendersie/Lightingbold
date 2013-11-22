@@ -12,11 +12,11 @@ namespace Sound {
 		assert(m_device);
 		if( m_device )
 		{
-			m_pContext = alcCreateContext( m_device, nullptr );
-			assert(m_pContext);
-			if( m_pContext )
+			m_context = alcCreateContext( m_device, nullptr );
+			assert(m_context);
+			if( m_context )
 			{
-				alcMakeContextCurrent( m_pContext );
+				alcMakeContextCurrent( m_context );
 			} else {
 				alcCloseDevice( m_device );
 			}
@@ -29,7 +29,7 @@ namespace Sound {
 	Device::~Device()
 	{
 		alcMakeContextCurrent( nullptr );
-		alcDestroyContext( m_pContext );
+		alcDestroyContext( m_context );
 		alcCloseDevice( m_device );
 	}
 
@@ -41,10 +41,10 @@ namespace Sound {
 
 	void Device::SetListenerVelocity( const Math::Vec3& _v )	{ alListenerfv( AL_VELOCITY, (float*)&_v ); }
 	void Device::SetListenerPosition( const Math::Vec3& _p )	{ alListenerfv( AL_POSITION, (float*)&_p ); }
-	void Device::SetListenerOrientation( const Math::Vec3& _vAt, const Math::Vec3& _vUp )
+	void Device::SetListenerOrientation( const Math::Vec3& _at, const Math::Vec3& _up )
 	{
 		// Copy stuff to make sure it is in the correct order in memory
-		float afOrientation[6] = { _vAt.x, _vAt.y, _vAt.z, _vUp.x, _vUp.y, _vUp.z };
-		alListenerfv( AL_ORIENTATION, afOrientation );
+		float orientation[6] = { _at.x, _at.y, _at.z, _up.x, _up.y, _up.z };
+		alListenerfv( AL_ORIENTATION, orientation );
 	}
 };

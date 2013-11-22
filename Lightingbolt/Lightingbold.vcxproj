@@ -28,6 +28,7 @@
     <ClInclude Include="src\predecl.hpp" />
     <ClInclude Include="src\sound\sound.hpp" />
     <ClInclude Include="src\sound\sounddevice.hpp" />
+    <ClInclude Include="src\utilities\smalldynarray.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F8AC08FF-1ACA-456A-A66A-4B6FDE7DFD8F}</ProjectGuid>

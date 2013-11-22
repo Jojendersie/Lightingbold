@@ -18,6 +18,9 @@
     <Filter Include="Source Files\math">
       <UniqueIdentifier>{59436b62-5b76-4538-b9ba-ca28b2da7717}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{abaa5bd3-e17d-45cb-a6a7-d65b293bd9c7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\graphic">
       <UniqueIdentifier>{a45268dc-8c10-4b2b-bc27-75e26e7390c8}</UniqueIdentifier>
     </Filter>
@@ -66,6 +69,9 @@
     </ClInclude>
     <ClInclude Include="src\math\math.hpp">
       <Filter>Source Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\smalldynarray.hpp">
+      <Filter>Source Files\utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\graphic\device.hpp">
       <Filter>Source Files\graphic</Filter>

@@ -1,11 +1,25 @@
+#include <Windows.h>
+#include <cstdint>
+#include <d3d11.h>
+
+// CRT's memory leak detection
+#if defined(DEBUG) || defined(_DEBUG)
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+#endif
 
 #include "predecl.hpp"
 #include "gamestates/menu.hpp"
+#include "gamestates/Ingame.hpp"
 #include "graphic/device.hpp"
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
+#include "graphic/Vertex.hpp"
 
 //Sound
+#include <ctime>
+
 #include "sound/sounddevice.hpp"
 #include "soundtest/note.hpp"
 #include "soundtest/melody.hpp"
@@ -46,38 +60,20 @@ void Scroll(int _delta)				{ g_State->Scroll(_delta); }
 int main()
 {
 	Sound::Device &device=Sound::Device::UseOpenAL();
-	vector<float> note=Soundtest::Note::getSine(261.63f);
-	string soundBuffer;
-	for(int i=0; i<note.size(); i++)
-	{
-		soundBuffer+=Soundtest::Note::toChar(note[i]);
-	}
-	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
+	float frequency=261.63f;
+	char *note=Soundtest::Note::getSquare(frequency);
 
-	vector<float> note2=Soundtest::Note::getSine(261.63f);
-	string soundBuffer2;
-	for(int i=0; i<note2.size(); i++)
-	{
-		soundBuffer2+=Soundtest::Note::toChar(note2[i]);
-	}
-	Sound::Sound sound2(soundBuffer2.c_str(), soundBuffer2.size());
+	Sound::Sound sound(note, Soundtest::Note::getLength(frequency));
 
-	vector<int> notes;
-	notes.push_back(0);
-	notes.push_back(2);
-	notes.push_back(4);
-	notes.push_back(5);
-	notes.push_back(7);
+	int noteSize=5;
+	int *notes=new int[noteSize];
+	notes[0]=0;
+	notes[1]=2;
+	notes[2]=4;
+	notes[3]=5;
+	notes[4]=7;
 
-	vector<int> notes2;
-	notes2.push_back(7);
-	notes2.push_back(5);
-	notes2.push_back(4);
-	notes2.push_back(2);
-	notes2.push_back(0);
-
-	Soundtest::Melody melody(sound, 120, notes);
-	Soundtest::Melody melody2(sound2, 120, notes2);
+	Soundtest::Melody melody(sound, 120, notes, noteSize);
 
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
@@ -133,7 +129,6 @@ int main()
 				g_State->Update(dTime, dDeltaTime);
 
 				melody.update(dDeltaTime);
-				melody2.update(dDeltaTime);
 			}
         }
     }

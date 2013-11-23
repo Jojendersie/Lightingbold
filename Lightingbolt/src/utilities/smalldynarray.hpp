@@ -21,49 +21,51 @@ namespace Utilities
 		return (_x>=1) & ((_x&(_x-1)) < 1);
 	}
 
+	template <class T> 
 	class DynArray
 	{
 	private:
-		uint m_uiNumObjects;
-		void** A;
+		uint m_size;
+		T* m_data;
+
 	public:
-		uint GetNum() const	{ return m_uiNumObjects; }
+		uint GetNum() const	{ return m_size; }
 
-		DynArray() : m_uiNumObjects(0), A(nullptr)	{}
+		DynArray() : m_size(0), m_data(nullptr)	{}
 
-		// Attention! delete all objects manually before destruction.
-#ifdef DYNAMIC_RELOAD
-		~DynArray()	{ free( A ); A = nullptr; m_uiNumObjects = 0; }
-#else
-		~DynArray()	{ free( A ); }
-#endif
+		~DynArray()	{ free( m_data ); }
 
 		// This access function is so small, that it will be inlined, or it doesn't
 		// matter if it is compiled for each class.
-		template<class T> T* Get( uint _Idx ) const	{ return (T*)A[_Idx]; }
+		T* Get( uint _Idx ) const { return m_data[_Idx]; }
 
-		void Append( void* _pNew )
+		void Append( T* _pNew )
 		{
 			// Bad special case - array is empty only the first time. Could be solved
 			// with an empty default entry.
-			if( m_uiNumObjects == 0 )
+			if( m_size == 0 )
 			{
-				A = (void**)malloc( sizeof(void*) );
+				m_data = (T*)malloc( sizeof(T*) );
 			} else if( IsPotOf2( m_uiNumObjects ) )
 			{
-				A = (void**)realloc( A, m_uiNumObjects*2*sizeof(void*) );
+				m_data = (T*)realloc( m_data, m_size*2*sizeof(T*) );
 			}
 
 			// Array size is now large enough. Simple append the new element.
-			A[m_uiNumObjects++] = _pNew;
+			m_data[m_uiNumObjects++] = _pNew;
 		}
 
 		void Remove( uint _Idx )
 		{
-			Assert( _Idx < m_uiNumObjects );
-			A[_Idx] = A[--m_uiNumObjects];
+			Assert( _Idx < m_size );
+			m_data[_Idx] = m_data[--m_size];
 			// Reallocation occurs only in Add. Space is still allocated, but
 			// traversing over the array is now one element shorter.
+		}
+
+		T* operator [](int _idx)
+		{
+			return m_data[_idx];
 		}
 	};
 };

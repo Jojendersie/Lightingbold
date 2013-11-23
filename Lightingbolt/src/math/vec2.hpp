@@ -9,6 +9,8 @@ namespace Math {
 	public:
 		float x, y;
 
+		Vec2() : x(0.0f),y(0.0f) {}
+
 		/// \brief Create with a scalar value in all channels
 		Vec2(float f) : x(f), y(f)	{}
 

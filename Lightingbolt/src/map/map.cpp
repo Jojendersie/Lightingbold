@@ -12,7 +12,8 @@ namespace Map
 		m_height = _height;
 
 		m_densityMap = new float[_width*_height];
-
+		
+		m_player = new Ai::GameObject();
 		InitMap();
 	}
 
@@ -20,7 +21,6 @@ namespace Map
 	{
 		free(m_densityMap);
 		free(m_player);
-		free(m_objects);
 	}
 
 	void Map::InitMap()
@@ -44,7 +44,7 @@ namespace Map
 	void Map::Update()
 	{
 		// update the player
-		//m_player->Update();
+		m_player->update();
 
 		// update all other objects
 		//m_objects

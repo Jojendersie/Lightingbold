@@ -15,6 +15,7 @@
 #include "graphic/device.hpp"
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
+#include "graphic/Vertex.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -95,6 +96,7 @@ int main()
 	delete g_RenderTargets;
 	delete g_ShaderList;
 	delete g_StateMenu;
+	Graphic::Vertex::ReleaseLayout();
 	delete g_StateIngame;
 	delete window;
 	return 0;
@@ -127,6 +129,7 @@ void CreateShaders()
 	g_ShaderList = new Graphic::ShaderList;
 
 	g_ShaderList->VSPassThrough = new Graphic::Shader(  L"shader/Quad.vs", Graphic::Shader::Type::VERTEX );
+	Graphic::Vertex::InitLayout( g_ShaderList->VSPassThrough );
 
 	g_ShaderList->GSQuad = new Graphic::Shader(  L"shader/Quad.gs", Graphic::Shader::Type::GEOMETRY );
 	g_ShaderList->GSSimulate = new Graphic::Shader(  L"shader/SimShader.gs", Graphic::Shader::Type::GEOMETRY );

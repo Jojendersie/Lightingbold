@@ -193,7 +193,7 @@ namespace Graphic {
 		m_swapChainDesc->SampleDesc.Quality = 0;
 		m_swapChainDesc->Windowed = !m_fullScreen;
 		m_swapChainDesc->Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-		auto FeatureLvl = D3D_FEATURE_LEVEL_11_0;
+		auto FeatureLvl = D3D_FEATURE_LEVEL_10_1;
 		// Try to create a hardware accelerated device with multisample antialiasing first
 		// TODO: reduce this 3 calls to safe space
 		hr = D3D11CreateDeviceAndSwapChain( nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, uiCreateDeviceFlags, 

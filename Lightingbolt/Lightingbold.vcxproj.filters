@@ -68,6 +68,9 @@
     <ClCompile Include="src\graphic\UniformBuffer.cpp">
       <Filter>Source Files\graphic</Filter>
     </ClCompile>
+    <ClCompile Include="src\ai\Enemy.cpp">
+      <Filter>Source Files\ai</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="src\graphic\TransformFeedbackBuffer.hpp">
       <Filter>Source Files\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ai\Enemy.hpp">
+      <Filter>Source Files\ai</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

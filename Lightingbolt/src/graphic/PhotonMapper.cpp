@@ -46,7 +46,7 @@ namespace Graphic {
 		{
 			_ShaderConstants->setTime(float(_time)+i);
 			_ShaderConstants->upload();
-			Graphic::Device::Context->Draw( 3, 0 );
+			Graphic::Device::Context->Draw( _individuals->getNum(), 0 );
 		}
 
 		// Simulate photons

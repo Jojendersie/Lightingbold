@@ -6,7 +6,8 @@ namespace Graphic {
 
 	VertexBuffer::VertexBuffer(int _vertexSize, int _maxNum) :
 		m_vertexSize(_vertexSize),
-		m_maxNum(_maxNum)
+		m_maxNum(_maxNum),
+		m_numCurrent(0)
 	{	
 		// Fill everything in the dx-creation descriptor. Not using a memset 0
 		// is saver in respect to forgotten attributes.
@@ -41,6 +42,7 @@ namespace Graphic {
 	void VertexBuffer::upload(void* _vertices, int _numVertices)
 	{
 		Assert(_numVertices <= m_maxNum);
+		m_numCurrent = _numVertices;
 		D3D11_MAPPED_SUBRESOURCE MappedResource;
 		HRESULT hr = Device::Context->Map( m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
 		Assert( SUCCEEDED(hr) );

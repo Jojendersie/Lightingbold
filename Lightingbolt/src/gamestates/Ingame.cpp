@@ -71,24 +71,24 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 void Ingame::Update( double _time, double _deltaTime )
 {
 	map->Update();
-	int number = map->getNumberOfObjects(); //TODO: vertices
-	Graphic::Vertex *vertexes= new Graphic::Vertex[number+1];
+	int number = map->getNumberOfObjects();
+	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){
-		//vertexes[i].Position.x = i*0.25f;
-		//vertexes[i].Size = 0.25;
-		vertexes[i].Position.x = ((map->getEnemy(i)->getPosition().x));
-		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y));
-		vertexes[i].Size = map->getEnemy(i)->getRadius();
-		vertexes[i].Rotation.y = 1.0;
+		//vertices[i].Position.x = i*0.25f;
+		//vertices[i].Size = 0.25;
+		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
+		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
+		vertices[i].Size = map->getEnemy(i)->getRadius();
+		vertices[i].Rotation.y = 1.0;
 	}
 
-	vertexes[number].Position.x = ((map->getPlayer()->getPosition().x));
-	vertexes[number].Position.y = ((map->getPlayer()->getPosition().y));
-	vertexes[number].Size = map->getPlayer()->getRadius();
-	vertexes[number].Rotation.y = 1.0;
+	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
+	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
+	vertices[number].Size = map->getPlayer()->getRadius();
+	vertices[number].Rotation.y = 1.0;
 
-	m_vertexBuffer->upload(vertexes, number+1);
-	delete[] vertexes;
+	m_vertexBuffer->upload(vertices, number+1);
+	delete[] vertices;
 }
 
 } // namespace GameStates

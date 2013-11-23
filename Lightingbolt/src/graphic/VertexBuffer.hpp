@@ -20,10 +20,13 @@ namespace Graphic {
 		/// \brief Commit changes to the GPU.
 		void upload(void* _vertices, int _numVertices);
 
+		int getNum() const { return m_numCurrent; }
+
 	private:
 		ID3D11Buffer* m_buffer;	///< DirectX constant buffer
 		unsigned m_vertexSize;
 		int m_maxNum;
+		int m_numCurrent;
 	};
 
 } // namespace Graphic

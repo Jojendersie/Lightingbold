@@ -5,6 +5,7 @@
 namespace Graphic {
 
 	ID3D11InputLayout* g_VertexLayout;
+	ID3D11InputLayout* g_PhotonVertexLayout;
 
 	void Vertex::InitLayout(Shader* _shader)
 	{
@@ -29,6 +30,33 @@ namespace Graphic {
 	void Vertex::SetLayout()
 	{
 		Device::Context->IASetInputLayout( g_VertexLayout );
+	}
+
+
+	// *** PHOTON VERTEX *************************************************** //
+	void PhotonVertex::InitLayouts(Shader* _shader)
+	{
+		// Define the input layout
+		D3D11_INPUT_ELEMENT_DESC LayoutDesc[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float)*2, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 1, DXGI_FORMAT_R32_FLOAT, 0, sizeof(float)*4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		};
+		HRESULT hr = Device::Device->CreateInputLayout(
+			LayoutDesc, 3, _shader->m_shader->GetBufferPointer(),
+			_shader->m_shader->GetBufferSize(), &g_PhotonVertexLayout);
+		Assert( SUCCEEDED(hr) );
+	}
+
+	void PhotonVertex::ReleaseLayouts()
+	{
+		g_PhotonVertexLayout->Release();
+	}
+
+	void PhotonVertex::SetLayouts()
+	{
+		Device::Context->IASetInputLayout( g_PhotonVertexLayout );
 	}
 
 } // namespace Graphic

@@ -17,6 +17,7 @@
     <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\graphic\RenderTarget.cpp" />
     <ClCompile Include="src\graphic\Shader.cpp" />
+    <ClCompile Include="src\graphic\UniformBuffer.cpp" />
     <ClCompile Include="src\graphic\Vertex.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
@@ -31,6 +32,8 @@
     <ClInclude Include="src\graphic\device.hpp" />
     <ClInclude Include="src\graphic\RenderTarget.hpp" />
     <ClInclude Include="src\graphic\Shader.hpp" />
+    <ClInclude Include="src\graphic\TransformFeedbackBuffer.hpp" />
+    <ClInclude Include="src\graphic\UniformBuffer.hpp" />
     <ClInclude Include="src\graphic\Vertex.hpp" />
     <ClInclude Include="src\map\map.hpp" />
     <ClInclude Include="src\math\math.hpp" />

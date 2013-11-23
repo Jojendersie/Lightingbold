@@ -12,3 +12,12 @@ struct PSInput
 	float2 TexCoord : TEXCOORD0;
 	float2 Params : TEXCOORD1;
 };
+
+struct Material {
+	float Refraction;
+};
+
+cbuffer Constants : register(b0)
+{
+	Material c_materials[8];
+};

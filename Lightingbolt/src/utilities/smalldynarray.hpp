@@ -21,7 +21,7 @@ namespace Utilities
 		return (_x>=1) & ((_x&(_x-1)) < 1);
 	}
 
-	template <class T> 
+	/*template <class T> 
 	class DynArray
 	{
 	private:
@@ -46,13 +46,13 @@ namespace Utilities
 			if( m_size == 0 )
 			{
 				m_data = (T*)malloc( sizeof(T*) );
-			} else if( IsPotOf2( m_uiNumObjects ) )
+			} else if( IsPotOf2( m_size ) )
 			{
 				m_data = (T*)realloc( m_data, m_size*2*sizeof(T*) );
 			}
 
 			// Array size is now large enough. Simple append the new element.
-			m_data[m_uiNumObjects++] = _pNew;
+			m_data[m_size++] = *_pNew;
 		}
 
 		void Remove( uint _Idx )
@@ -67,5 +67,56 @@ namespace Utilities
 		{
 			return m_data[_idx];
 		}
+	};*/
+
+	template <class T> 
+	class DynArray
+	{
+	private:
+		int m_size;
+		int m_capacity;
+		T* m_data;
+
+		void reallocate();
+	public:
+		DynArray() : m_size(0), m_capacity(1), m_data(nullptr)	{ m_data = new T[m_capacity]; }
+		DynArray(int _capacity) : m_size(0), m_capacity(_capacity), m_data(nullptr)	{ m_data = new T[m_capacity]; }
+		~DynArray()	{ free( m_data ); }
+
+		int size() {return m_size;}
+		int capacity() {return m_capacity;}
+
+		void append(const T& _element) 
+		{
+			if(m_size<m_capacity) m_data[m_size++] = _element;
+			else
+			{
+				/*T* temp= new T[m_capacity];
+				for(int i=0;i<m_size;++i)
+					temp[0]=m_data[0];*/
+				m_capacity*=2;
+				T* temp= new T[m_capacity];
+				for(int i=0;i<m_size;++i)
+					temp[i]=m_data[i];
+				m_data= temp;//new T[m_capacity];
+				/*for(int i=0;i<m_size;++i)
+					m_data[0]=temp[0];*/
+				//delete(m_data);
+				//m_data = (T*)realloc( m_data, m_capacity*sizeof(T) );
+				m_data[m_size++]= _element;
+			}
+		}
+
+		void remove(int _idx)
+		{
+			Assert( _idx < m_size );
+			m_data[_idx] = m_data[--m_size];
+		}
+
+		T* operator [](int _idx)
+		{
+			return &m_data[_idx];
+		}
+
 	};
 };

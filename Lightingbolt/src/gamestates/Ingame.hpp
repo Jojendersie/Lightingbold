@@ -22,6 +22,7 @@ namespace GameStates {
 		virtual void Update( double _time, double _deltaTime ) override;
 	private:
 		Graphic::VertexBuffer* m_vertexBuffer;
+		Map::Map *map;
 	};
 
 } // namespace GameStates

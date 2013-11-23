@@ -5,13 +5,12 @@
 
 namespace Ai
 {
-	class Enemy : GameObject
+	class Enemy : public GameObject
 	{
 	public:
 		Enemy();
-		Enemy(const Math::Vec2& _position, float _radius);
+		Enemy(const Math::Vec2& _position, float _radius,Map::Map* _map);
 		~Enemy();
 	private:
-
 	};
 }

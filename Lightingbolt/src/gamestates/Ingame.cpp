@@ -34,7 +34,7 @@ Ingame::~Ingame()
 
 void Ingame::MouseMove(int _dx, int _dy)
 {
-	map->getPlayer()->setGoal(Math::Vec2(_dx,-_dy));
+	map->getPlayer()->setGoal(Math::Vec2((float)_dx/(1024.0f/2.0f),(float)-_dy/(768.0f/2.0f)));
 }
 
 void Ingame::KeyDown(int _key)
@@ -82,8 +82,8 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertexes[i].Rotation.y = 1.0;
 	}
 
-	vertexes[number].Position.x = ((map->getPlayer()->getPosition().x)/1024) * 2;
-	vertexes[number].Position.y = ((map->getPlayer()->getPosition().y)/768) * 2;
+	vertexes[number].Position.x = ((map->getPlayer()->getPosition().x));
+	vertexes[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertexes[number].Size = map->getPlayer()->getRadius();
 	vertexes[number].Rotation.y = 1.0;
 

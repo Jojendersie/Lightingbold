@@ -78,7 +78,7 @@ namespace Ai
 		Math::Vec2 targetDirection = m_goal - m_position;
 		if(targetDirection.length() == 0)
 			return;
-		m_direction = /*targetDirection/targetDirection.length() * m_map->Density(m_position);*/ Math::lerp(m_direction,(targetDirection/targetDirection.length()), 1);
+		m_direction = /*targetDirection/targetDirection.length() * m_map->Density(m_position);*/ Math::lerp(m_direction,(targetDirection/targetDirection.length()), 0.005);
 
 		m_position += m_direction;
 	}

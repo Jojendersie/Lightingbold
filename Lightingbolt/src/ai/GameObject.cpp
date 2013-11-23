@@ -68,6 +68,9 @@ namespace Ai
 
 	void GameObject::update()
 	{
-		
+		Math::Vec2 targetDirection = m_goal - m_position;
+		m_direction = targetDirection/targetDirection.length();// Math::lerp(m_direction,(targetDirection/targetDirection.length()), 1);
+
+		m_position += m_direction;
 	}
 }

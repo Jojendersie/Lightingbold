@@ -28,12 +28,13 @@ namespace Map
 
 	void Map::InitMap()
 	{
+		float amplitude = 1.0f;
 		// build density map
 		for(int y=0;y<m_height;++y)
 		{
 			for(int x=0;x<m_width;++x)
 			{
-				m_densityMap[m_width*y+x]  = GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(m_width/2,m_height/2),Math::Vec2(m_width/4,m_height/4),1);
+				m_densityMap[m_width*y+x]  = amplitude - GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(m_width/2,m_height/2),Math::Vec2(m_width/4,m_height/4),amplitude);
 			} // for x
 		} // for y
 	}

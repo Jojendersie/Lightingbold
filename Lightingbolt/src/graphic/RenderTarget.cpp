@@ -44,7 +44,7 @@ namespace Graphic {
 
 	// ********************************************************************* //
 	/// \brief Create a render target with the given size and format.
-	RenderTarget::RenderTarget( uint _width, uint _height, DXGI_FORMAT _format, uint _flags ) :
+	RenderTarget::RenderTarget( uint _width, uint _height, DXGI_FORMAT _format, uint _flags, void* _initalData ) :
 		m_textureView(nullptr),
 		m_DSTextureView(nullptr),
 		m_targetView(nullptr),
@@ -76,7 +76,14 @@ namespace Graphic {
 			TexDesc.Format = _format;
 
 			ID3D11Texture2D* pTexture;
-			hr = Device::Device->CreateTexture2D( &TexDesc, nullptr, &pTexture );
+			if( _initalData )
+			{
+				D3D11_SUBRESOURCE_DATA data;
+				data.pSysMem = _initalData;
+				data.SysMemPitch = data.SysMemSlicePitch = 0;
+				hr = Device::Device->CreateTexture2D( &TexDesc, &data, &pTexture );
+			} else
+				hr = Device::Device->CreateTexture2D( &TexDesc, nullptr, &pTexture );
 			Assert( SUCCEEDED(hr) );
 
 			// Now create the views

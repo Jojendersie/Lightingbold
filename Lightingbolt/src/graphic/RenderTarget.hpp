@@ -49,8 +49,10 @@ namespace Graphic {
 		///		or a potence of two is useful.
 		/// \param [in] _format An arbitrary allowed format for render targets.
 		/// \param [in] _flags A combination of flags from the CREATION_FLAGS.
+		/// \param [in] _initalData Data to be loaded if used as texture only.
+		///		This parameter might be zero
 		RenderTarget( uint _width, uint _height, DXGI_FORMAT _format,
-					  uint _flags );
+					  uint _flags, void* _initalData );
 
 		/// \brief Fill this render target with already existing resources and
 		///		give away the ownership of the resources.

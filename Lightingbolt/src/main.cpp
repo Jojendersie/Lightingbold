@@ -16,6 +16,7 @@
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
 #include "graphic/Vertex.hpp"
+#include "graphic/UniformBuffer.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -30,6 +31,7 @@ GameStates::Ingame* g_StateIngame;
 GameStates::IGameState* g_State;
 Graphic::RenderTargetList* g_RenderTargets;
 Graphic::ShaderList* g_ShaderList;
+Graphic::UniformBuffer* g_ShaderConstants;
 void MouseMove(int _dx, int _dy)	{ g_State->MouseMove(_dx,_dy); }
 void KeyDown(int _key)				{ g_State->KeyDown(_key); }
 void KeyUp(int _key)				{ g_State->KeyUp(_key); }
@@ -50,6 +52,7 @@ int main()
 	g_StateMenu = new GameStates::Menu;
 	g_StateIngame = new GameStates::Ingame;
 	g_State = g_StateMenu;
+	g_ShaderConstants = new Graphic::UniformBuffer();
 	window->OnMouseMove = MouseMove;
 	window->OnKeyDown = KeyDown;
 	window->OnKeyUp = KeyUp;
@@ -87,7 +90,7 @@ int main()
 #ifdef DYNAMIC_SHADER_RELOAD
 				ReloadShaders();
 #endif
-				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList);
+				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList, g_ShaderConstants);
 				g_State->Update(dTime, dDeltaTime);
 			}
         }
@@ -97,6 +100,7 @@ int main()
 	delete g_RenderTargets;
 	delete g_ShaderList;
 	delete g_StateMenu;
+	delete g_ShaderConstants;
 	Graphic::Vertex::ReleaseLayout();
 	Graphic::PhotonVertex::releaseLayout();
 	delete g_StateIngame;

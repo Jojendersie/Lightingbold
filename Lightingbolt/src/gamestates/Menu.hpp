@@ -18,13 +18,15 @@ namespace GameStates {
 
 		virtual void Render( double _time, double _deltaTime,
 			Graphic::RenderTargetList& _renderTargets,
-			Graphic::ShaderList& _shaders ) override;
+			Graphic::ShaderList& _shaders,
+			Graphic::UniformBuffer* _ShaderConstants ) override;
 
 		virtual void Update( double _time, double _deltaTime ) override;
 
 	private:
-		Graphic::FeedBackBuffer* m_photons;
 		Graphic::VertexBuffer* m_vertexBuffer;
+		Graphic::PhotonMapper* m_photonMapper;
+		Graphic::RenderTarget* m_mapTexture;
 	};
 
 } // namespace GameStates

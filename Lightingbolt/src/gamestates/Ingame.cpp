@@ -50,7 +50,7 @@ void Ingame::Scroll(int _delta)
 }
 
 void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _renderTargets,
-				   Graphic::ShaderList& _shaders)
+				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 {
 	_renderTargets.BackBuffer->SetAsTarget();
 	_renderTargets.BackBuffer->Clear( CLEAR_COLOR );

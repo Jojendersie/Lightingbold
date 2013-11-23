@@ -19,6 +19,8 @@ struct Material {
 
 cbuffer Constants : register(b0)
 {
+	float c_time;
+	float3 _1;
 	Material c_materials[8];
 };
 
@@ -33,3 +35,23 @@ struct PhotonOut {
 	float2 Direction : TEXCOORD0;
 	float Energy : TEXCOORD1;
 };
+
+
+
+int HashInt( int _a )
+{
+	_a -= _a << 6;
+	_a ^= _a >> 17;
+	_a -= _a << 9;
+	_a ^= _a << 4;
+	_a -= _a << 3;
+	_a ^= _a << 10;
+	_a ^= _a >> 15;
+	return _a;
+}
+
+// Standard random variable [0,1]
+float RandomSample( float2 _val, int _seed )
+{
+	return HashInt(int(_val.x*2011.364 + _val.y*4501001.21 + _seed + c_time * 1234.456)) * 4.656612873e-10;
+}

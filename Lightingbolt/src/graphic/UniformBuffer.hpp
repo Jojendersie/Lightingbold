@@ -19,10 +19,15 @@ namespace Graphic {
 		void upload();
 
 		void setMaterial( int _index, float _refraction );
+		void setTime( float _time )		{ m_storage.Time = _time; }
 	private:
 		ID3D11Buffer* m_buffer;	///< DirectX constant buffer
 
 		struct {
+			float Time;
+			float _1;
+			float _2;
+			float _3;
 			Material Materials[8];
 		} m_storage;
 	};

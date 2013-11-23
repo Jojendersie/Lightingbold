@@ -17,7 +17,8 @@ namespace GameStates {
 
 		virtual void Render( double _time, double _deltaTime,
 			Graphic::RenderTargetList& _renderTargets,
-			Graphic::ShaderList& _shaders ) override;
+			Graphic::ShaderList& _shaders,
+			Graphic::UniformBuffer* _ShaderConstants) override;
 
 		virtual void Update( double _time, double _deltaTime ) override;
 	private:

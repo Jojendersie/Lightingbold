@@ -30,6 +30,8 @@ namespace Graphic {
 	struct ShaderList;
 	class VertexBuffer;
 	class FeedBackBuffer;
+	class UniformBuffer;
+	class PhotonMapper;
 
 	namespace Device {
 		extern ID3D11Device* Device;
@@ -97,6 +99,6 @@ namespace GameStates {
 #endif // _DEBUG
 
 
-const float CLEAR_COLOR[4] = {1.0f, 0.564705882f, 0.003921569f, 1.0f };
+const float CLEAR_COLOR[4] = {0.0f, 0.0f, 0.0f, 1.0f }; //{1.0f, 0.564705882f, 0.003921569f, 1.0f };
 
 void SwitchGameState( GameStates::GS _State );

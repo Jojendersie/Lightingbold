@@ -32,6 +32,9 @@ namespace Map {
 
 		int getNumberOfObjects() {return m_objects.size(); }
 		Ai::Enemy* getEnemy(int _idx) {return m_objects[_idx]; }
+		const float* getDensityMap() const { return m_densityMap; }
+		int getWidth() const { return m_width; }
+		int getHeight() const { return m_height; }
 	private:
 		int m_height;
 		int m_width;

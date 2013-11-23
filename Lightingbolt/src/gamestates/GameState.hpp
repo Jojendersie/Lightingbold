@@ -16,7 +16,9 @@ namespace GameStates {
 		/// \param [in] _deltaTime Time since last frame.
 		/// \param [inout] _renderTargets List of all rendertargets. The state
 		///		can use them as it likes.
+		/// \param [in] _shaders The global maintained list of all shaders.
 		virtual void Render( double _time, double _deltaTime,
-			Graphic::RenderTargetList& _renderTargets ) = 0;
+			Graphic::RenderTargetList& _renderTargets,
+			Graphic::ShaderList& _shaders ) = 0;
 	};
 } // namespace GameStates

@@ -154,6 +154,10 @@ namespace Graphic {
 		Device::Device = nullptr;
 		Device::Context = nullptr;
 
+		if( m_depthStencilState ) m_depthStencilState->Release();
+		if( m_blendState ) m_blendState->Release();
+		if( m_rasterState ) m_rasterState->Release();
+
 		if( m_devContext ) 
 			m_devContext->ClearState();
 
@@ -210,12 +214,13 @@ namespace Graphic {
 		Device::Context = m_devContext;
 
 		// Setup stages
-		// TODO: reicht das hier?
-		m_devContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+		m_devContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_POINTLIST );
+
+		CreateStates();
 	}
 
 
-	// ************************************************************************** //
+	// ********************************************************************* //
 	// Mapped method for content creation
 	ID3D11Buffer* DX11Window::CreateStaticStdBuffer( unsigned _size, const void* _data, unsigned _bindFlag ) const
 	{
@@ -236,6 +241,60 @@ namespace Graphic {
 		Assert( SUCCEEDED(hr) );
 
 		return pResult;
+	}
+
+	// ********************************************************************* //
+	void DX11Window::CreateStates()
+	{
+		HRESULT hr;
+
+		// No Z-Test
+		D3D11_DEPTH_STENCILOP_DESC od;
+		od.StencilFunc = D3D11_COMPARISON_ALWAYS;
+		od.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		od.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		od.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+
+		D3D11_DEPTH_STENCIL_DESC DepthStencilDesc;
+		DepthStencilDesc.DepthEnable = false;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+		DepthStencilDesc.StencilEnable = true;
+		DepthStencilDesc.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
+		DepthStencilDesc.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
+		DepthStencilDesc.FrontFace = od;
+		DepthStencilDesc.BackFace = od;
+		hr = Device::Device->CreateDepthStencilState( &DepthStencilDesc, &m_depthStencilState );
+		Assert( SUCCEEDED( hr ) );
+
+		// Standard alpha blending
+		D3D11_BLEND_DESC BlendDesc;
+		BlendDesc.AlphaToCoverageEnable = false;
+		BlendDesc.IndependentBlendEnable = false;
+		BlendDesc.RenderTarget[0].BlendEnable = true;
+		BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendState );
+		Assert( SUCCEEDED( hr ) );
+
+		// Solid fill mode no culling
+		D3D11_RASTERIZER_DESC RasterDesc;
+		memset( &RasterDesc, 0, sizeof(RasterDesc) );
+		RasterDesc.MultisampleEnable = false;
+		RasterDesc.FillMode = D3D11_FILL_SOLID;
+		RasterDesc.CullMode = D3D11_CULL_NONE;
+		hr = Device::Device->CreateRasterizerState( &RasterDesc, &m_rasterState );
+		Assert( SUCCEEDED( hr ) );
+
+		// Set them all
+		Device::Context->OMSetBlendState( m_blendState, nullptr, 0xffffffff );
+		Device::Context->RSSetState( m_rasterState );
+		Device::Context->OMSetDepthStencilState( m_depthStencilState, 0 );
 	}
 
 } // namespace Graphic

@@ -104,7 +104,7 @@ namespace Graphic {
 
 	/// \brief A list of all targets to be passed between game states.
 	struct RenderTargetList {
-		Graphic::RenderTarget* BackBuffer;
+		RenderTarget* BackBuffer;
 
 		RenderTargetList() : BackBuffer(nullptr)	{}
 		~RenderTargetList()

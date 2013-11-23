@@ -17,14 +17,19 @@
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
+void CreateShaders();
+#ifdef DYNAMIC_SHADER_RELOAD
+void ReloadShaders();
+#endif
 
 // *** GLOBAL STUFF main.cpp IS MORE OR LESS THE GAME CLASS **************** //
 GameStates::IGameState* g_State;
+Graphic::RenderTargetList* g_RenderTargets;
+Graphic::ShaderList* g_ShaderList;
 void MouseMove(int _dx, int _dy)	{ g_State->MouseMove(_dx,_dy); }
 void KeyDown(int _key)				{ g_State->KeyDown(_key); }
 void KeyUp(int _key)				{ g_State->KeyUp(_key); }
 void Scroll(int _delta)				{ g_State->Scroll(_delta); }
-Graphic::RenderTargetList* g_RenderTargets;
 
 
 
@@ -43,8 +48,7 @@ int main()
 	window->OnKeyUp = KeyUp;
 	window->OnScroll = Scroll;
 	CreateRenderTargets();
-
-	Graphic::Shader Test( L"shader/QuadShader.vs", Graphic::Shader::Type::VERTEX );
+	CreateShaders();
 
 	double dTime = 0.0;
 	uint64_t uiOldTime, uiNewTime;
@@ -72,8 +76,11 @@ int main()
 				uiOldTime = uiNewTime;
 				dTime += dDeltaTime;
 
-				// Call stuff
-				g_State->Render(dTime, dDeltaTime, *g_RenderTargets);
+				// Call update stuff
+#ifdef DYNAMIC_SHADER_RELOAD
+				ReloadShaders();
+#endif
+				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList);
 				//pGame->Update( dTime, Saga::min(0.05, dDeltaTime) );
 				//pGame->RenderFrame( dTime, Saga::min(0.05, dDeltaTime) );
 			}
@@ -82,6 +89,7 @@ int main()
 
 	// *** SHUTDOWN ******************************************************** //
 	delete g_RenderTargets;
+	delete g_ShaderList;
 	delete g_State;
 	delete window;
 	return 0;
@@ -108,3 +116,27 @@ void CreateRenderTargets()
 	// TODO: due to post process the backbuffer does not need a depth-stencil buffer
 	g_RenderTargets->BackBuffer = new Graphic::RenderTarget( pBackbufferView, nullptr, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH );
 }
+
+void CreateShaders()
+{
+	g_ShaderList = new Graphic::ShaderList;
+
+	g_ShaderList->VSPassThrough = new Graphic::Shader(  L"shader/Quad.vs", Graphic::Shader::Type::VERTEX );
+
+	g_ShaderList->GSQuad = new Graphic::Shader(  L"shader/Quad.gs", Graphic::Shader::Type::GEOMETRY );
+	g_ShaderList->GSSimulate = new Graphic::Shader(  L"shader/SimShader.gs", Graphic::Shader::Type::GEOMETRY );
+
+	g_ShaderList->PSBlob = new Graphic::Shader(  L"shader/Blob.ps", Graphic::Shader::Type::PIXEL );
+}
+
+#ifdef DYNAMIC_SHADER_RELOAD
+void ReloadShaders()
+{
+	g_ShaderList->VSPassThrough->DynamicReload();
+
+	g_ShaderList->GSQuad->DynamicReload();
+	g_ShaderList->GSSimulate->DynamicReload();
+
+	g_ShaderList->PSBlob->DynamicReload();
+}
+#endif

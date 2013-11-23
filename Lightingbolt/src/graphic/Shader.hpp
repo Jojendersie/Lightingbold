@@ -32,11 +32,40 @@ namespace Graphic {
 	private:
 		Type m_type;			///< Remember type for reloads and sets
 		const wchar_t* m_fileName;	///< Name given in constructor
+#ifdef DYNAMIC_SHADER_RELOAD
+		time_t m_lastModified;
+#endif
 
 		void Load();			///< Loads the file m_fileName with m_type
 
 		/// This is exactly one type of shader
 		ID3DBlob* m_shader;
+		union {
+			ID3D11VertexShader* m_vertexShader;
+			ID3D11GeometryShader* m_geometryShader;
+			ID3D11PixelShader* m_pixelShader;
+		};
+
+		friend struct Vertex;
+	};
+
+	/// \brief A list of all shaders to be passed between game states.
+	struct ShaderList {
+		Shader* VSPassThrough;		///< Vertex shader which only passes the vertex info to the next stage
+
+		Shader* GSQuad;				///< Create a rotated quad 
+		Shader* GSSimulate;			///< Move a photon...
+
+		Shader* PSBlob;				///< Draw a shaped object.
+
+		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSSimulate(nullptr), PSBlob(nullptr)	{}
+		~ShaderList()
+		{
+			delete VSPassThrough;
+			delete GSQuad;
+			delete GSSimulate;
+			delete PSBlob;
+		}
 	};
 
 } // namespace Graphic

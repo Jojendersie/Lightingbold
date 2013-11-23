@@ -21,6 +21,12 @@ namespace Graphic {
 
 		ID3D11Device*			m_device;
 		ID3D11DeviceContext*	m_devContext;
+
+		/// \brief Create all state objects required for the application
+		void CreateStates();
+		ID3D11DepthStencilState* m_depthStencilState;	///< No Z-Test
+		ID3D11BlendState* m_blendState;					///< Standard alpha blending
+		ID3D11RasterizerState* m_rasterState;			///< Solid fill mode no culling
 	public:
 		DX11Window( int _width, int _height, bool _fullScreen );
 		~DX11Window();

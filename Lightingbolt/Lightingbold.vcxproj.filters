@@ -59,6 +59,9 @@
     <ClCompile Include="src\graphic\Shader.cpp">
       <Filter>Source Files\graphic</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\Vertex.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">
@@ -101,6 +104,9 @@
       <Filter>Source Files\graphic</Filter>
     </ClInclude>
     <ClInclude Include="src\graphic\Shader.hpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\Vertex.hpp">
       <Filter>Source Files\graphic</Filter>
     </ClInclude>
   </ItemGroup>

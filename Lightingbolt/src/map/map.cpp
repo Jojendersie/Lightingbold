@@ -1,4 +1,5 @@
 #include "map.hpp"
+#include <cstdlib>
 
 namespace Map
 {

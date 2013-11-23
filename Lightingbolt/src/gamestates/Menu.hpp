@@ -12,7 +12,8 @@ namespace GameStates {
 		virtual void Scroll(int _delta) override;
 
 		virtual void Render( double _time, double _deltaTime,
-			Graphic::RenderTargetList& _renderTargets ) override;
+			Graphic::RenderTargetList& _renderTargets,
+			Graphic::ShaderList& _shaders ) override;
 	};
 
 } // namespace GameStates

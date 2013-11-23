@@ -19,12 +19,15 @@ struct ID3D11Texture2D;
 struct ID3D11VertexShader;
 struct ID3D11GeometryShader;
 struct ID3D11PixelShader;
+struct ID3D11InputLayout;
 
 namespace Graphic {
 	class DX11Window;
 	class RenderTarget;
 	struct RenderTargetList;
 	class Shader;
+	struct Vertex;
+	struct ShaderList;
 
 	namespace Device {
 		extern ID3D11Device* Device;

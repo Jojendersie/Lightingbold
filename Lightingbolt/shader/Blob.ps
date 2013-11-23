@@ -1,0 +1,7 @@
+#include "Common.hlsl"
+
+float4 main(PSInput _in) : SV_TARGET
+{
+	float density = 1 - dot(_in.TexCoord, _in.TexCoord) / 1.414;
+	return float4(1,1,1,1);//density.xxxx;
+}

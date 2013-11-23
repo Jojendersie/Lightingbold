@@ -34,7 +34,10 @@ namespace Map {
 		Ai::GameObject* m_player;
 
 		// initialization
-		void initMap();
+		void InitMap();
+
+		// function to compute a gauss blob, you get the value for the given coordinates
+		float GaussAtCoordinate(const Math::Vec2& _coordinate, const Math::Vec2& _center, const Math::Vec2& spread, float _amplidude);
 	};
 
 } // namespace Map

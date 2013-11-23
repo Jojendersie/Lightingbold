@@ -2,15 +2,28 @@
 
 namespace Soundtest
 {
-	std::string Note::getNote(float frequency, int length)
+	vector<float> Note::getNote(float frequency, int length)
 	{
-		std::string pcBuffer;
-		for (int i=0; i < length; i++)
+		vector<float> res;
+		for (int i=0; i<length; i++)
 		{
-			double x;
-			x = sin(i*6.283185307*(frequency)/20000.0);
-			pcBuffer.push_back((char)(127*x+128));
+			res.push_back(sin(i*6.283185307*(frequency)/20000.0));
 		}
-		return pcBuffer;
+		return res;
+	}
+
+	vector<float> Note::getNoise(int length)
+	{
+		vector<float> res;
+		for(int i=0; i<length; i++)
+		{
+			res.push_back(((rand()%100)/100.0f*2)-1);
+		}
+		return res;
+	}
+
+	char Note::toChar(float note)
+	{
+		return (char)(note*127+128);
 	}
 }

@@ -1,4 +1,6 @@
 
+#include <ctime>
+
 #include "math/vec3.hpp"
 #include "soundtest/note.hpp"
 #include "sound/sounddevice.hpp"
@@ -107,12 +109,13 @@ int main()
 	delete g_rand;
 	Sound::Device &device=Sound::Device::UseOpenAL();
 	string soundBuffer;
-	soundBuffer+=Soundtest::Note::getNote(261.63f, 12150);
-	soundBuffer+=Soundtest::Note::getNote(293.66f, 12150);
-	soundBuffer+=Soundtest::Note::getNote(329.63f, 12150);
-	soundBuffer+=Soundtest::Note::getNote(293.66f, 12150);
-	soundBuffer+=Soundtest::Note::getNote(261.63f, 12150*3);
+	srand(time(NULL));
+	vector<float> note=Soundtest::Note::getNote(261.63f, 12150*3);
 
+	for(int i=0; i<note.size(); i++)
+	{
+		soundBuffer+=Soundtest::Note::toChar(note[i]);
+	}
 
 	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
 	Sound::Source source(sound, 0.2f, 5);
@@ -120,10 +123,18 @@ int main()
 	source.SetPosition(position);
 
 	source.Play();
+	int current=0;
+	source.SetPitch(pow(2.0, 1*1.0/12.0));
+	float volume=0.0f;
+	source.SetLooping(true);
 	while(source.IsPlaying())
 	{
-		//position.x+=0.00002f;
-		//source.SetPosition(position);
+		volume+=0.0000001f;
+		if(volume>=0.2f)
+		{
+			volume=0.0f;
+		}
+		source.SetVolume(volume);
 	}
 	return 0;
 }

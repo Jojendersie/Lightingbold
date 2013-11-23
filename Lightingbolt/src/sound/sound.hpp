@@ -56,7 +56,10 @@ namespace Sound {
 		///		stopped before.
 		void Pause() const;
 
+		void SetPitch(float _pitch);
+		void SetVolume(float _volume);
 		void SetVelocity( const Math::Vec3& _v );
 		void SetPosition( const Math::Vec3& _p );
+		void SetLooping(bool _looping);
 	};
 };

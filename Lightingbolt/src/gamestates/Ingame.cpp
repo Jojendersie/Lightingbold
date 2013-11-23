@@ -14,6 +14,7 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
+	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 3);
 	/** Test **/
 	map = new Map::Map(512,512);
 	map->addEnemy(Math::Vec2(0),0.3);
@@ -85,9 +86,8 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertexes[i].Size = 0.25;
 		vertexes[i].Rotation.y = 1.0;
 	}
-	m_vertexBuffer->setVertices(vertexes);
+	m_vertexBuffer->upload(vertexes, number);
 	delete[] vertexes;
-	m_vertexBuffer->upload();
 }
 
 } // namespace GameStates

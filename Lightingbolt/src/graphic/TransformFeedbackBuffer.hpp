@@ -11,6 +11,7 @@ namespace Graphic {
 		FeedBackBuffer();
 
 		/// \brief Toggles the two buffers and set one of them as target.
+		///		The other is used as current input vertex buffer.
 		void toggle();
 
 		/// \brief Disable recording of geometry output
@@ -19,6 +20,8 @@ namespace Graphic {
 		/// \brief Draw the source buffer.
 		void draw();
 	private:
+		ID3D11Buffer* m_buffers[2];
+		int m_source;					///< Which of the two buffers is the current source
 	};
 
 } // namespace Graphic

@@ -9,7 +9,7 @@ namespace Graphic {
 	public:
 
 		/// \brief Create the directx resource for this buffer.
-		VertexBuffer();
+		VertexBuffer( int _vertexSize, int _maxNum );
 
 		~VertexBuffer();
 
@@ -17,14 +17,13 @@ namespace Graphic {
 
 		void set();
 
-		void setVertices(Vertex* _vertices);
-
 		/// \brief Commit changes to the GPU.
-		void upload();
+		void upload(void* _vertices, int _numVertices);
 
 	private:
 		ID3D11Buffer* m_buffer;	///< DirectX constant buffer
-		Vertex* m_vertices;
+		unsigned m_vertexSize;
+		int m_maxNum;
 	};
 
 } // namespace Graphic

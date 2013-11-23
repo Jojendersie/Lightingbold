@@ -4,7 +4,7 @@ namespace Soundtest
 {
 	int Note::getLength(float frequency)
 	{
-		return TT/frequency;
+		return (int)(TT/frequency);
 	}
 
 	char *Note::getSine(float frequency)
@@ -13,7 +13,7 @@ namespace Soundtest
 		char *res=new char[length];
 		for(int x=0; x<length; x++)
 		{
-			char signal=toChar(sin(x*2.0f*PI*frequency/TT));
+			char signal=toChar((float)sin(x*2.0f*PI*frequency/TT));
 			res[x]=signal;
 		}
 		return res;

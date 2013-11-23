@@ -34,7 +34,7 @@ namespace Soundtest
 		if(m_index<m_noteSize)
 		{
 			int note=m_notes[m_index];
-			float pitch=pow(2.0, note*1.0/12.0);
+			float pitch=(float)pow(2.0, note*1.0/12.0);
 			m_source->SetPitch(pitch);
 		}
 	}

@@ -9,7 +9,7 @@ namespace Ai
 		
 	}
 
-	Enemy::Enemy(const Math::Vec2& _position, float _radius)
+	Enemy::Enemy(const Math::Vec2& _position, float _radius, Map::Map* _map): GameObject(_map)
 	{
 		setPosition(_position);
 		setRadius(_radius);
@@ -17,6 +17,7 @@ namespace Ai
 
 	Enemy::~Enemy()
 	{
+
 	}
 
 } // namespace Ai

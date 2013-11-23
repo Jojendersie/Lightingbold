@@ -20,7 +20,8 @@ struct Material {
 cbuffer Constants : register(b0)
 {
 	float c_time;
-	float3 _1;
+	float2 c_mapSize;
+	float c_lightScale;
 	Material c_materials[8];
 };
 
@@ -33,7 +34,7 @@ struct Photon {
 struct PhotonOut {
 	float4 Position : SV_POSITION;
 	float2 Direction : TEXCOORD0;
-	float Energy : TEXCOORD1;
+	float2 Energy : TEXCOORD1;		// x remaining energy, y part to be saved to the map
 };
 
 

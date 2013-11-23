@@ -52,7 +52,7 @@ namespace Graphic {
 		/// \param [in] _initalData Data to be loaded if used as texture only.
 		///		This parameter might be zero
 		RenderTarget( uint _width, uint _height, DXGI_FORMAT _format,
-					  uint _flags, void* _initalData );
+					  uint _flags, const void* _initalData );
 
 		/// \brief Fill this render target with already existing resources and
 		///		give away the ownership of the resources.

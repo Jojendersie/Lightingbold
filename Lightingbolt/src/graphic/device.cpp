@@ -3,6 +3,7 @@
 #pragma comment(lib, "d3d11.lib")
 
 #include "device.hpp"
+#include "../graphic/VertexBuffer.hpp"
 
 static int g_iLastX;
 static int g_iLastY;
@@ -146,6 +147,13 @@ namespace Graphic {
 		Device::Window = this;
 
 		InitDevice();
+
+		m_screenQuad = new Graphic::VertexBuffer(sizeof(Vertex), 1);
+		Vertex quad;
+		quad.Position = 0.0f;
+		quad.Size = 1.0f;
+		quad.Rotation.x = 0.0f; quad.Rotation.y = 1.0f;
+		m_screenQuad->upload(&quad, 1);
 	}
 
 	DX11Window::~DX11Window()
@@ -155,8 +163,12 @@ namespace Graphic {
 		Device::Context = nullptr;
 
 		if( m_depthStencilState ) m_depthStencilState->Release();
-		if( m_blendState ) m_blendState->Release();
+		if( m_blendStateAlpha ) m_blendStateAlpha->Release();
+		if( m_blendStateAdd ) m_blendStateAdd->Release();
 		if( m_rasterState ) m_rasterState->Release();
+		if( m_pointSampler ) m_pointSampler->Release();
+
+		delete m_screenQuad;
 
 		if( m_devContext ) 
 			m_devContext->ClearState();
@@ -221,29 +233,6 @@ namespace Graphic {
 
 
 	// ********************************************************************* //
-	// Mapped method for content creation
-	ID3D11Buffer* DX11Window::CreateStaticStdBuffer( unsigned _size, const void* _data, unsigned _bindFlag ) const
-	{
-		D3D11_BUFFER_DESC Desc;
-		Desc.BindFlags = _bindFlag;
-		Desc.ByteWidth = _size;
-		Desc.CPUAccessFlags = 0;
-		Desc.MiscFlags = 0;
-		Desc.StructureByteStride = 0;//?
-		Desc.Usage = D3D11_USAGE_IMMUTABLE;
-		D3D11_SUBRESOURCE_DATA Data;
-		Data.pSysMem = _data;
-		Data.SysMemPitch = 0;
-		Data.SysMemSlicePitch = 0;
-
-		ID3D11Buffer* pResult;
-		HRESULT hr = m_device->CreateBuffer( &Desc, &Data, &pResult );
-		Assert( SUCCEEDED(hr) );
-
-		return pResult;
-	}
-
-	// ********************************************************************* //
 	void DX11Window::CreateStates()
 	{
 		HRESULT hr;
@@ -276,10 +265,16 @@ namespace Graphic {
 		BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendState );
+		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendStateAlpha );
+		Assert( SUCCEEDED( hr ) );
+		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendStateAdd );
 		Assert( SUCCEEDED( hr ) );
 
 		// Solid fill mode no culling
@@ -291,10 +286,47 @@ namespace Graphic {
 		hr = Device::Device->CreateRasterizerState( &RasterDesc, &m_rasterState );
 		Assert( SUCCEEDED( hr ) );
 
+
+		// Create a texture sampler state description.
+		D3D11_SAMPLER_DESC SamplerDesc;
+		SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		SamplerDesc.MipLODBias = 0.0f;
+		SamplerDesc.MaxAnisotropy = 1;
+		SamplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		SamplerDesc.BorderColor[0] = 0;
+		SamplerDesc.BorderColor[1] = 0;
+		SamplerDesc.BorderColor[2] = 0;
+		SamplerDesc.BorderColor[3] = 0;
+		SamplerDesc.MinLOD = 0;
+		SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+		hr = Device::Device->CreateSamplerState( &SamplerDesc, &m_pointSampler );
+		Assert( SUCCEEDED(hr) );
+
 		// Set them all
-		Device::Context->OMSetBlendState( m_blendState, nullptr, 0xffffffff );
+		Device::Context->OMSetBlendState( m_blendStateAlpha, nullptr, 0xffffffff );
 		Device::Context->RSSetState( m_rasterState );
 		Device::Context->OMSetDepthStencilState( m_depthStencilState, 0 );
+		Device::Context->PSSetSamplers( 0, 1, &m_pointSampler );
+		Device::Context->GSSetSamplers( 0, 1, &m_pointSampler );
+	}
+
+
+	void DX11Window::setBlendMode( BLEND_MODES _mode )
+	{
+		if( _mode == BLEND_MODES::ALPHA )
+			Device::Context->OMSetBlendState( m_blendStateAlpha, nullptr, 0xffffffff );
+		else
+			Device::Context->OMSetBlendState( m_blendStateAdd, nullptr, 0xffffffff );
+	}
+
+	void DX11Window::drawScreenQuad()
+	{
+		Graphic::Vertex::SetLayout();
+		m_screenQuad->set();
+		Graphic::Device::Context->Draw( 1, 0 );
 	}
 
 } // namespace Graphic

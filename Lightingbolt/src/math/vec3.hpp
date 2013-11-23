@@ -6,13 +6,15 @@ namespace Math {
 	public:
 		float x, y, z;
 
+		Vec3() : x(0), y(0), z(0)			{}
+
 		/// \brief Create with a scalar value in all channels
 		Vec3(float f) : x(f), y(f), z(f)	{}
 
 		/// \brief Set all three components
 		Vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)	{}
 	
-		Vec3& operator=(const Vec3& _v)			{ x=_v.x; y=_v.y; z=_v.z; }
+		Vec3& operator=(const Vec3& _v)			{ x=_v.x; y=_v.y; z=_v.z; return *this; }
 
 		Vec3 operator+(const Vec3& _v) const	{ return Vec3(x+_v.x, y+_v.y, z+_v.z); }
 		Vec3 operator-(const Vec3& _v) const	{ return Vec3(x-_v.x, y-_v.y, z-_v.z); }

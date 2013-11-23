@@ -44,7 +44,7 @@ namespace Graphic {
 
 	// ********************************************************************* //
 	/// \brief Create a render target with the given size and format.
-	RenderTarget::RenderTarget( uint _width, uint _height, DXGI_FORMAT _format, uint _flags, void* _initalData ) :
+	RenderTarget::RenderTarget( uint _width, uint _height, DXGI_FORMAT _format, uint _flags, const void* _initalData ) :
 		m_textureView(nullptr),
 		m_DSTextureView(nullptr),
 		m_targetView(nullptr),
@@ -80,7 +80,8 @@ namespace Graphic {
 			{
 				D3D11_SUBRESOURCE_DATA data;
 				data.pSysMem = _initalData;
-				data.SysMemPitch = data.SysMemSlicePitch = 0;
+				data.SysMemPitch = _width * sizeof(float);
+				data.SysMemSlicePitch = 0;
 				hr = Device::Device->CreateTexture2D( &TexDesc, &data, &pTexture );
 			} else
 				hr = Device::Device->CreateTexture2D( &TexDesc, nullptr, &pTexture );
@@ -169,6 +170,7 @@ namespace Graphic {
 	//		Device::Context->PSSetShaderResources( m_lastTextureSlot, 1, &pNull );
 		m_lastTextureSlot = _slot;
 		Device::Context->PSSetShaderResources( _slot, 1, &m_textureView );
+		Device::Context->GSSetShaderResources( _slot, 1, &m_textureView );
 	}
 
 
@@ -194,12 +196,14 @@ namespace Graphic {
 		{
 			ID3D11ShaderResourceView* const pNull = 0;
 			Device::Context->PSSetShaderResources( m_lastTextureSlot, 1, &pNull );
+			Device::Context->GSSetShaderResources( m_lastTextureSlot, 1, &pNull );
 			m_lastTextureSlot = 0xffffffff;
 		}
 		if( m_DSLastTextureSlot != 0xffffffff )
 		{
 			ID3D11ShaderResourceView* const pNull = 0;
 			Device::Context->PSSetShaderResources( m_DSLastTextureSlot, 1, &pNull );
+			Device::Context->GSSetShaderResources( m_lastTextureSlot, 1, &pNull );
 			m_DSLastTextureSlot = 0xffffffff;
 		}
 		Device::Context->OMSetRenderTargets( 1, &m_targetView, m_depthBufferRef );

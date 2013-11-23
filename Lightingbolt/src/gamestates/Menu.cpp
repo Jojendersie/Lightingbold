@@ -20,14 +20,16 @@ Menu::Menu()
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 3);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(0),0.3);
+	map->addEnemy(Math::Vec2(0),0.3f);
 	map->getEnemy(0)->setGoal(Math::Vec2(215,400));
-	map->addEnemy(Math::Vec2(215,400),0.7);
+	map->addEnemy(Math::Vec2(215,400),0.7f);
 	map->getEnemy(1)->setGoal(Math::Vec2(2,40));
 	map->addEnemy(Math::Vec2(400,30),0.5);
 	map->getEnemy(2)->setGoal(Math::Vec2(500,10));
 	/**********/
-//	m_mapTexture = new Graphic::RenderTarget( map->getWidth(), map->getHeight(), , map->getDensityMap() );
+	m_mapTexture = new Graphic::RenderTarget( map->getWidth(), map->getHeight(),
+		DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW,
+		map->getDensityMap() );
 
 	m_photonMapper = new Graphic::PhotonMapper( 4, 100 );
 }
@@ -36,6 +38,7 @@ Menu::~Menu()
 {
 	delete m_vertexBuffer;
 	delete m_photonMapper;
+	delete m_mapTexture;
 	delete map;
 }
 
@@ -60,15 +63,25 @@ void Menu::Scroll(int _delta)
 void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _renderTargets,
 				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 {
+	//_time *= 0;
+	// Fill relevant constants
+	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
+//	_ShaderConstants->setTime(float(_time));
+	//_ShaderConstants->upload();
+	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
+	_ShaderConstants->setMaterial(0, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
+	_ShaderConstants->setMaterial(0, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
+
+	m_mapTexture->SetAsTexture(0);
+	m_photonMapper->CreateLightMap( m_vertexBuffer, _time, _renderTargets, _shaders, _ShaderConstants );
+
+	// Draw light map to framebuffer
 	_renderTargets.BackBuffer->SetAsTarget();
 	_renderTargets.BackBuffer->Clear( CLEAR_COLOR );
 
-	//_time *= 0;
-	// Fill relevant constants
-//	_ShaderConstants->setTime(float(_time));
-	//_ShaderConstants->upload();
-
-	m_photonMapper->CreateLightMap( m_vertexBuffer, _time, _renderTargets, _shaders, _ShaderConstants );
+	_ShaderConstants->setLightScale(-0.5f);	// Tone mapper
+	_ShaderConstants->upload();
+	Graphic::Device::Window->drawScreenQuad();
 
 	Graphic::Device::Window->Present();
 }

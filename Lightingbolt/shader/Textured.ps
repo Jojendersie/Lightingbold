@@ -1,0 +1,12 @@
+#include "Common.hlsl"
+
+Texture2D g_lightTexture : register(t1);
+SamplerState g_pointSampler : register(s0);
+
+float4 main(PSInput _in) : SV_TARGET
+{
+	float2 coord = _in.TexCoord;
+	coord.y = -coord.y;
+	float light = g_lightTexture.Sample(g_pointSampler, coord*0.5+0.5).x;
+	return (c_lightScale < 0) ? -log(1+light)*c_lightScale : light * c_lightScale;
+}

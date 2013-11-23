@@ -38,10 +38,11 @@ namespace Graphic {
 		Device::Context->Unmap( m_buffer, 0 );
 	}
 
-	void UniformBuffer::setMaterial( int _index, float _refraction )
+	void UniformBuffer::setMaterial( int _index, float _refraction, const Math::Vec3& _color )
 	{
 		Assert( 0<=_index && _index<8 );
 		m_storage.Materials[_index].Refraction = _refraction;
+		m_storage.Materials[_index].Color = _color;
 	}
 
 } // namespace Graphic

@@ -5,7 +5,7 @@ void main( point Vertex _in[1], inout PointStream<PhotonOut> _out )
 {
 	PhotonOut vertexOut;
 	vertexOut.Position.z = 0.5; vertexOut.Position.w = 1;
-	vertexOut.Energy = 1.0;
+	vertexOut.Energy.xy = float2(10.0,0.0);
 	vertexOut.Position.xy = _in[0].Position;
 	for( int i=0; i<100; ++i )
 	{

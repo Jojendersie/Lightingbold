@@ -16,6 +16,8 @@ namespace Graphic {
 
 		~PhotonMapper();
 
+		/// \brief Simulate the photons.
+		/// \details At the end the light map is set as texture 1.
 		void CreateLightMap(Graphic::VertexBuffer* _individuals, double _time,
 			Graphic::RenderTargetList& _renderTargets,
 			Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants);
@@ -24,6 +26,8 @@ namespace Graphic {
 		int m_simSteps;
 
 		Graphic::FeedBackBuffer* m_photons;
+		Graphic::RenderTarget* m_photonMap[2];
+		int m_targetMap;
 	};
 
 } // namespace Graphic

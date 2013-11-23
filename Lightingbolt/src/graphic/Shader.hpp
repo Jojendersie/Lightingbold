@@ -69,6 +69,7 @@ namespace Graphic {
 
 		Shader* PSBlob;				///< Draw a shaped object.
 		Shader* PSPhoton;			///< Draw a point with some energy
+		Shader* PSTexture;			///< Sample a texture
 
 		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr)	{}
 		~ShaderList()
@@ -80,6 +81,7 @@ namespace Graphic {
 			delete GSSimulate;
 			delete PSBlob;
 			delete PSPhoton;
+			delete PSTexture;
 		}
 	};
 

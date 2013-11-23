@@ -25,8 +25,12 @@ namespace Graphic {
 		/// \brief Create all state objects required for the application
 		void CreateStates();
 		ID3D11DepthStencilState* m_depthStencilState;	///< No Z-Test
-		ID3D11BlendState* m_blendState;					///< Standard alpha blending
+		ID3D11BlendState* m_blendStateAlpha;			///< Standard alpha blending
+		ID3D11BlendState* m_blendStateAdd;				///< Pure additive blending
 		ID3D11RasterizerState* m_rasterState;			///< Solid fill mode no culling
+		ID3D11SamplerState* m_pointSampler;				///< Point sampler with clamp
+
+		Graphic::VertexBuffer* m_screenQuad;			///< One vertex buffer to render screen aligned quads.
 	public:
 		DX11Window( int _width, int _height, bool _fullScreen );
 		~DX11Window();
@@ -47,13 +51,14 @@ namespace Graphic {
 
 		void Present() const;
 
-		/// \brief Create a static (immutable) vertex or indexbuffer.
-		/// \param [in] _size Size of the bufferdata in bytes.
-		/// \param [in] _data Memory with the data. After the creation the
-		///		data inside the created buffer cannot be changed so _data
-		///		should contain the final result.
-		/// \param [in] _bindFlag D3D11_BIND_VERTEX_BUFFER or D3D11_BIND_INDEX_BUFFER
-		ID3D11Buffer* CreateStaticStdBuffer( unsigned _size, const void* _data, unsigned _bindFlag ) const;
+		enum struct BLEND_MODES
+		{
+			ALPHA,
+			ADDITIVE
+		};
+		void setBlendMode( BLEND_MODES _mode );
+
+		void drawScreenQuad();
 	};
 
 } // namespace Graphic

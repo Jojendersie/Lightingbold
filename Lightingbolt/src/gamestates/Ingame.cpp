@@ -14,7 +14,7 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
-	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 3);
+	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
 	/** Test **/
 	map = new Map::Map(1024,768);
 	map->addEnemy(Math::Vec2(0),0.3);
@@ -34,7 +34,7 @@ Ingame::~Ingame()
 
 void Ingame::MouseMove(int _dx, int _dy)
 {
-	map->getEnemy(0)->setGoal(Math::Vec2(_dx/1024,-_dy/768));
+	map->getPlayer()->setGoal(Math::Vec2((float)_dx/(1024.0f/2.0f),(float)-_dy/(768.0f/2.0f)));
 }
 
 void Ingame::KeyDown(int _key)
@@ -63,7 +63,7 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 	m_vertexBuffer->set();
 
-	Graphic::Device::Context->Draw( 3, 0 );
+	Graphic::Device::Context->Draw( map->getNumberOfObjects()+1, 0 );
 
 	Graphic::Device::Window->Present();
 }
@@ -72,7 +72,7 @@ void Ingame::Update( double _time, double _deltaTime )
 {
 	map->Update();
 	int number = map->getNumberOfObjects(); //TODO: vertices
-	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
+	Graphic::Vertex *vertexes= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){
 		//vertexes[i].Position.x = i*0.25f;
 		//vertexes[i].Size = 0.25;
@@ -81,7 +81,13 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}
-	m_vertexBuffer->upload(vertexes, number);
+
+	vertexes[number].Position.x = ((map->getPlayer()->getPosition().x));
+	vertexes[number].Position.y = ((map->getPlayer()->getPosition().y));
+	vertexes[number].Size = map->getPlayer()->getRadius();
+	vertexes[number].Rotation.y = 1.0;
+
+	m_vertexBuffer->upload(vertexes, number+1);
 	delete[] vertexes;
 }
 

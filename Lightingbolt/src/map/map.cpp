@@ -15,13 +15,15 @@ namespace Map
 		m_densityMap = new float[_width*_height];
 		
 		m_player = new Ai::GameObject(this);
+		m_player->setPosition(Math::Vec2(0.0,0.0));
+		m_player->setRadius(0.1f);
 		InitMap();
 	}
 
 	Map::~Map()
 	{
-		free(m_densityMap);
-		free(m_player);
+		delete m_densityMap;
+		delete m_player;
 	}
 
 	void Map::InitMap()

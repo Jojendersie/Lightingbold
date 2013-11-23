@@ -74,6 +74,9 @@
     <ClCompile Include="src\graphic\TransfromFeedbackBuffer.cpp">
       <Filter>Source Files\graphic</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\VertexBuffer.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="src\ai\Enemy.hpp">
       <Filter>Source Files\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\VertexBuffer.hpp">
+      <Filter>Source Files\graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

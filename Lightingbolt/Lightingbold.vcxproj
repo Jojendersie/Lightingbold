@@ -21,6 +21,7 @@
     <ClCompile Include="src\graphic\TransfromFeedbackBuffer.cpp" />
     <ClCompile Include="src\graphic\UniformBuffer.cpp" />
     <ClCompile Include="src\graphic\Vertex.cpp" />
+    <ClCompile Include="src\graphic\VertexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map\map.cpp" />
     <ClCompile Include="src\sound\sound.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\graphic\TransformFeedbackBuffer.hpp" />
     <ClInclude Include="src\graphic\UniformBuffer.hpp" />
     <ClInclude Include="src\graphic\Vertex.hpp" />
+    <ClInclude Include="src\graphic\VertexBuffer.hpp" />
     <ClInclude Include="src\map\map.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\vec2.hpp" />

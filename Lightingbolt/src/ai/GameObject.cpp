@@ -17,7 +17,7 @@ namespace Ai
 	GameObject::GameObject(Map::Map* _map) : m_map(_map)
 	{
 		m_direction = Math::Vec2(0);
-		m_energy = 0.5f;
+		//m_energy = 0.5f;
 		m_goal = Math::Vec2(0);
 		m_position = Math::Vec2(0);
 		m_radius = 0;
@@ -60,7 +60,7 @@ namespace Ai
 
 	float GameObject::getRadius()
 	{
-		return m_radius;
+		return m_energy;
 	}
 
 	float GameObject::getEnergy()

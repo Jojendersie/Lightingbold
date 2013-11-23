@@ -16,6 +16,7 @@
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
 #include "graphic/Vertex.hpp"
+#include "generator\Random.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -28,6 +29,7 @@ void ReloadShaders();
 GameStates::Menu* g_StateMenu;
 GameStates::Ingame* g_StateIngame;
 GameStates::IGameState* g_State;
+Generators::Random* g_rand;
 Graphic::RenderTargetList* g_RenderTargets;
 Graphic::ShaderList* g_ShaderList;
 void MouseMove(int _dx, int _dy)	{ g_State->MouseMove(_dx,_dy); }
@@ -47,6 +49,7 @@ int main()
 
 	// *** INITIALIZATION ************************************************** //
 	Graphic::DX11Window* window = new Graphic::DX11Window( 1024, 768, false );
+	g_rand = new Generators::Random(0);
 	g_StateMenu = new GameStates::Menu;
 	g_StateIngame = new GameStates::Ingame;
 	g_State = g_StateMenu;

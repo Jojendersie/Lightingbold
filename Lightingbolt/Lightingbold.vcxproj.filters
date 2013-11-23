@@ -115,6 +115,9 @@
     <ClInclude Include="src\gamestates\GameState.hpp">
       <Filter>Source Files\gamestates</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\Circle.hpp">
+      <Filter>Source Files\math</Filter>
+    </ClInclude>
     <ClInclude Include="src\graphic\RenderTarget.hpp">
       <Filter>Source Files\graphic</Filter>
     </ClInclude>

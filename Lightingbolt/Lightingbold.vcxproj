@@ -41,6 +41,7 @@
     <ClInclude Include="src\graphic\Vertex.hpp" />
     <ClInclude Include="src\graphic\VertexBuffer.hpp" />
     <ClInclude Include="src\map\map.hpp" />
+    <ClInclude Include="src\math\Circle.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\vec2.hpp" />
     <ClInclude Include="src\math\vec3.hpp" />

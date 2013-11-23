@@ -9,6 +9,11 @@
 
 namespace GameStates {
 
+Ingame::Ingame(int _numberOfEnemys) 
+{
+	//m_vertexBuffer = Graphic::Device::Window->CreateStaticStdBuffer(3,&a,0);
+}
+
 void Ingame::MouseMove(int _dx, int _dy)
 {
 }
@@ -43,6 +48,7 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
+	Graphic::Device::Window->
 }
 
 } // namespace GameStates

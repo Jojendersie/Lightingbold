@@ -6,6 +6,9 @@ namespace GameStates {
 
 	class Ingame: public IGameState
 	{
+	public:
+		Ingame();
+		Ingame(int _numberOfEnemys);
 		virtual void MouseMove(int _dx, int _dy) override;
 		virtual void KeyDown(int _key) override;
 		virtual void KeyUp(int _key) override;
@@ -16,6 +19,8 @@ namespace GameStates {
 			Graphic::ShaderList& _shaders ) override;
 
 		virtual void Update( double _time, double _deltaTime ) override;
+	private:
+		ID3D11Buffer* m_vertexBuffer;
 	};
 
 } // namespace GameStates

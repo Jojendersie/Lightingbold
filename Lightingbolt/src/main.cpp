@@ -1,10 +1,14 @@
 
-#include <ctime>
+#include "predecl.hpp"
+#include "gamestates/menu.hpp"
+#include "graphic/device.hpp"
+#include "graphic/RenderTarget.hpp"
+#include "graphic/Shader.hpp"
 
-#include "math/vec3.hpp"
-#include "soundtest/note.hpp"
+//Sound
 #include "sound/sounddevice.hpp"
-#include "sound/sound.hpp"
+#include "soundtest/note.hpp"
+#include "soundtest/melody.hpp"
 
 
 #include "predecl.hpp"
@@ -41,6 +45,40 @@ void Scroll(int _delta)				{ g_State->Scroll(_delta); }
 
 int main()
 {
+	Sound::Device &device=Sound::Device::UseOpenAL();
+	vector<float> note=Soundtest::Note::getSine(261.63f);
+	string soundBuffer;
+	for(int i=0; i<note.size(); i++)
+	{
+		soundBuffer+=Soundtest::Note::toChar(note[i]);
+	}
+	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
+
+	vector<float> note2=Soundtest::Note::getSine(261.63f);
+	string soundBuffer2;
+	for(int i=0; i<note2.size(); i++)
+	{
+		soundBuffer2+=Soundtest::Note::toChar(note2[i]);
+	}
+	Sound::Sound sound2(soundBuffer2.c_str(), soundBuffer2.size());
+
+	vector<int> notes;
+	notes.push_back(0);
+	notes.push_back(2);
+	notes.push_back(4);
+	notes.push_back(5);
+	notes.push_back(7);
+
+	vector<int> notes2;
+	notes2.push_back(7);
+	notes2.push_back(5);
+	notes2.push_back(4);
+	notes2.push_back(2);
+	notes2.push_back(0);
+
+	Soundtest::Melody melody(sound, 120, notes);
+	Soundtest::Melody melody2(sound2, 120, notes2);
+
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -93,6 +131,9 @@ int main()
 #endif
 				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList, g_ShaderConstants);
 				g_State->Update(dTime, dDeltaTime);
+
+				melody.update(dDeltaTime);
+				melody2.update(dDeltaTime);
 			}
         }
     }

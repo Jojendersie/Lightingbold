@@ -2,12 +2,49 @@
 
 namespace Soundtest
 {
-	vector<float> Note::getNote(float frequency, int length)
+	vector<float> Note::getSine(float frequency, int length)
 	{
+		float pi=3.141592653;
+		float tt=20000.0f;
+
 		vector<float> res;
-		for (int i=0; i<length; i++)
+		for (int x=0; x<length; x++)
 		{
-			res.push_back(sin(i*6.283185307*(frequency)/20000.0));
+			res.push_back(sin(x*2.0f*pi*frequency/tt));
+		}
+		return res;
+	}
+
+	vector<float> Note::getSine(float frequency)
+	{
+		float pi=3.141592653;
+		float tt=20000.0f;
+
+		vector<float> res;
+		int length=tt/frequency;
+		for(int x=0; x<length; x++)
+		{
+			res.push_back(sin(x*2.0f*pi*frequency/tt));
+		}
+		return res;
+	}
+
+	vector<float> Note::getSquare(float frequency)
+	{
+		float tt=20000.0f;
+
+		vector<float> res;
+		int length=tt/frequency;
+		for(int x=0; x<length; x++)
+		{
+			if(x<length/2)
+			{
+				res.push_back(-1);
+			}
+			else
+			{
+				res.push_back(1);
+			}
 		}
 		return res;
 	}

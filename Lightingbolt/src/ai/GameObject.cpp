@@ -99,10 +99,30 @@ namespace Ai
 		//m_velocity *= 0.5;
 
 		m_direction *= 0.5;
-		
-		m_position += m_direction;
 
+		m_position += m_direction;
+		checkForBoundaries();
 		//m_position = Math::lerp(m_position,(m_goal/*targetDirection.length()*/), 0.005);
+	}
+
+	void GameObject::checkForBoundaries()
+	{
+		if (m_position.x > 1.0f)
+		{
+			m_position.x = 1;
+		}
+		if(m_position.y > 1.0f)
+		{
+			m_position.y = 1;
+		}
+		if (m_position.x < -1.0f)
+		{
+			m_position.x = -1;
+		}
+		if(m_position.y < -1.0f)
+		{
+			m_position.y = -1;
+		}
 	}
 
 	float GameObject::getShinyRadius()

@@ -9,6 +9,7 @@ namespace Ai {
 
 	class GameObject{
 	public:
+		GameObject(Map::Map* _map);
 		GameObject();
 		~GameObject();
 		const Math::Vec2& getPosition();
@@ -29,6 +30,7 @@ namespace Ai {
 		Math::Vec2 m_goal;
 		float m_radius;
 		float m_energy;
+		Map::Map* m_map;
 	};
 
 } // namespace gameObject

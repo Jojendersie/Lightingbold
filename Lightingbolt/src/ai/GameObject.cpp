@@ -3,11 +3,15 @@
 
 namespace Ai
 {
+	GameObject::GameObject()
+	{
+	}
+
 	GameObject::~GameObject()
 	{
 	}
 
-	GameObject::GameObject()
+	GameObject::GameObject(Map::Map* _map) : m_map(_map)
 	{
 		m_direction = Math::Vec2(0);
 		m_energy = 0;

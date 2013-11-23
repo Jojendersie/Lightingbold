@@ -14,7 +14,7 @@ namespace Map
 
 		m_densityMap = new float[_width*_height];
 		
-		m_player = new Ai::GameObject();
+		m_player = new Ai::GameObject(this);
 		InitMap();
 	}
 
@@ -79,7 +79,7 @@ namespace Map
 
 	void Map::addEnemy(const Math::Vec2& _position, float _radius)
 	{
-		m_objects.append(Ai::Enemy(_position, _radius));
+		m_objects.append(Ai::Enemy(_position, _radius,this));
 	}
 
 } // namespace Map

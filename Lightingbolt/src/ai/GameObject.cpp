@@ -1,5 +1,7 @@
 #include "GameObject.hpp"
 #include "../math/math.hpp"
+#include "../map/map.hpp"
+#include "Enemy.hpp"
 
 namespace Ai
 {
@@ -73,7 +75,8 @@ namespace Ai
 	void GameObject::update()
 	{
 		Math::Vec2 targetDirection = m_goal - m_position;
-		m_direction = targetDirection/targetDirection.length();// Math::lerp(m_direction,(targetDirection/targetDirection.length()), 1);
+
+		m_direction = /*targetDirection/targetDirection.length() * m_map->Density(m_position);*/ Math::lerp(m_direction,(targetDirection/targetDirection.length()), 1);
 
 		m_position += m_direction;
 	}

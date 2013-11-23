@@ -16,7 +16,7 @@ Ingame::Ingame()
 {
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 3);
 	/** Test **/
-	map = new Map::Map(512,512);
+	map = new Map::Map(1024,768);
 	map->addEnemy(Math::Vec2(0),0.3);
 	map->getEnemy(0)->setGoal(Math::Vec2(215,400));
 	map->addEnemy(Math::Vec2(215,400),0.7);

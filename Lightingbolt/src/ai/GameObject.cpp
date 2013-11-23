@@ -17,7 +17,7 @@ namespace Ai
 	GameObject::GameObject(Map::Map* _map) : m_map(_map)
 	{
 		m_direction = Math::Vec2(0);
-		m_energy = 0;
+		m_energy = 0.5f;
 		m_goal = Math::Vec2(0);
 		m_position = Math::Vec2(0);
 		m_radius = 0;
@@ -76,9 +76,15 @@ namespace Ai
 	void GameObject::update()
 	{
 		Math::Vec2 targetDirection = m_goal - m_position;
-
+		if(targetDirection.length() == 0)
+			return;
 		m_direction = /*targetDirection/targetDirection.length() * m_map->Density(m_position);*/ Math::lerp(m_direction,(targetDirection/targetDirection.length()), 1);
 
 		m_position += m_direction;
+	}
+
+	float GameObject::getShinyRadius()
+	{
+		return getRadius()*2;
 	}
 }

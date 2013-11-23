@@ -54,10 +54,10 @@ namespace Map
 		{
 			//int direction = 1;
 			m_objects[i]->update();
-			//Math::Vec2 newPos(m_objects[i]->getPosition());
-			//newPos.x = newPos.x + direction *(i%2? 5 : -5);
-			//newPos.y = newPos.y + direction *(i%2? -5 : 5);
-			//m_objects[i]->setPosition(newPos);
+			/*Math::Vec2 newPos(m_objects[i]->getPosition());
+			newPos.x = newPos.x + direction *(i%2? 0.005 : -0.005);
+			newPos.y = newPos.y + direction *(i%2? -0.005 : 0.005);
+			m_objects[i]->setPosition(newPos);*/
 		}
 		//m_objects
 	}

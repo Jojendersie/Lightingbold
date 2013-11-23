@@ -18,11 +18,11 @@ Ingame::Ingame()
 	/** Test **/
 	map = new Map::Map(1024,768);
 	map->addEnemy(Math::Vec2(0),0.3);
-	map->getEnemy(0)->setGoal(Math::Vec2(215,400));
-	map->addEnemy(Math::Vec2(215,400),0.7);
-	map->getEnemy(1)->setGoal(Math::Vec2(2,40));
-	map->addEnemy(Math::Vec2(400,30),0.5);
-	map->getEnemy(2)->setGoal(Math::Vec2(500,10));
+	map->getEnemy(0)->setGoal(Math::Vec2(0));
+	map->addEnemy(Math::Vec2(0),0.7);
+	map->getEnemy(1)->setGoal(Math::Vec2(0));
+	map->addEnemy(Math::Vec2(0),0.5);
+	map->getEnemy(2)->setGoal(Math::Vec2(0));
 	/**********/
 }
 
@@ -76,8 +76,8 @@ void Ingame::Update( double _time, double _deltaTime )
 	for(int i = 0;i<number;i++){
 		//vertexes[i].Position.x = i*0.25f;
 		//vertexes[i].Size = 0.25;
-		vertexes[i].Position.x = ((map->getEnemy(i)->getPosition().x)/1024) * 2;
-		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y)/768) * 2;
+		vertexes[i].Position.x = ((map->getEnemy(i)->getPosition().x));
+		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}

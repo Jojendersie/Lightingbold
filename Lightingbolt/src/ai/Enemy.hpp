@@ -11,6 +11,8 @@ namespace Ai
 		Enemy();
 		Enemy(const Math::Vec2& _position, float _radius,Map::Map* _map);
 		~Enemy();
+		void think();
+		virtual void update();
 	private:
 	};
 }

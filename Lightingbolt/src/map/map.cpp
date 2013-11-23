@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "../math/math.hpp"
 #include "../ai/GameObject.hpp"
+#include "../ai/Enemy.hpp"
 #include <cmath>
 
 namespace Map
@@ -47,6 +48,10 @@ namespace Map
 		m_player->update();
 
 		// update all other objects
+		for(int i=0;i<m_objects.size();++i)
+		{
+			m_objects[i]->update();
+		}
 		//m_objects
 	}
 
@@ -65,6 +70,11 @@ namespace Map
 	float Map::Density( const Math::Vec2& _position)
 	{
 		return m_densityMap[m_width*(int)_position.y+(int)_position.x];
+	}
+
+	void Map::addEnemy(const Math::Vec2& _position, float _radius)
+	{
+		m_objects.append(Ai::Enemy(_position, _radius));
 	}
 
 } // namespace Map

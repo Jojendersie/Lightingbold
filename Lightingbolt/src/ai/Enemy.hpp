@@ -5,7 +5,7 @@
 
 namespace Ai
 {
-	class Enemy : GameObject
+	class Enemy : public GameObject
 	{
 	public:
 		Enemy();

@@ -6,16 +6,28 @@
 #include "../graphic/Shader.hpp"
 #include "../graphic/Vertex.hpp"
 #include "../graphic/device.hpp"
+#include "../map/map.hpp"
+#include "../ai/Enemy.hpp"
 
 namespace GameStates {
 
 Ingame::Ingame() 
 {
+	/** Test **/
+	map = new Map::Map(512,512);
+	map->addEnemy(Math::Vec2(0),0.3);
+	map->addEnemy(Math::Vec2(215,400),0.7);
+	map->addEnemy(Math::Vec2(400,30),0.5);
+	/**********/
 	int number = 3; //TODO: vertices
 	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
 	for(int i = 0;i<number;i++){
-		vertexes[i].Position.x = i*0.25f;
+		/*vertexes[i].Position.x = i*0.25f;
 		vertexes[i].Size = 0.25;
+		vertexes[i].Rotation.y = 1.0;*/
+		vertexes[i].Position.x = (map->getEnemy(i)->getPosition().x -256)/512;
+		vertexes[i].Position.y = (map->getEnemy(i)->getPosition().y -256)/512;
+		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}
 	m_vertexBuffer = Graphic::Device::Window->CreateStaticStdBuffer(number*sizeof(Graphic::Vertex),vertexes,D3D11_BIND_VERTEX_BUFFER);

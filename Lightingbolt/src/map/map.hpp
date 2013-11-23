@@ -27,6 +27,11 @@ namespace Map {
 
 		/// \brief Updates the map
 		void Update();
+
+		void addEnemy(const Math::Vec2& _position, float _radius);
+
+		int getNumberOfObjects() {return m_objects.size(); }
+		Ai::Enemy* getEnemy(int _idx) {return m_objects[_idx]; }
 	private:
 		int m_height;
 		int m_width;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../predecl.hpp"
+#include "../math/math.hpp"
 
 using namespace Math;
 
@@ -23,9 +24,9 @@ namespace Ai {
 		float getKineticEnegy();
 		void update();
 	private:
-		Math::Vec2 *m_position;
-		Math::Vec2 *m_direction;
-		Math::Vec2 *m_goal;
+		Math::Vec2 m_position;
+		Math::Vec2 m_direction;
+		Math::Vec2 m_goal;
 		float m_radius;
 		float m_energy;
 	};

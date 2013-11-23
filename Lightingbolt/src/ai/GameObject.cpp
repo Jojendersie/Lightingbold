@@ -5,22 +5,19 @@ namespace Ai
 {
 	GameObject::~GameObject()
 	{
-		free(m_direction);
-		free(m_goal);
-		free(m_position);
 	}
 
 	GameObject::GameObject()
 	{
-		m_direction = new Math::Vec2(0);
+		m_direction = Math::Vec2(0);
 		m_energy = 0;
-		m_goal = new Math::Vec2(0);
-		m_position = new Math::Vec2(0);
+		m_goal = Math::Vec2(0);
+		m_position = Math::Vec2(0);
 		m_radius = 0;
 	}
 
 	void GameObject::setDirection(const Math::Vec2& _newDirection){
-		m_direction = new Math::Vec2(_newDirection);
+		m_direction = Math::Vec2(_newDirection);
 	}
 
 	void GameObject::setEnergy(float _newEnergy){
@@ -28,11 +25,11 @@ namespace Ai
 	}
 
 	void GameObject::setGoal(const Math::Vec2& _newGoal){
-		m_goal = new Math::Vec2(_newGoal);
+		m_goal = Math::Vec2(_newGoal);
 	}
 
 	void GameObject::setPosition(const Math::Vec2& _newPosition){
-		m_position = new Math::Vec2(_newPosition);
+		m_position = Math::Vec2(_newPosition);
 	}
 
 	void GameObject::setRadius(float _newRadius){
@@ -41,7 +38,7 @@ namespace Ai
 
 	const Math::Vec2& GameObject::getPosition()
 	{
-		return *m_position;
+		return m_position;
 	}
 
 	const Math::Vec2& GameObject::getDiretion()

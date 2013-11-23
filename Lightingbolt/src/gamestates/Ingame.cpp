@@ -21,19 +21,6 @@ Ingame::Ingame()
 	map->addEnemy(Math::Vec2(215,400),0.7);
 	map->addEnemy(Math::Vec2(400,30),0.5);
 	/**********/
-	int number = 3; //TODO: vertices
-	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
-	for(int i = 0;i<number;i++){
-		/*vertexes[i].Position.x = i*0.25f;
-		vertexes[i].Size = 0.25;
-		vertexes[i].Rotation.y = 1.0;*/
-		vertexes[i].Position.x = (map->getEnemy(i)->getPosition().x -256)/512;
-		vertexes[i].Position.y = (map->getEnemy(i)->getPosition().y -256)/512;
-		vertexes[i].Size = map->getEnemy(i)->getRadius();
-		vertexes[i].Rotation.y = 1.0;
-	}
-
-	delete[] vertexes;
 }
 
 Ingame::~Ingame()
@@ -78,11 +65,15 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
-	int number = 3; //TODO: vertices
+	map->Update();
+	int number = map->getNumberOfObjects(); //TODO: vertices
 	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
 	for(int i = 0;i<number;i++){
-		vertexes[i].Position.x = i*0.25f;
-		vertexes[i].Size = 0.25;
+		//vertexes[i].Position.x = i*0.25f;
+		//vertexes[i].Size = 0.25;
+		vertexes[i].Position.x = (map->getEnemy(i)->getPosition().x -256)/512;
+		vertexes[i].Position.y = (map->getEnemy(i)->getPosition().y -256)/512;
+		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}
 	m_vertexBuffer->upload(vertexes, number);

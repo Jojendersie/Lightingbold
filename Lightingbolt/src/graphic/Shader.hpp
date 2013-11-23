@@ -18,7 +18,11 @@ namespace Graphic {
 		/// \param [in] _fileName A persistent string with the file name.
 		///		This reference is used in the update (DynamicReload()).
 		/// \param [in] _type Which shader type is in the file.
-		Shader( const wchar_t* _fileName, Type _type );
+		/// \param [in] _outLayout Optional for geometry shaders which should
+		///		be used with transform feedback.
+		/// \param [in] _layoutSize Size of the layout descriptor 
+		Shader( const wchar_t* _fileName, Type _type,
+			D3D11_SO_DECLARATION_ENTRY* _outLayout = nullptr, int _layoutSize = 0);
 
 		~Shader();
 
@@ -36,7 +40,9 @@ namespace Graphic {
 		time_t m_lastModified;
 #endif
 
-		void Load();			///< Loads the file m_fileName with m_type
+		/// \brief Loads the file m_fileName with m_type
+		/// \see Shader::Shader();
+		void Load(D3D11_SO_DECLARATION_ENTRY* _outLayout = nullptr, int _layoutSize = 0);
 
 		/// This is exactly one type of shader
 		ID3DBlob* m_shader;
@@ -47,6 +53,7 @@ namespace Graphic {
 		};
 
 		friend struct Vertex;
+		friend struct PhotonVertex;
 	};
 
 	/// \brief A list of all shaders to be passed between game states.

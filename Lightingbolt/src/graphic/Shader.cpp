@@ -11,7 +11,8 @@
 #endif
 
 namespace Graphic {
-	Shader::Shader( const wchar_t* _fileName, Type _type ) :
+	Shader::Shader( const wchar_t* _fileName, Type _type,
+			D3D11_SO_DECLARATION_ENTRY* _outLayout, int _layoutSize ) :
 		m_fileName(_fileName),
 		m_type(_type),
 		m_shader(nullptr),
@@ -29,8 +30,10 @@ namespace Graphic {
 		m_vertexShader = nullptr;
 	}
 
-	void Shader::Load()
+	void Shader::Load(D3D11_SO_DECLARATION_ENTRY* _outLayout, int _layoutSize)
 	{
+		HRESULT hr;
+
 #ifdef DYNAMIC_SHADER_RELOAD
 		// Unload if there was one before
 		this->~Shader();
@@ -55,9 +58,10 @@ namespace Graphic {
 		}
 
 		ID3DBlob* errorBlob = nullptr;
-		HRESULT hr = D3DCompileFromFile( m_fileName, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
-										 "main", profile,
-										 flags, 0, &m_shader, &errorBlob );
+		hr = D3DCompileFromFile( m_fileName, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
+								 "main", profile,
+								 flags, 0, &m_shader, &errorBlob );
+
 		if(FAILED(hr))
 		{
 #ifdef DYNAMIC_SHADER_RELOAD
@@ -76,7 +80,14 @@ namespace Graphic {
 			switch( m_type )
 			{
 			case Type::VERTEX: hr = Device::Device->CreateVertexShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_vertexShader ); break;
-			case Type::GEOMETRY: hr = Device::Device->CreateGeometryShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_geometryShader ); break;
+			case Type::GEOMETRY:
+				if( _outLayout )
+				{
+					Device::Device->CreateGeometryShaderWithStreamOutput( m_shader->GetBufferPointer(), m_shader->GetBufferSize(),
+						_outLayout, _layoutSize, nullptr, 0, 0, nullptr, &m_geometryShader );
+				} else
+					hr = Device::Device->CreateGeometryShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_geometryShader );
+				break;
 			case Type::PIXEL: hr = Device::Device->CreatePixelShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_pixelShader ); break;
 			} 
 

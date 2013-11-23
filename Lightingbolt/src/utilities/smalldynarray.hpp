@@ -28,12 +28,10 @@ namespace Utilities
 		uint m_size;
 		T* m_data;
 
-		void Reallocate();
-        void Reallocate(int _newSize);
 	public:
-		uint GetNum() const	{ return m_uiNumObjects; }
+		uint GetNum() const	{ return m_size; }
 
-		DynArray() : m_uiNumObjects(0), A(nullptr)	{}
+		DynArray() : m_size(0), m_data(nullptr)	{}
 
 		~DynArray()	{ free( m_data ); }
 
@@ -45,12 +43,12 @@ namespace Utilities
 		{
 			// Bad special case - array is empty only the first time. Could be solved
 			// with an empty default entry.
-			if( m_uiNumObjects == 0 )
+			if( m_size == 0 )
 			{
 				m_data = (T*)malloc( sizeof(T*) );
 			} else if( IsPotOf2( m_uiNumObjects ) )
 			{
-				m_data = (T*)realloc( m_data, m_uiNumObjects*2*sizeof(T*) );
+				m_data = (T*)realloc( m_data, m_size*2*sizeof(T*) );
 			}
 
 			// Array size is now large enough. Simple append the new element.
@@ -59,10 +57,15 @@ namespace Utilities
 
 		void Remove( uint _Idx )
 		{
-			Assert( _Idx < m_uiNumObjects );
-			m_data[_Idx] = m_data[--m_uiNumObjects];
+			Assert( _Idx < m_size );
+			m_data[_Idx] = m_data[--m_size];
 			// Reallocation occurs only in Add. Space is still allocated, but
 			// traversing over the array is now one element shorter.
+		}
+
+		T* operator [](int _idx)
+		{
+			return m_data[_idx];
 		}
 	};
 };

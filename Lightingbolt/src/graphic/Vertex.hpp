@@ -25,4 +25,22 @@ namespace Graphic {
 		static void SetLayout();
 	};
 
+	struct PhotonVertex
+	{
+		Math::Vec2 Position;	///< Screen space position
+		Math::Vec2 Direction;	///< Normalized direction in the plane
+		float Energy;			///< h*f ^^
+
+		/// \brief Create the vertex input and output layout for this vertex.
+		///		Call this oneth after a device was created.
+		/// \details At the end call ReleaseLayouts() before device destructoin.
+		static void InitLayouts(Shader* _shader);
+
+		/// \brief Delete the one vertex layout.
+		static void ReleaseLayouts();
+
+		/// \brief Set the vertex layout created by InitLayout().
+		static void SetLayouts();
+	};
+
 } // namespace Graphic

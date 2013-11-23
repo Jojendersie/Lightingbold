@@ -15,6 +15,8 @@ namespace Map
 		m_densityMap = new float[_width*_height];
 		
 		m_player = new Ai::GameObject(this);
+		m_player->setPosition(Math::Vec2(200,200));
+		m_player->setRadius(0.1f);
 		InitMap();
 	}
 

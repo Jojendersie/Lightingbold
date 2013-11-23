@@ -30,8 +30,11 @@ namespace Map {
 
 		void addEnemy(const Math::Vec2& _position, float _radius);
 
+		/// \brief all objects without the player
 		int getNumberOfObjects() {return m_objects.size(); }
 		Ai::Enemy* getEnemy(int _idx) {return m_objects[_idx]; }
+
+		Ai::GameObject* getPlayer() {return m_player;}
 	private:
 		int m_height;
 		int m_width;

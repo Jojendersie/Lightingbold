@@ -53,11 +53,13 @@ namespace Map {
 } // namespace Map
 
 namespace Utilities {
+	template <class T> 
 	class DynArray;
 } // namespace Utilities
 
 namespace Ai {
 	class GameObject;
+	class Enemy;
 } // namespace Ai
 
 namespace GameStates {

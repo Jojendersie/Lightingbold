@@ -21,7 +21,6 @@ namespace Map
 	{
 		free(m_densityMap);
 		free(m_player);
-		free(m_objects);
 	}
 
 	void Map::InitMap()

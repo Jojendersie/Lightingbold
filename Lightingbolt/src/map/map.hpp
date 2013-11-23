@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../predecl.hpp"
+#include "../utilities/smalldynarray.hpp"
 
 namespace Map {
 
@@ -30,7 +31,7 @@ namespace Map {
 		int m_height;
 		int m_width;
 		float *m_densityMap;
-		Utilities::DynArray *m_objects;
+		Utilities::DynArray<Ai::Enemy> m_objects;
 		Ai::GameObject* m_player;
 
 		// initialization

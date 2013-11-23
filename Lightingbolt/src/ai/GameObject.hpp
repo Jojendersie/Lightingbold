@@ -10,11 +10,11 @@ namespace Ai {
 	public:
 		GameObject();
 		~GameObject();
-		Math::Vec2 getPosition();
+		const Math::Vec2& getPosition();
 		void setPosition(const Math::Vec2& _newPosition);
-		Math::Vec2 getDiretion();
+		const Math::Vec2& getDiretion();
 		void setDirection(const Math::Vec2& _newDirection);
-		Math::Vec2 getGoal();
+		const Math::Vec2& getGoal();
 		void setGoal(const Math::Vec2& _newGoal);
 		float getRadius();
 		void setRadius(float _newRadius);

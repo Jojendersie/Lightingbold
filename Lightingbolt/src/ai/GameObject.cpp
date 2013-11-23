@@ -39,24 +39,24 @@ namespace Ai
 		m_radius = _newRadius;
 	}
 
-	Math::Vec2 GameObject::getPosition()
+	const Math::Vec2& GameObject::getPosition()
+	{
+		return *m_position;
+	}
+
+	const Math::Vec2& GameObject::getDiretion()
 	{
 		return Vec2(0);
 	}
 
-	Math::Vec2 GameObject::getDiretion()
-	{
-		return Vec2(0);
-	}
-
-	Math::Vec2 GameObject::getGoal()
+	const Math::Vec2& GameObject::getGoal()
 	{
 		return Vec2(0);
 	}
 
 	float GameObject::getRadius()
 	{
-		return 0;
+		return m_radius;
 	}
 
 	float GameObject::getEnergy()

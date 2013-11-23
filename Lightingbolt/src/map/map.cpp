@@ -20,8 +20,8 @@ namespace Map
 
 	Map::~Map()
 	{
-		free(m_densityMap);
-		free(m_player);
+		delete m_densityMap;
+		delete m_player;
 	}
 
 	void Map::InitMap()

@@ -29,6 +29,7 @@ namespace Graphic {
 	struct Vertex;
 	struct ShaderList;
 	class VertexBuffer;
+	class FeedBackBuffer;
 
 	namespace Device {
 		extern ID3D11Device* Device;

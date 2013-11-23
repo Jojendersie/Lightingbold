@@ -97,6 +97,7 @@ int main()
 	delete g_ShaderList;
 	delete g_StateMenu;
 	Graphic::Vertex::ReleaseLayout();
+	Graphic::PhotonVertex::releaseLayout();
 	delete g_StateIngame;
 	delete window;
 	return 0;
@@ -130,22 +131,31 @@ void CreateShaders()
 
 	g_ShaderList->VSPassThrough = new Graphic::Shader(  L"shader/Quad.vs", Graphic::Shader::Type::VERTEX );
 	Graphic::Vertex::InitLayout( g_ShaderList->VSPassThrough );
+	g_ShaderList->VSPassPhoton = new Graphic::Shader(  L"shader/PassPhoton.vs", Graphic::Shader::Type::VERTEX );
+	Graphic::PhotonVertex::initLayout( g_ShaderList->VSPassPhoton );
 
 	g_ShaderList->GSQuad = new Graphic::Shader(  L"shader/Quad.gs", Graphic::Shader::Type::GEOMETRY );
-	g_ShaderList->GSSimulate = new Graphic::Shader(  L"shader/SimShader.gs", Graphic::Shader::Type::GEOMETRY );
+	g_ShaderList->GSInitPhotons = new Graphic::Shader(  L"shader/InitPhotons.gs", Graphic::Shader::Type::GEOMETRY,
+		Graphic::PhotonVertex::getOutputLayoutDesc(), Graphic::PhotonVertex::getOutputLayoutNum() );
+	g_ShaderList->GSSimulate = new Graphic::Shader(  L"shader/SimPhotons.gs", Graphic::Shader::Type::GEOMETRY,
+		Graphic::PhotonVertex::getOutputLayoutDesc(), Graphic::PhotonVertex::getOutputLayoutNum() );
 
 	g_ShaderList->PSBlob = new Graphic::Shader(  L"shader/Blob.ps", Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSPhoton = new Graphic::Shader(  L"shader/Photon.ps", Graphic::Shader::Type::PIXEL );
 }
 
 #ifdef DYNAMIC_SHADER_RELOAD
 void ReloadShaders()
 {
-	g_ShaderList->VSPassThrough->DynamicReload();
+	g_ShaderList->VSPassThrough->dynamicReload();
+	g_ShaderList->VSPassPhoton->dynamicReload();
 
-	g_ShaderList->GSQuad->DynamicReload();
-	g_ShaderList->GSSimulate->DynamicReload();
+	g_ShaderList->GSQuad->dynamicReload();
+	g_ShaderList->GSInitPhotons->dynamicReload();
+	g_ShaderList->GSSimulate->dynamicReload();
 
-	g_ShaderList->PSBlob->DynamicReload();
+	g_ShaderList->PSBlob->dynamicReload();
+	g_ShaderList->PSPhoton->dynamicReload();
 }
 #endif
 

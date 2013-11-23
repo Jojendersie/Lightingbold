@@ -1,0 +1,6 @@
+#include "Common.hlsl"
+
+float4 main(PhotonOut _in) : SV_TARGET
+{
+	return _in.Energy.xxxx;
+}

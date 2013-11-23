@@ -12,7 +12,7 @@ namespace Graphic {
 		{
 			sizeof(PhotonVertex) * 1000,
 			D3D11_USAGE_DEFAULT,
-			D3D11_BIND_STREAM_OUTPUT,
+			D3D11_BIND_STREAM_OUTPUT | D3D11_BIND_VERTEX_BUFFER,
 			0,
 			0,
 			0
@@ -22,11 +22,25 @@ namespace Graphic {
 		Device::Device->CreateBuffer( &bufferDesc, nullptr, &m_buffers[1] );
 	}
 
+	FeedBackBuffer::~FeedBackBuffer()
+	{
+		m_buffers[0]->Release();
+		m_buffers[1]->Release();
+	}
+
+	void FeedBackBuffer::enable()
+	{
+		uint offset = 0;
+		Device::Context->SOSetTargets( 1, &m_buffers[1-m_source], &offset );
+	}
+
 	void FeedBackBuffer::toggle()
 	{
 		m_source = 1-m_source;
 		uint offset = 0;
 		uint stride = sizeof(PhotonVertex);
+		// If one of the buffers is bound to the other stage it must be unbound before.
+		disable();
 		Device::Context->IASetVertexBuffers( 0, 1, &m_buffers[m_source], &stride, &offset );
 		Device::Context->SOSetTargets( 1, &m_buffers[1-m_source], &offset );
 	}

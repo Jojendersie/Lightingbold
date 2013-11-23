@@ -1,5 +1,6 @@
 #include "GameObject.hpp"
 #include "../math/math.hpp"
+#include <cstdlib>
 
 namespace Ai
 {

@@ -34,7 +34,7 @@ namespace Graphic {
 
 
 	// *** PHOTON VERTEX *************************************************** //
-	void PhotonVertex::InitLayouts(Shader* _shader)
+	void PhotonVertex::initLayout(Shader* _shader)
 	{
 		// Define the input layout
 		D3D11_INPUT_ELEMENT_DESC LayoutDesc[] =
@@ -49,14 +49,31 @@ namespace Graphic {
 		Assert( SUCCEEDED(hr) );
 	}
 
-	void PhotonVertex::ReleaseLayouts()
+	void PhotonVertex::releaseLayout()
 	{
 		g_PhotonVertexLayout->Release();
 	}
 
-	void PhotonVertex::SetLayouts()
+	void PhotonVertex::setLayout()
 	{
 		Device::Context->IASetInputLayout( g_PhotonVertexLayout );
+	}
+
+	D3D11_SO_DECLARATION_ENTRY* PhotonVertex::getOutputLayoutDesc()
+	{
+		static D3D11_SO_DECLARATION_ENTRY pDecl[] =
+		{
+			// stream, semantic name, semantic index, start component, component count, output slot
+			{ 0, "SV_POSITION", 0, 0, 2, 0 },   // output two components of position
+			{ 0, "TEXCOORD", 0, 0, 2, 0 },     // output the direction
+			{ 0, "TEXCOORD", 1, 0, 1, 0 },     // output the energy
+		};
+		return pDecl;
+	}
+
+	int PhotonVertex::getOutputLayoutNum()
+	{
+		return 3;
 	}
 
 } // namespace Graphic

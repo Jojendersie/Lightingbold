@@ -43,9 +43,9 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 	_renderTargets.BackBuffer->Clear( CLEAR_COLOR );
 
 	// Test
-	_shaders.VSPassThrough->Set();
-	_shaders.GSQuad->Set();
-	_shaders.PSBlob->Set();
+	_shaders.VSPassThrough->set();
+	_shaders.GSQuad->set();
+	_shaders.PSBlob->set();
 	Graphic::Vertex::SetLayout();
 
 	m_vertexBuffer->set();

@@ -21,3 +21,15 @@ cbuffer Constants : register(b0)
 {
 	Material c_materials[8];
 };
+
+struct Photon {
+	float2 Position : POSITION;
+	float2 Direction : TEXCOORD0;
+	float Energy : TEXCOORD1;
+};
+
+struct PhotonOut {
+	float4 Position : SV_POSITION;
+	float2 Direction : TEXCOORD0;
+	float Energy : TEXCOORD1;
+};

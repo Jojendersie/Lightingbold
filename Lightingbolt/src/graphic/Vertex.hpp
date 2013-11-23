@@ -34,13 +34,16 @@ namespace Graphic {
 		/// \brief Create the vertex input and output layout for this vertex.
 		///		Call this oneth after a device was created.
 		/// \details At the end call ReleaseLayouts() before device destructoin.
-		static void InitLayouts(Shader* _shader);
+		static void initLayout(Shader* _shader);
 
 		/// \brief Delete the one vertex layout.
-		static void ReleaseLayouts();
+		static void releaseLayout();
 
 		/// \brief Set the vertex layout created by InitLayout().
-		static void SetLayouts();
+		static void setLayout();
+
+		static D3D11_SO_DECLARATION_ENTRY* getOutputLayoutDesc();
+		static int getOutputLayoutNum();
 	};
 
 } // namespace Graphic

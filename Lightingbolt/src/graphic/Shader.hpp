@@ -27,10 +27,10 @@ namespace Graphic {
 		~Shader();
 
 		/// \brief Use this shader
-		void Set();
+		void set();
 
 #ifdef DYNAMIC_SHADER_RELOAD
-		void DynamicReload();
+		void dynamicReload();
 #endif
 
 	private:
@@ -39,10 +39,12 @@ namespace Graphic {
 #ifdef DYNAMIC_SHADER_RELOAD
 		time_t m_lastModified;
 #endif
+		D3D11_SO_DECLARATION_ENTRY* m_outLayoutDesc;	///< Optional set for geometry shaders
+		int m_outLayoutNum;								///< Size of the refereced desc
 
 		/// \brief Loads the file m_fileName with m_type
 		/// \see Shader::Shader();
-		void Load(D3D11_SO_DECLARATION_ENTRY* _outLayout = nullptr, int _layoutSize = 0);
+		void load();
 
 		/// This is exactly one type of shader
 		ID3DBlob* m_shader;
@@ -59,19 +61,25 @@ namespace Graphic {
 	/// \brief A list of all shaders to be passed between game states.
 	struct ShaderList {
 		Shader* VSPassThrough;		///< Vertex shader which only passes the vertex info to the next stage
+		Shader* VSPassPhoton;		///< An other vertex shader to pass the photon vertex format.
 
-		Shader* GSQuad;				///< Create a rotated quad 
+		Shader* GSQuad;				///< Create a rotated quad
+		Shader* GSInitPhotons;		///< Sample some photons at player locations
 		Shader* GSSimulate;			///< Move a photon...
 
 		Shader* PSBlob;				///< Draw a shaped object.
+		Shader* PSPhoton;			///< Draw a point with some energy
 
-		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSSimulate(nullptr), PSBlob(nullptr)	{}
+		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr)	{}
 		~ShaderList()
 		{
 			delete VSPassThrough;
+			delete VSPassPhoton;
 			delete GSQuad;
+			delete GSInitPhotons;
 			delete GSSimulate;
 			delete PSBlob;
+			delete PSPhoton;
 		}
 	};
 

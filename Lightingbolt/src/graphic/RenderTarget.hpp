@@ -105,11 +105,13 @@ namespace Graphic {
 	/// \brief A list of all targets to be passed between game states.
 	struct RenderTargetList {
 		RenderTarget* BackBuffer;
+		RenderTarget* PhotonMap;
 
-		RenderTargetList() : BackBuffer(nullptr)	{}
+		RenderTargetList() : BackBuffer(nullptr), PhotonMap(nullptr)	{}
 		~RenderTargetList()
 		{
 			delete BackBuffer;
+			delete PhotonMap;
 		}
 	};
 }

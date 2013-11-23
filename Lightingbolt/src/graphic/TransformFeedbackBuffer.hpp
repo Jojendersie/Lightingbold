@@ -9,6 +9,10 @@ namespace Graphic {
 	{
 	public:
 		FeedBackBuffer();
+		~FeedBackBuffer();
+
+		/// \brief Set target for transform feedback
+		void enable();
 
 		/// \brief Toggles the two buffers and set one of them as target.
 		///		The other is used as current input vertex buffer.

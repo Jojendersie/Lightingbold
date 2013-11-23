@@ -16,9 +16,11 @@ namespace Graphic {
 		m_fileName(_fileName),
 		m_type(_type),
 		m_shader(nullptr),
-		m_vertexShader(nullptr)
+		m_vertexShader(nullptr),
+		m_outLayoutDesc(_outLayout),
+		m_outLayoutNum(_layoutSize)
 	{
-		Load();
+		load();
 	}
 
 	Shader::~Shader()
@@ -30,7 +32,7 @@ namespace Graphic {
 		m_vertexShader = nullptr;
 	}
 
-	void Shader::Load(D3D11_SO_DECLARATION_ENTRY* _outLayout, int _layoutSize)
+	void Shader::load()
 	{
 		HRESULT hr;
 
@@ -81,10 +83,10 @@ namespace Graphic {
 			{
 			case Type::VERTEX: hr = Device::Device->CreateVertexShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_vertexShader ); break;
 			case Type::GEOMETRY:
-				if( _outLayout )
+				if( m_outLayoutDesc )
 				{
 					Device::Device->CreateGeometryShaderWithStreamOutput( m_shader->GetBufferPointer(), m_shader->GetBufferSize(),
-						_outLayout, _layoutSize, nullptr, 0, 0, nullptr, &m_geometryShader );
+						m_outLayoutDesc, m_outLayoutNum, nullptr, 0, 0, nullptr, &m_geometryShader );
 				} else
 					hr = Device::Device->CreateGeometryShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_geometryShader );
 				break;
@@ -96,7 +98,7 @@ namespace Graphic {
 	}
 
 
-	void Shader::Set()
+	void Shader::set()
 	{
 		switch( m_type )
 		{
@@ -107,7 +109,7 @@ namespace Graphic {
 	}
 
 #ifdef DYNAMIC_SHADER_RELOAD
-	void Shader::DynamicReload()
+	void Shader::dynamicReload()
 	{
 		// Find out if the file was changed
 		struct _stat64i32 fileStatus;
@@ -118,7 +120,7 @@ namespace Graphic {
 			m_lastModified = fileStatus.st_mtime;
 
 			// Unload old and reload (both done by load)
-			Load();
+			load();
 		}
 	}
 #endif

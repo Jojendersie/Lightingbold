@@ -29,6 +29,7 @@ Ingame::Ingame()
 Ingame::~Ingame()
 {
 	delete m_vertexBuffer;
+	delete map;
 }
 
 void Ingame::MouseMove(int _dx, int _dy)

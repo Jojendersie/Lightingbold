@@ -81,7 +81,7 @@ namespace Utilities
 	public:
 		DynArray() : m_size(0), m_capacity(1), m_data(nullptr)	{ m_data = new T[m_capacity]; }
 		DynArray(int _capacity) : m_size(0), m_capacity(_capacity), m_data(nullptr)	{ m_data = new T[m_capacity]; }
-		~DynArray()	{ free( m_data ); }
+		~DynArray()	{ delete[] m_data; }
 
 		int size() {return m_size;}
 		int capacity() {return m_capacity;}
@@ -91,18 +91,12 @@ namespace Utilities
 			if(m_size<m_capacity) m_data[m_size++] = _element;
 			else
 			{
-				/*T* temp= new T[m_capacity];
-				for(int i=0;i<m_size;++i)
-					temp[0]=m_data[0];*/
 				m_capacity*=2;
-				T* temp= new T[m_capacity];
+				T* temp = new T[m_capacity];
 				for(int i=0;i<m_size;++i)
 					temp[i]=m_data[i];
-				m_data= temp;//new T[m_capacity];
-				/*for(int i=0;i<m_size;++i)
-					m_data[0]=temp[0];*/
-				//delete(m_data);
-				//m_data = (T*)realloc( m_data, m_capacity*sizeof(T) );
+				delete[] m_data;
+				m_data = temp;
 				m_data[m_size++]= _element;
 			}
 		}

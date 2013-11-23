@@ -9,8 +9,8 @@ namespace Graphic {
 	{
 	public:
 		struct Material {
-			float Refraction;
 			Math::Vec3 Color;
+			float Refraction;
 		};
 
 		/// \brief Create the directx resource for this buffer.

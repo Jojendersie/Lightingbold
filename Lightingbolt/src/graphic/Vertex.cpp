@@ -41,7 +41,7 @@ namespace Graphic {
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float)*2, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 1, DXGI_FORMAT_R32_FLOAT, 0, sizeof(float)*4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float)*4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 		HRESULT hr = Device::Device->CreateInputLayout(
 			LayoutDesc, 3, _shader->m_shader->GetBufferPointer(),
@@ -66,7 +66,7 @@ namespace Graphic {
 			// stream, semantic name, semantic index, start component, component count, output slot
 			{ 0, "SV_POSITION", 0, 0, 2, 0 },   // output two components of position
 			{ 0, "TEXCOORD", 0, 0, 2, 0 },     // output the direction
-			{ 0, "TEXCOORD", 1, 0, 1, 0 },     // output the energy
+			{ 0, "TEXCOORD", 1, 0, 3, 0 },     // output the energy
 		};
 		return pDecl;
 	}

@@ -28,7 +28,7 @@ namespace Graphic {
 		ID3D11BlendState* m_blendStateAlpha;			///< Standard alpha blending
 		ID3D11BlendState* m_blendStateAdd;				///< Pure additive blending
 		ID3D11RasterizerState* m_rasterState;			///< Solid fill mode no culling
-		ID3D11SamplerState* m_pointSampler;				///< Point sampler with clamp
+		ID3D11SamplerState* m_linearSampler;				///< Point sampler with clamp
 
 		Graphic::VertexBuffer* m_screenQuad;			///< One vertex buffer to render screen aligned quads.
 	public:

@@ -69,8 +69,8 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 //	_ShaderConstants->setTime(float(_time));
 	//_ShaderConstants->upload();
 	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
-	_ShaderConstants->setMaterial(0, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
-	_ShaderConstants->setMaterial(0, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
+	_ShaderConstants->setMaterial(1, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
+	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
 
 	m_mapTexture->SetAsTexture(0);
 	m_photonMapper->CreateLightMap( m_vertexBuffer, _time, _renderTargets, _shaders, _ShaderConstants );
@@ -98,6 +98,7 @@ void Menu::Update( double _time, double _deltaTime )
 		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y)/768) * 2;
 		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
+		vertexes[i].Param.x = float(i);
 	}
 	m_vertexBuffer->upload(vertexes, number);
 	delete[] vertexes;

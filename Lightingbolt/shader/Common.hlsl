@@ -14,6 +14,7 @@ struct PSInput
 };
 
 struct Material {
+	float3 Color;
 	float Refraction;
 };
 
@@ -28,13 +29,14 @@ cbuffer Constants : register(b0)
 struct Photon {
 	float2 Position : POSITION;
 	float2 Direction : TEXCOORD0;
-	float Energy : TEXCOORD1;
+	float3 Energy : TEXCOORD1;		// Colored photons
 };
 
 struct PhotonOut {
 	float4 Position : SV_POSITION;
 	float2 Direction : TEXCOORD0;
-	float2 Energy : TEXCOORD1;		// x remaining energy, y part to be saved to the map
+	float3 Energy : TEXCOORD1;		// remaining energy
+	float3 EnergyOut : TEXCOORD2;	// part to be saved to the map
 };
 
 

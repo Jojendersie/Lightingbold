@@ -15,8 +15,8 @@ namespace Graphic {
 		m_simSteps(_simSteps)
 	{
 		m_photons = new Graphic::FeedBackBuffer();
-		m_photonMap[0] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
-		m_photonMap[1] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
+		m_photonMap[0] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32G32B32A32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
+		m_photonMap[1] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32G32B32A32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
 		m_targetMap = 0;
 	}
 

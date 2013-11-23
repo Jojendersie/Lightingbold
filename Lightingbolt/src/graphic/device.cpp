@@ -166,7 +166,7 @@ namespace Graphic {
 		if( m_blendStateAlpha ) m_blendStateAlpha->Release();
 		if( m_blendStateAdd ) m_blendStateAdd->Release();
 		if( m_rasterState ) m_rasterState->Release();
-		if( m_pointSampler ) m_pointSampler->Release();
+		if( m_linearSampler ) m_linearSampler->Release();
 
 		delete m_screenQuad;
 
@@ -289,7 +289,7 @@ namespace Graphic {
 
 		// Create a texture sampler state description.
 		D3D11_SAMPLER_DESC SamplerDesc;
-		SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 		SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 		SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -302,15 +302,15 @@ namespace Graphic {
 		SamplerDesc.BorderColor[3] = 0;
 		SamplerDesc.MinLOD = 0;
 		SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-		hr = Device::Device->CreateSamplerState( &SamplerDesc, &m_pointSampler );
+		hr = Device::Device->CreateSamplerState( &SamplerDesc, &m_linearSampler );
 		Assert( SUCCEEDED(hr) );
 
 		// Set them all
 		Device::Context->OMSetBlendState( m_blendStateAlpha, nullptr, 0xffffffff );
 		Device::Context->RSSetState( m_rasterState );
 		Device::Context->OMSetDepthStencilState( m_depthStencilState, 0 );
-		Device::Context->PSSetSamplers( 0, 1, &m_pointSampler );
-		Device::Context->GSSetSamplers( 0, 1, &m_pointSampler );
+		Device::Context->PSSetSamplers( 0, 1, &m_linearSampler );
+		Device::Context->GSSetSamplers( 0, 1, &m_linearSampler );
 	}
 
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameState.hpp"
+#include "../predecl.hpp"
 
 namespace GameStates {
 
@@ -20,7 +21,7 @@ namespace GameStates {
 
 		virtual void Update( double _time, double _deltaTime ) override;
 	private:
-		ID3D11Buffer* m_vertexBuffer;
+		Graphic::VertexBuffer* m_vertexBuffer;
 		Map::Map *map;
 	};
 

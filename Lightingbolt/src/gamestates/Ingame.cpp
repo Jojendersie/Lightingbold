@@ -6,6 +6,7 @@
 #include "../graphic/Shader.hpp"
 #include "../graphic/Vertex.hpp"
 #include "../graphic/device.hpp"
+#include "../graphic/VertexBuffer.hpp"
 #include "../map/map.hpp"
 #include "../ai/Enemy.hpp"
 
@@ -13,6 +14,7 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
+
 	/** Test **/
 	map = new Map::Map(512,512);
 	map->addEnemy(Math::Vec2(0),0.3);
@@ -32,11 +34,12 @@ Ingame::Ingame()
 	}
 	m_vertexBuffer = Graphic::Device::Window->CreateStaticStdBuffer(number*sizeof(Graphic::Vertex),vertexes,D3D11_BIND_VERTEX_BUFFER);
 	delete[] vertexes;
+	m_vertexBuffer = new Graphic::VertexBuffer();
 }
 
 Ingame::~Ingame()
 {
-	m_vertexBuffer->Release();
+	delete m_vertexBuffer;
 }
 
 void Ingame::MouseMove(int _dx, int _dy)
@@ -67,9 +70,7 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 	_shaders.PSBlob->Set();
 	Graphic::Vertex::SetLayout();
 
-	uint stride = sizeof(Graphic::Vertex);
-	uint offset = 0;
-	Graphic::Device::Context->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+	m_vertexBuffer->set();
 
 	Graphic::Device::Context->Draw( 3, 0 );
 
@@ -78,7 +79,16 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
-
+	int number = 3; //TODO: vertices
+	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
+	for(int i = 0;i<number;i++){
+		vertexes[i].Position.x = i*0.25f;
+		vertexes[i].Size = 0.25;
+		vertexes[i].Rotation.y = 1.0;
+	}
+	m_vertexBuffer->setVertices(vertexes);
+	delete[] vertexes;
+	m_vertexBuffer->upload();
 }
 
 } // namespace GameStates

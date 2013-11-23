@@ -65,6 +65,9 @@
     <ClCompile Include="src\gamestates\Ingame.cpp">
       <Filter>Source Files\gamestates</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\UniformBuffer.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
     <ClCompile Include="src\ai\Enemy.cpp">
       <Filter>Source Files\ai</Filter>
     </ClCompile>
@@ -117,6 +120,12 @@
     </ClInclude>
     <ClInclude Include="src\gamestates\Ingame.hpp">
       <Filter>Source Files\gamestates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\UniformBuffer.hpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphic\TransformFeedbackBuffer.hpp">
+      <Filter>Source Files\graphic</Filter>
     </ClInclude>
     <ClInclude Include="src\ai\Enemy.hpp">
       <Filter>Source Files\ai</Filter>

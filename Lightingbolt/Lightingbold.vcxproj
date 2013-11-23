@@ -28,6 +28,8 @@
     <ClCompile Include="src\map\map.cpp" />
     <ClCompile Include="src\soundtest\melody.cpp" />
     <ClCompile Include="src\soundtest\note.cpp" />
+    <ClCompile Include="src\soundtest\signal.cpp" />
+    <ClCompile Include="src\soundtest\song.cpp" />
     <ClCompile Include="src\sound\sound.cpp" />
     <ClCompile Include="src\sound\sounddevice.cpp" />
   </ItemGroup>
@@ -54,6 +56,8 @@
     <ClInclude Include="src\predecl.hpp" />
     <ClInclude Include="src\soundtest\melody.hpp" />
     <ClInclude Include="src\soundtest\note.hpp" />
+    <ClInclude Include="src\soundtest\signal.hpp" />
+    <ClInclude Include="src\soundtest\song.hpp" />
     <ClInclude Include="src\sound\sound.hpp" />
     <ClInclude Include="src\sound\sounddevice.hpp" />
     <ClInclude Include="src\utilities\smalldynarray.hpp" />

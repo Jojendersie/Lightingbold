@@ -80,6 +80,15 @@ namespace Utilities
 		void reallocate();
 	public:
 		DynArray() : m_size(0), m_capacity(1), m_data(nullptr)	{ m_data = new T[m_capacity]; }
+		DynArray(const DynArray &other):
+			m_size(other.m_size), m_capacity(other.m_capacity)
+		{
+			m_data=new T[m_capacity];
+			for(int i=0; i<other.m_size; i++)
+			{
+				m_data[i]=other.m_data[i];
+			}
+		}
 		DynArray(int _capacity) : m_size(0), m_capacity(_capacity), m_data(nullptr)	{ m_data = new T[m_capacity]; }
 		~DynArray()	{ delete[] m_data; }
 

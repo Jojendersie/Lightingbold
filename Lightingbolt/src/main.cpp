@@ -18,11 +18,11 @@
 #include "graphic/Vertex.hpp"
 
 //Sound
-#include <ctime>
-
 #include "sound/sounddevice.hpp"
-#include "soundtest/note.hpp"
 #include "soundtest/melody.hpp"
+#include "soundtest/note.hpp"
+#include "soundtest/signal.hpp"
+#include "soundtest/song.hpp"
 
 
 #include "predecl.hpp"
@@ -61,19 +61,14 @@ int main()
 {
 	Sound::Device &device=Sound::Device::UseOpenAL();
 	float frequency=261.63f;
-	char *note=Soundtest::Note::getSquare(frequency);
+	char *note=Soundtest::Signal::getSine(frequency);
 
-	Sound::Sound sound(note, Soundtest::Note::getLength(frequency));
+	Sound::Sound sound(note, Soundtest::Signal::getLength(frequency));
 
-	int noteSize=5;
-	int *notes=new int[noteSize];
-	notes[0]=0;
-	notes[1]=2;
-	notes[2]=4;
-	notes[3]=5;
-	notes[4]=7;
-
-	Soundtest::Melody melody(sound, 120, notes, noteSize);
+	Soundtest::Melody melody(sound, 110, Soundtest::Song::twosonHigh());
+	melody.setRepeat(true);
+	Soundtest::Melody melody2(sound, 110, Soundtest::Song::twosonLow());
+	melody2.setRepeat(true);
 
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
@@ -129,6 +124,7 @@ int main()
 				g_State->Update(dTime, dDeltaTime);
 
 				melody.update(dDeltaTime);
+				melody2.update(dDeltaTime);
 			}
         }
     }

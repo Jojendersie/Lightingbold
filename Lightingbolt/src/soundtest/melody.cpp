@@ -2,13 +2,20 @@
 
 namespace Soundtest
 {
-	Melody::Melody(Sound::Sound sound, float bpm, int *notes, int noteSize):
-		m_curTime(0), m_spb(60.0f/bpm), m_notes(notes), m_noteSize(noteSize), m_index(0)
+	Melody::Melody(Sound::Sound sound, float bpm, DynArray<Note> notes):
+		m_curTime(0), m_spb(60.0f/bpm), m_notes(notes), m_index(0), m_repeat(false)
 	{
-		m_source=new Sound::Source(sound, 0.025f, 5);
-		setPitch();
+		m_source=new Sound::Source(sound, 0.03f, 5);
 		m_source->SetLooping(true);
-		m_source->Play();
+		if(m_index<m_notes.size())
+		{
+			setPitch();
+			m_source->Stop();
+			if(m_notes[m_index]->m_played)
+			{
+				m_source->Play();
+			}
+		}
 	}
 
 	Melody::~Melody()
@@ -18,24 +25,50 @@ namespace Soundtest
 
 	void Melody::update(double _deltaTime)
 	{
-		setPitch();
-
 		m_curTime+=_deltaTime;
-		if(m_curTime>=m_spb)
+		if(m_index<m_notes.size())
 		{
-			m_index++;
-			
-			m_curTime=0;
+			setPitch();
+			if(m_curTime>=m_spb*m_notes[m_index]->m_value)
+			{
+				if(m_index<m_notes.size()-1)
+				{
+					m_index++;
+				}
+				else if(m_repeat)
+				{
+					m_index=0;
+				}
+
+				if(m_notes[m_index]->m_played)
+				{
+					m_source->Play();
+				}
+				else
+				{
+					m_source->Stop();
+				}
+
+				m_curTime=0;
+			}
 		}
+		/*else
+		{
+			if(m_repeat)
+			{
+				m_index=0;
+			}
+		}*/
+	}
+
+	void Melody::setRepeat(bool repeat)
+	{
+		m_repeat=repeat;
 	}
 
 	void Melody::setPitch()
 	{
-		if(m_index<m_noteSize)
-		{
-			int note=m_notes[m_index];
-			float pitch=(float)pow(2.0, note*1.0/12.0);
-			m_source->SetPitch(pitch);
-		}
+		float pitch=(float)pow(2.0, m_notes[m_index]->m_note/12.0);
+		m_source->SetPitch(pitch);
 	}
 }

@@ -14,7 +14,6 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
-
 	/** Test **/
 	map = new Map::Map(512,512);
 	map->addEnemy(Math::Vec2(0),0.3);

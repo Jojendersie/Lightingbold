@@ -32,9 +32,8 @@ Ingame::Ingame()
 		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}
-	m_vertexBuffer = Graphic::Device::Window->CreateStaticStdBuffer(number*sizeof(Graphic::Vertex),vertexes,D3D11_BIND_VERTEX_BUFFER);
+
 	delete[] vertexes;
-	m_vertexBuffer = new Graphic::VertexBuffer();
 }
 
 Ingame::~Ingame()

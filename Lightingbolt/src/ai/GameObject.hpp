@@ -26,6 +26,7 @@ namespace Ai {
 		virtual void update();
 		float getShinyRadius();
 	private:
+		void checkForBoundaries();
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;
 		Math::Vec2 m_goal;

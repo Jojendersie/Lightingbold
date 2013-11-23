@@ -9,6 +9,9 @@
 #include "../graphic/VertexBuffer.hpp"
 #include "../map/map.hpp"
 #include "../ai/Enemy.hpp"
+#include "../generator/Random.hpp"
+
+extern Generators::Random* g_rand;
 
 namespace GameStates {
 
@@ -17,12 +20,13 @@ Ingame::Ingame()
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(0),0.3);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05);
 	map->getEnemy(0)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(0),0.7);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07);
 	map->getEnemy(1)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(0),0.5);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011);
 	map->getEnemy(2)->setGoal(Math::Vec2(0));
+
 	/**********/
 }
 

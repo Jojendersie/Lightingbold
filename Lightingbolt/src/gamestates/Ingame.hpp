@@ -8,7 +8,7 @@ namespace GameStates {
 	{
 	public:
 		Ingame();
-		Ingame(int _numberOfEnemys);
+		~Ingame();
 		virtual void MouseMove(int _dx, int _dy) override;
 		virtual void KeyDown(int _key) override;
 		virtual void KeyUp(int _key) override;

@@ -15,23 +15,26 @@ namespace Map
 		m_densityMap = new float[_width*_height];
 		
 		m_player = new Ai::GameObject(this);
+		m_player->setPosition(Math::Vec2(0.0,0.0));
+		m_player->setRadius(0.1f);
 		InitMap();
 	}
 
 	Map::~Map()
 	{
-		free(m_densityMap);
-		free(m_player);
+		delete m_densityMap;
+		delete m_player;
 	}
 
 	void Map::InitMap()
 	{
+		float amplitude = 1.0f;
 		// build density map
 		for(int y=0;y<m_height;++y)
 		{
 			for(int x=0;x<m_width;++x)
 			{
-				m_densityMap[m_width*y+x]  = GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(m_width/2,m_height/2),Math::Vec2(m_width/4,m_height/4),1);
+				m_densityMap[m_width*y+x]  = amplitude - GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(m_width/2,m_height/2),Math::Vec2(m_width/4,m_height/4),amplitude);
 			} // for x
 		} // for y
 	}
@@ -52,10 +55,10 @@ namespace Map
 		{
 			//int direction = 1;
 			m_objects[i]->update();
-			//Math::Vec2 newPos(m_objects[i]->getPosition());
-			//newPos.x = newPos.x + direction *(i%2? 5 : -5);
-			//newPos.y = newPos.y + direction *(i%2? -5 : 5);
-			//m_objects[i]->setPosition(newPos);
+			/*Math::Vec2 newPos(m_objects[i]->getPosition());
+			newPos.x = newPos.x + direction *(i%2? 0.005 : -0.005);
+			newPos.y = newPos.y + direction *(i%2? -0.005 : 0.005);
+			m_objects[i]->setPosition(newPos);*/
 		}
 		//m_objects
 	}

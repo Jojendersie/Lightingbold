@@ -14,15 +14,15 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
-	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 3);
+	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
 	/** Test **/
 	map = new Map::Map(1024,768);
 	map->addEnemy(Math::Vec2(0),0.3);
-	map->getEnemy(0)->setGoal(Math::Vec2(215,400));
-	map->addEnemy(Math::Vec2(215,400),0.7);
-	map->getEnemy(1)->setGoal(Math::Vec2(2,40));
-	map->addEnemy(Math::Vec2(400,30),0.5);
-	map->getEnemy(2)->setGoal(Math::Vec2(500,10));
+	map->getEnemy(0)->setGoal(Math::Vec2(0));
+	map->addEnemy(Math::Vec2(0),0.7);
+	map->getEnemy(1)->setGoal(Math::Vec2(0));
+	map->addEnemy(Math::Vec2(0),0.5);
+	map->getEnemy(2)->setGoal(Math::Vec2(0));
 	/**********/
 }
 
@@ -34,7 +34,7 @@ Ingame::~Ingame()
 
 void Ingame::MouseMove(int _dx, int _dy)
 {
-	map->getEnemy(0)->setGoal(Math::Vec2(_dx,-_dy));
+	map->getPlayer()->setGoal(Math::Vec2((float)_dx/(1024.0f/2.0f),(float)-_dy/(768.0f/2.0f)));
 }
 
 void Ingame::KeyDown(int _key)
@@ -63,7 +63,7 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 	m_vertexBuffer->set();
 
-	Graphic::Device::Context->Draw( 3, 0 );
+	Graphic::Device::Context->Draw( map->getNumberOfObjects()+1, 0 );
 
 	Graphic::Device::Window->Present();
 }
@@ -72,16 +72,22 @@ void Ingame::Update( double _time, double _deltaTime )
 {
 	map->Update();
 	int number = map->getNumberOfObjects(); //TODO: vertices
-	Graphic::Vertex *vertexes= new Graphic::Vertex[number];
+	Graphic::Vertex *vertexes= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){
 		//vertexes[i].Position.x = i*0.25f;
 		//vertexes[i].Size = 0.25;
-		vertexes[i].Position.x = ((map->getEnemy(i)->getPosition().x)/1024) * 2;
-		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y)/768) * 2;
+		vertexes[i].Position.x = ((map->getEnemy(i)->getPosition().x));
+		vertexes[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertexes[i].Size = map->getEnemy(i)->getRadius();
 		vertexes[i].Rotation.y = 1.0;
 	}
-	m_vertexBuffer->upload(vertexes, number);
+
+	vertexes[number].Position.x = ((map->getPlayer()->getPosition().x));
+	vertexes[number].Position.y = ((map->getPlayer()->getPosition().y));
+	vertexes[number].Size = map->getPlayer()->getRadius();
+	vertexes[number].Rotation.y = 1.0;
+
+	m_vertexBuffer->upload(vertexes, number+1);
 	delete[] vertexes;
 }
 

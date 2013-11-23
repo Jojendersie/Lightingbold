@@ -23,13 +23,21 @@ namespace Ai {
 		float getEnergy();
 		void setEnergy(float _newEnergy);
 		float getKineticEnegy();
-		void update();
+		virtual void update();
+		float getShinyRadius();
 	private:
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;
 		Math::Vec2 m_goal;
 		float m_radius;
 		float m_energy;
+
+		Math::Vec2 m_velocity;
+		Math::Vec2 m_acceleration;
+		float m_maxSpeed;
+		float m_timetoReachMaxSpeed;
+		float m_friction;
+	protected:
 		Map::Map* m_map;
 	};
 

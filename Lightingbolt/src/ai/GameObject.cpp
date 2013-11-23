@@ -43,12 +43,12 @@ namespace Ai
 
 	const Math::Vec2& GameObject::getDiretion()
 	{
-		return Vec2(0);
+		return m_direction;
 	}
 
 	const Math::Vec2& GameObject::getGoal()
 	{
-		return Vec2(0);
+		return m_goal;
 	}
 
 	float GameObject::getRadius()
@@ -58,12 +58,12 @@ namespace Ai
 
 	float GameObject::getEnergy()
 	{
-		return 0;
+		return m_energy;
 	}
 
 	float GameObject::getKineticEnegy()
 	{
-		return 0;
+		return m_direction.length();
 	}
 
 	void GameObject::update()

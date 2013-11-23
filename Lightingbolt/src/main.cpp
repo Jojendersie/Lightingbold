@@ -11,6 +11,7 @@
 
 #include "predecl.hpp"
 #include "gamestates/menu.hpp"
+#include "gamestates/Ingame.hpp"
 #include "graphic/device.hpp"
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
@@ -23,6 +24,8 @@ void ReloadShaders();
 #endif
 
 // *** GLOBAL STUFF main.cpp IS MORE OR LESS THE GAME CLASS **************** //
+GameStates::Menu* g_StateMenu;
+GameStates::Ingame* g_StateIngame;
 GameStates::IGameState* g_State;
 Graphic::RenderTargetList* g_RenderTargets;
 Graphic::ShaderList* g_ShaderList;
@@ -42,7 +45,9 @@ int main()
 
 	// *** INITIALIZATION ************************************************** //
 	Graphic::DX11Window* window = new Graphic::DX11Window( 1024, 768, false );
-	g_State = new GameStates::Menu;
+	g_StateMenu = new GameStates::Menu;
+	g_StateIngame = new GameStates::Ingame;
+	g_State = g_StateMenu;
 	window->OnMouseMove = MouseMove;
 	window->OnKeyDown = KeyDown;
 	window->OnKeyUp = KeyUp;
@@ -81,8 +86,7 @@ int main()
 				ReloadShaders();
 #endif
 				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList);
-				//pGame->Update( dTime, Saga::min(0.05, dDeltaTime) );
-				//pGame->RenderFrame( dTime, Saga::min(0.05, dDeltaTime) );
+				g_State->Update(dTime, dDeltaTime);
 			}
         }
     }
@@ -90,7 +94,8 @@ int main()
 	// *** SHUTDOWN ******************************************************** //
 	delete g_RenderTargets;
 	delete g_ShaderList;
-	delete g_State;
+	delete g_StateMenu;
+	delete g_StateIngame;
 	delete window;
 	return 0;
 }
@@ -140,3 +145,14 @@ void ReloadShaders()
 	g_ShaderList->PSBlob->DynamicReload();
 }
 #endif
+
+
+
+void SwitchGameState( GameStates::GS _State )
+{
+	switch(_State)
+	{
+		case GameStates::GS::INGAME: g_State = g_StateIngame; break;
+		case GameStates::GS::MENU: g_State = g_StateMenu; break;
+	}
+}

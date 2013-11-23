@@ -4,7 +4,7 @@
 
 namespace GameStates {
 
-	class Menu: public IGameState
+	class Ingame: public IGameState
 	{
 		virtual void MouseMove(int _dx, int _dy) override;
 		virtual void KeyDown(int _key) override;

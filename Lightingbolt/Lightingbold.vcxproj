@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ai\GameObject.cpp" />
+    <ClCompile Include="src\gamestates\Ingame.cpp" />
     <ClCompile Include="src\gamestates\Menu.cpp" />
     <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\graphic\RenderTarget.cpp" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="src\gamestates\GameState.hpp" />
     <ClInclude Include="src\ai\GameObject.hpp" />
+    <ClInclude Include="src\gamestates\Ingame.hpp" />
     <ClInclude Include="src\gamestates\Menu.hpp" />
     <ClInclude Include="src\graphic\device.hpp" />
     <ClInclude Include="src\graphic\RenderTarget.hpp" />

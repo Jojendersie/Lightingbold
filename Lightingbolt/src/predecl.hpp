@@ -63,6 +63,11 @@ namespace Ai {
 namespace GameStates {
 	class IGameState;
 	class Menu;
+	class Ingame;
+	enum struct GS {
+		MENU,
+		INGAME
+	};
 } // namespace GameStates
 
 #ifdef _DEBUG
@@ -89,3 +94,5 @@ namespace GameStates {
 
 
 const float CLEAR_COLOR[4] = {1.0f, 0.564705882f, 0.003921569f, 1.0f };
+
+void SwitchGameState( GameStates::GS _State );

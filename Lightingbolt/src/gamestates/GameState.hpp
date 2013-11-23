@@ -6,6 +6,7 @@ namespace GameStates {
 	class IGameState
 	{
 	public:
+		virtual ~IGameState()	{}
 		virtual void MouseMove(int _dx, int _dy)	{}
 		virtual void KeyDown(int _key)				{}
 		virtual void KeyUp(int _key)				{}
@@ -20,5 +21,7 @@ namespace GameStates {
 		virtual void Render( double _time, double _deltaTime,
 			Graphic::RenderTargetList& _renderTargets,
 			Graphic::ShaderList& _shaders ) = 0;
+
+		virtual void Update( double _time, double _deltaTime ) = 0;
 	};
 } // namespace GameStates

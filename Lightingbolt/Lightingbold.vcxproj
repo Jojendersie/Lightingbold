@@ -18,6 +18,7 @@
     <ClCompile Include="src\graphic\device.cpp" />
     <ClCompile Include="src\graphic\RenderTarget.cpp" />
     <ClCompile Include="src\graphic\Shader.cpp" />
+    <ClCompile Include="src\graphic\TransfromFeedbackBuffer.cpp" />
     <ClCompile Include="src\graphic\UniformBuffer.cpp" />
     <ClCompile Include="src\graphic\Vertex.cpp" />
     <ClCompile Include="src\main.cpp" />

@@ -71,6 +71,9 @@
     <ClCompile Include="src\ai\Enemy.cpp">
       <Filter>Source Files\ai</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphic\TransfromFeedbackBuffer.cpp">
+      <Filter>Source Files\graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">

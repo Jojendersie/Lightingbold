@@ -23,15 +23,17 @@ namespace Graphic {
 	Shader::~Shader()
 	{
 		if(m_shader) m_shader->Release();
+		m_shader = nullptr;
 		// Release is a basic interface method -> type unrelevant
 		if(m_vertexShader) m_vertexShader->Release();
+		m_vertexShader = nullptr;
 	}
 
 	void Shader::Load()
 	{
 #ifdef DYNAMIC_SHADER_RELOAD
 		// Unload if there was one before
-		if(m_shader) m_shader->Release();
+		this->~Shader();
 
 		struct _stat64i32 fileStatus;
 		_wstat( m_fileName, &fileStatus );

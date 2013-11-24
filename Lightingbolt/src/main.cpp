@@ -16,6 +16,8 @@
 #include "graphic/RenderTarget.hpp"
 #include "graphic/Shader.hpp"
 #include "graphic/Vertex.hpp"
+#include "graphic/UniformBuffer.hpp"
+#include "generator\Random.hpp"
 
 //Sound
 #include "sound/sounddevice.hpp"
@@ -23,17 +25,6 @@
 #include "soundtest/note.hpp"
 #include "soundtest/signal.hpp"
 #include "soundtest/song.hpp"
-
-
-#include "predecl.hpp"
-#include "gamestates/menu.hpp"
-#include "gamestates/Ingame.hpp"
-#include "graphic/device.hpp"
-#include "graphic/RenderTarget.hpp"
-#include "graphic/Shader.hpp"
-#include "graphic/Vertex.hpp"
-#include "graphic/UniformBuffer.hpp"
-#include "generator\Random.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -145,35 +136,6 @@ int main()
 	delete g_StateIngame;
 	delete window;
 	delete g_rand;
-	Sound::Device &device=Sound::Device::UseOpenAL();
-	string soundBuffer;
-	srand(time(NULL));
-	vector<float> note=Soundtest::Note::getNote(261.63f, 12150*3);
-
-	for(int i=0; i<note.size(); i++)
-	{
-		soundBuffer+=Soundtest::Note::toChar(note[i]);
-	}
-
-	Sound::Sound sound(soundBuffer.c_str(), soundBuffer.size());
-	Sound::Source source(sound, 0.2f, 5);
-	Math::Vec3 position(0, 0, 0);
-	source.SetPosition(position);
-
-	source.Play();
-	int current=0;
-	source.SetPitch(pow(2.0, 1*1.0/12.0));
-	float volume=0.0f;
-	source.SetLooping(true);
-	while(source.IsPlaying())
-	{
-		volume+=0.0000001f;
-		if(volume>=0.2f)
-		{
-			volume=0.0f;
-		}
-		source.SetVolume(volume);
-	}
 	return 0;
 }
 

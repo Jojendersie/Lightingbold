@@ -20,7 +20,7 @@ namespace Ai
 		m_energy = 1.0f;
 		m_goal = Math::Vec2(0);
 		m_position = Math::Vec2(0);
-		m_radius = 0;
+		setRadius();
 
 		m_accelerationPerFrame = 0.00015f;
 		m_maxAcceleration = 0.0005f;
@@ -43,8 +43,9 @@ namespace Ai
 		m_position = Math::Vec2(_newPosition);
 	}
 
-	void GameObject::setRadius(float _newRadius){
-		m_radius = _newRadius;
+	void GameObject::setRadius(){
+		// TODO compute
+		m_radius = m_energy;
 	}
 
 	const Math::Vec2& GameObject::getPosition()
@@ -64,7 +65,7 @@ namespace Ai
 
 	float GameObject::getRadius()
 	{
-		return m_energy;
+		return m_radius;
 	}
 
 	float GameObject::getEnergy()

@@ -19,7 +19,7 @@ namespace Ai {
 		const Math::Vec2& getGoal();
 		void setGoal(const Math::Vec2& _newGoal);
 		float getRadius();
-		void setRadius(float _newRadius);
+		void setRadius();
 		float getEnergy();
 		void setEnergy(float _newEnergy);
 		float getKineticEnegy();

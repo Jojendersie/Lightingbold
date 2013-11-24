@@ -19,6 +19,8 @@
 #include "graphic/UniformBuffer.hpp"
 #include "generator\Random.hpp"
 
+#include "soundtest/soundmanager.hpp"
+
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
 void CreateShaders();
@@ -43,6 +45,8 @@ void Scroll(int _delta)				{ g_State->Scroll(_delta); }
 
 int main()
 {
+	Soundtest::SoundManager sound;
+
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -95,6 +99,8 @@ int main()
 #endif
 				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList, g_ShaderConstants);
 				g_State->Update(dTime, dDeltaTime);
+
+				sound.update(dDeltaTime);
 			}
         }
     }
@@ -180,7 +186,10 @@ void SwitchGameState( GameStates::GS _State )
 {
 	switch(_State)
 	{
-		case GameStates::GS::INGAME: g_State = g_StateIngame; break;
+		case GameStates::GS::INGAME: 
+			delete g_StateIngame;
+			g_StateIngame = new GameStates::Ingame;
+			g_State = g_StateIngame; break;
 		case GameStates::GS::MENU: g_State = g_StateMenu; break;
 	}
 }

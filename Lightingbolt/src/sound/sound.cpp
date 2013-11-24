@@ -61,6 +61,16 @@ namespace Sound {
 		alSourcePause( m_uiSource );
 	}
 
+	void Source::SetPitch(float _pitch)
+	{
+		alSourcef(m_uiSource, AL_PITCH, _pitch);
+	}
+
+	void Source::SetVolume(float _volume)
+	{
+		alSourcef(m_uiSource, AL_GAIN, _volume);
+	}
+
 	void Source::SetVelocity( const Math::Vec3& _v )
 	{
 		alSourcefv( m_uiSource, AL_VELOCITY, (float*)&_v );
@@ -69,5 +79,10 @@ namespace Sound {
 	void Source::SetPosition( const Math::Vec3& _p )
 	{
 		alSourcefv( m_uiSource, AL_POSITION, (float*)&_p );
+	}
+
+	void Source::SetLooping(bool _looping)
+	{
+		alSourcei(m_uiSource, AL_LOOPING, _looping);
 	}
 };

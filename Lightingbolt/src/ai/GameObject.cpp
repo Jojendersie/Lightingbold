@@ -31,6 +31,7 @@ namespace Ai
 
 	void GameObject::setEnergy(float _newEnergy){
 		m_energy = _newEnergy;
+		setRadius();
 	}
 
 	void GameObject::setGoal(const Math::Vec2& _newGoal){
@@ -78,8 +79,12 @@ namespace Ai
 
 	void GameObject::update()
 	{
-		movement();
-		checkForBoundaries();
+		checkCollision();
+		if(isAlive())
+		{
+			movement();
+			checkForBoundaries();
+		}
 	}
 
 	void GameObject::movement()
@@ -92,9 +97,9 @@ namespace Ai
         float distance = difference.length();
 
 		// every step we throw in some friction, to slow the object down
-		m_direction *= 0.97f;//m_friction;
+		m_direction *= m_friction;
 
-		Math::Vec2 acceleration = differenceNormal * 0.00015f;
+		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame;
         //acceleration = acceleration / (distance * distance);
 
 		if(acceleration.length() > m_maxAcceleration) acceleration = acceleration.normalize() * m_maxAcceleration;
@@ -107,6 +112,37 @@ namespace Ai
 
 		// end we wish to move ^^
 		m_position += m_direction;
+	}
+
+	void GameObject::checkCollision()
+	{
+		for(int i=0;i<m_map->getNumberOfObjects();++i)
+		{
+			if(m_map->getEnemy(i) != this && m_map->getEnemy(i)->isAlive())
+			{
+				if(g_circleCollision(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius()))
+				{
+					if(getRadius()>m_map->getEnemy(i)->getRadius())
+					{
+						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
+						m_map->getEnemy(i)->setAlive(false);
+					}
+					else if(getRadius()<m_map->getEnemy(i)->getRadius())
+					{
+						m_alive=false;
+					}
+					else if(getDiretion().length() >= m_map->getEnemy(i)->getDiretion().length())
+					{
+						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
+						m_map->getEnemy(i)->setAlive(false);
+					}
+					else
+					{
+						m_alive=false;
+					}
+				}
+			}
+		}
 	}
 
 	void GameObject::checkForBoundaries()

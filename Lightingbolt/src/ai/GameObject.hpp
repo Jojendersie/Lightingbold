@@ -25,9 +25,11 @@ namespace Ai {
 		float getKineticEnegy();
 		virtual void update();
 		float getShinyRadius();
+		bool isAlive() {return m_alive;}
 	private:
 		void checkForBoundaries();
 		void movement();
+		void checkCollision();
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;
 		Math::Vec2 m_goal;
@@ -37,8 +39,11 @@ namespace Ai {
 		float m_maxAcceleration;
 		float m_friction;
 		float m_accelerationPerFrame;
+		
+		bool m_alive;
 	protected:
 		Map::Map* m_map;
+		void setAlive(bool _alive) {m_alive=_alive;}
 	};
 
 } // namespace gameObject

@@ -19,12 +19,22 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
-	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
+	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 50);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
+	/*map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.511f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.731f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);*/
+	m_minEnemies = 4;
+	m_maxEnemies = 20;
+	int numberOfEnemies = g_rand->Uniform(m_minEnemies,m_maxEnemies);
+	for(int i=0;i<numberOfEnemies;++i)
+	{
+		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+	}
 
 	/**********/
 
@@ -50,6 +60,10 @@ void Ingame::MouseMove(int _dx, int _dy)
 
 void Ingame::KeyDown(int _key)
 {
+	if(!map->getPlayer()->isAlive())
+	{
+		SwitchGameState(GameStates::GS::MENU);
+	}
 }
 
 void Ingame::KeyUp(int _key)
@@ -95,6 +109,31 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
+	if(map->getNumberOfObjects() < m_maxEnemies)
+	{
+		if(map->getNumberOfObjects() < m_minEnemies*3)
+		{
+			if(g_rand->Uniform(0.0f,1.0f)<0.05f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
+		}
+		if(map->getNumberOfObjects() < m_minEnemies*2)
+		{
+			if(g_rand->Uniform(0.0f,1.0f)<0.2f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
+		}
+		if(map->getNumberOfObjects() < m_minEnemies)
+		{
+			if(g_rand->Uniform(0.0f,1.0f)<0.4f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
+		}
+	}
+
 	map->Update();
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
@@ -105,20 +144,20 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
 		vertices[i].MaterialIndex = g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx1 = g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx2 = g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx1 = 0;//g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = 3;//g_rand->Uniform(0,3);
 		vertices[i].Energy = map->getEnemy(i)->getEnergy();
-		vertices[i].ShapeInterpolation = g_rand->Uniform();
+		vertices[i].ShapeInterpolation = 0.5f;//g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
 	vertices[number].MaterialIndex = g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx1 = g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx2 = g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx1 = 1;//g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = 2;//g_rand->Uniform(0,3);
 	vertices[number].Energy = map->getPlayer()->getEnergy();
-	vertices[number].ShapeInterpolation = g_rand->Uniform();
+	vertices[number].ShapeInterpolation = 0.2;//g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

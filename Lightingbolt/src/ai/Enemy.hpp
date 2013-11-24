@@ -15,5 +15,8 @@ namespace Ai
 		Math::Vec2 Enemy::determineReaction(GameObject* _currentEnemy);
 		virtual void update( double _deltaTime);
 	private:
+		double m_currentThinkSleep;
+		double m_maxThinkSleep;
+		void Enemy::resetThinkSleep();
 	};
 }

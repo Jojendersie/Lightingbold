@@ -21,8 +21,14 @@ namespace Graphic {
 		/// \param [in] _outLayout Optional for geometry shaders which should
 		///		be used with transform feedback.
 		/// \param [in] _layoutSize Size of the layout descriptor 
+#if defined( DEBUG ) || defined( _DEBUG )
 		Shader( const wchar_t* _fileName, Type _type,
 			D3D11_SO_DECLARATION_ENTRY* _outLayout = nullptr, int _layoutSize = 0);
+#else
+
+		Shader( const BYTE* _shaderCode, int _bytes, Type _type,
+			D3D11_SO_DECLARATION_ENTRY* _outLayout = nullptr, int _layoutSize = 0);
+#endif
 
 		~Shader();
 
@@ -44,10 +50,14 @@ namespace Graphic {
 
 		/// \brief Loads the file m_fileName with m_type
 		/// \see Shader::Shader();
+#if defined( DEBUG ) || defined( _DEBUG )
 		void load();
+#endif
 
 		/// This is exactly one type of shader
 		ID3DBlob* m_shader;
+		const BYTE* m_shaderCode;
+		int m_codeSize;
 		union {
 			ID3D11VertexShader* m_vertexShader;
 			ID3D11GeometryShader* m_geometryShader;
@@ -70,8 +80,10 @@ namespace Graphic {
 		Shader* PSBlob;				///< Draw a shaped object.
 		Shader* PSPhoton;			///< Draw a point with some energy
 		Shader* PSTexture;			///< Sample a texture
+		Shader* PSRefractionMap;	///< Draw a refraction map
+		Shader* PSBlur;				///< Gaußian blur
 
-		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr)	{}
+		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr), PSRefractionMap(nullptr), PSBlur(nullptr)	{}
 		~ShaderList()
 		{
 			delete VSPassThrough;
@@ -82,6 +94,8 @@ namespace Graphic {
 			delete PSBlob;
 			delete PSPhoton;
 			delete PSTexture;
+			delete PSRefractionMap;
+			delete PSBlur;
 		}
 	};
 

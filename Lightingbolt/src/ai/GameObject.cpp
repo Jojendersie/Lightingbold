@@ -20,7 +20,7 @@ namespace Ai
 
 		setRadius();
 
-		m_accelerationPerFrame = 0.00015f;
+		m_accelerationPerFrame = 0.015f;
 		m_maxAcceleration = 0.0005f;
 		m_friction = 0.975f;
 	}
@@ -99,7 +99,7 @@ namespace Ai
 		// every step we throw in some friction, to slow the object down
 		m_direction *= m_friction;
 
-		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame;
+		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame * _deltaTime;
         //acceleration = acceleration / (distance * distance);
 
 		if(acceleration.length() > m_maxAcceleration) acceleration = acceleration.normalize() * m_maxAcceleration;

@@ -21,6 +21,7 @@
 
 #include "soundtest/soundmanager.hpp"
 
+#if !defined(DEBUG) && !defined(_DEBUG)
 #include "shader/Blob.h"
 #include "shader/Blur.h"
 #include "shader/InitPhotons.h"
@@ -31,6 +32,7 @@
 #include "shader/RefractionMap.h"
 #include "shader/SimPhotons.h"
 #include "shader/Textured.h"
+#endif
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();

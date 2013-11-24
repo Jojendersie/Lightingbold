@@ -117,8 +117,13 @@ namespace Graphic {
 		// Create a window
 		RECT Rc = { 0, 0, _width, _height };
 		AdjustWindowRect( &Rc, WS_OVERLAPPEDWINDOW, FALSE );
-		m_width = Rc.right-Rc.left;
-		m_height = Rc.bottom-Rc.top;
+		if( _fullScreen ) {
+			m_width = _width;
+			m_height = _height;
+		} else {
+			m_width = Rc.right-Rc.left;
+			m_height = Rc.bottom-Rc.top;
+		}
 		// TODO is das mit den Borders so richtig, oder sollte die größe für Rendertargets anders sein?
 		m_HWND = CreateWindow( "DX11Window", "Sagaramatha",
 							   WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 
@@ -175,6 +180,7 @@ namespace Graphic {
 
 		if( m_swapChain ) while( 0 != m_swapChain->Release() );
 		if( m_devContext ) while( 0 != m_devContext->Release() );
+
 #if defined(DEBUG) | defined(_DEBUG) // Quick and dirty - avoid release crash!!!
 		if( m_device ) while( 0 != m_device->Release() );
 #endif

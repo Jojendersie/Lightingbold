@@ -21,7 +21,7 @@ Ingame::Ingame()
 {
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 50);
 	/** Test **/
-	map = new Map::Map(1024,768);
+	map = new Map::Map(Graphic::Device::Window->Width(),Graphic::Device::Window->Height());
 	/*map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
@@ -57,7 +57,8 @@ Ingame::~Ingame()
 
 void Ingame::MouseMove(int _dx, int _dy)
 {
-	map->getPlayer()->setGoal(Math::Vec2((float)_dx/(1024.0f/2.0f),(float)-_dy/(768.0f/2.0f)));
+	map->getPlayer()->setGoal(Math::Vec2((float)_dx/(Graphic::Device::Window->Width()/2.0f),
+		(float)-_dy/(Graphic::Device::Window->Height()/2.0f)));
 }
 
 void Ingame::KeyDown(int _key)

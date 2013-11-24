@@ -28,8 +28,9 @@ Ingame::Ingame()
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.511f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.731f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);*/
-	int m_minEnemies = 4;
-	int numberOfEnemies = g_rand->Uniform(m_minEnemies,20);
+	m_minEnemies = 4;
+	m_maxEnemies = 20;
+	int numberOfEnemies = g_rand->Uniform(m_minEnemies,m_maxEnemies);
 	for(int i=0;i<numberOfEnemies;++i)
 	{
 		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
@@ -59,6 +60,10 @@ void Ingame::MouseMove(int _dx, int _dy)
 
 void Ingame::KeyDown(int _key)
 {
+	if(!map->getPlayer()->isAlive())
+	{
+		SwitchGameState(GameStates::GS::MENU);
+	}
 }
 
 void Ingame::KeyUp(int _key)
@@ -104,25 +109,28 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
-	if(map->getNumberOfObjects() < m_minEnemies*3)
+	if(map->getNumberOfObjects() < m_maxEnemies)
 	{
-		if(g_rand->Uniform(0.0f,1.0f)<0.05f)
+		if(map->getNumberOfObjects() < m_minEnemies*3)
 		{
-			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			if(g_rand->Uniform(0.0f,1.0f)<0.05f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
 		}
-	}
-	if(map->getNumberOfObjects() < m_minEnemies*2)
-	{
-		if(g_rand->Uniform(0.0f,1.0f)<0.2f)
+		if(map->getNumberOfObjects() < m_minEnemies*2)
 		{
-			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			if(g_rand->Uniform(0.0f,1.0f)<0.2f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
 		}
-	}
-	if(map->getNumberOfObjects() < m_minEnemies)
-	{
-		if(g_rand->Uniform(0.0f,1.0f)<0.4f)
+		if(map->getNumberOfObjects() < m_minEnemies)
 		{
-			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			if(g_rand->Uniform(0.0f,1.0f)<0.4f)
+			{
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+			}
 		}
 	}
 

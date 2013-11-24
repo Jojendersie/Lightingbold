@@ -29,6 +29,7 @@ namespace GameStates {
 		Graphic::PhotonMapper* m_photonMapper;
 		Graphic::RenderTarget* m_mapTexture;
 		int m_minEnemies;
+		int m_maxEnemies;
 	};
 
 } // namespace GameStates

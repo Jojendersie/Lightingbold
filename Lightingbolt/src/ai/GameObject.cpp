@@ -14,7 +14,7 @@ namespace Ai
 	{
 	}
 
-	GameObject::GameObject(Map::Map* _map) : m_map(_map)
+	GameObject::GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map) : m_map(_map), m_position(_position), m_energy(_energy)
 	{
 		m_direction = Math::Vec2(0);
 		m_energy = 1.0f;

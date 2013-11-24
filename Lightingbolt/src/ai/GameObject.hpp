@@ -9,7 +9,7 @@ namespace Ai {
 
 	class GameObject{
 	public:
-		GameObject(Map::Map* _map);
+		GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map);
 		GameObject();
 		~GameObject();
 		const Math::Vec2& getPosition();

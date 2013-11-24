@@ -52,10 +52,8 @@ namespace Ai
 		
 	}
 
-	Enemy::Enemy(const Math::Vec2& _position, float _energy, Map::Map* _map): GameObject(_map)
+	Enemy::Enemy(const Math::Vec2& _position, float _energy, Map::Map* _map): GameObject(_position,_energy,_map)
 	{
-		setPosition(_position);
-		setEnergy(_energy);
 	}
 
 	Enemy::~Enemy()

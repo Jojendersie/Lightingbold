@@ -67,6 +67,10 @@ void Ingame::KeyDown(int _key)
 	{
 		SwitchGameState(GameStates::GS::INGAME);
 	}
+	if( _key == 1)
+	{
+		map->getPlayer()->sprint();
+	}
 }
 
 void Ingame::KeyUp(int _key)

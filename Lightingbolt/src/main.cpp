@@ -19,12 +19,7 @@
 #include "graphic/UniformBuffer.hpp"
 #include "generator\Random.hpp"
 
-//Sound
-#include "sound/sounddevice.hpp"
-#include "soundtest/melody.hpp"
-#include "soundtest/note.hpp"
-#include "soundtest/signal.hpp"
-#include "soundtest/song.hpp"
+#include "soundtest/soundmanager.hpp"
 
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
@@ -50,18 +45,7 @@ void Scroll(int _delta)				{ g_State->Scroll(_delta); }
 
 int main()
 {
-	Sound::Device &device=Sound::Device::UseOpenAL();
-	float frequency=261.63f;
-	char *note=Soundtest::Signal::getSine(frequency);
-
-	Sound::Sound sound(note, Soundtest::Signal::getLength(frequency));
-
-	Soundtest::Melody melody(sound, 110, Soundtest::Song::twosonHigh());
-	melody.setRepeat(true);
-	melody.play();
-	Soundtest::Melody melody2(sound, 110, Soundtest::Song::twosonLow());
-	melody2.setRepeat(true);
-	melody2.play();
+	Soundtest::SoundManager sound;
 
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
@@ -116,12 +100,7 @@ int main()
 				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList, g_ShaderConstants);
 				g_State->Update(dTime, dDeltaTime);
 
-				if(melody.update(dDeltaTime))
-				{
-					melody.play();
-					melody2.play();
-				}
-				melody2.update(dDeltaTime);
+				sound.update(dDeltaTime);
 			}
         }
     }

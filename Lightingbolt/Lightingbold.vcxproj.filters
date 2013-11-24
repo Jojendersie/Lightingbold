@@ -101,6 +101,9 @@
     <ClCompile Include="src\soundtest\song.cpp">
       <Filter>Source Files\soundtest</Filter>
     </ClCompile>
+    <ClCompile Include="src\soundtest\soundmanager.cpp">
+      <Filter>Source Files\soundtest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\map\map.hpp">
@@ -182,6 +185,9 @@
       <Filter>Source Files\soundtest</Filter>
     </ClInclude>
     <ClInclude Include="src\soundtest\song.hpp">
+      <Filter>Source Files\soundtest</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soundtest\soundmanager.hpp">
       <Filter>Source Files\soundtest</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,6 +30,9 @@ namespace Graphic {
 
 		/// \brief The player energy is the referene for all colors
 		void setPlayerEnergy( float _energy )		{ m_storage.PlayerEnergy = _energy; }
+
+		/// \brief Set delta coord (texelsize in x or y) for blur
+		void setDeltaCoord( const Math::Vec2& _delta )	{ m_storage.DeltaCoord = _delta; }
 	private:
 		ID3D11Buffer* m_buffer;	///< DirectX constant buffer
 
@@ -38,7 +41,8 @@ namespace Graphic {
 			Math::Vec2 MapSize;
 			float LightScale;
 			float PlayerEnergy;
-			float _1,_2,_3;
+			Math::Vec2 DeltaCoord;
+			float _1;
 			Material Materials[8];
 		} m_storage;
 	};

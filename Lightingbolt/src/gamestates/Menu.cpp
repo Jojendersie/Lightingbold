@@ -31,7 +31,7 @@ Menu::Menu()
 		DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW,
 		map->getDensityMap() );
 
-	m_photonMapper = new Graphic::PhotonMapper( 4, 100 );
+	m_photonMapper = new Graphic::PhotonMapper( 10, 70 );
 }
 
 Menu::~Menu()

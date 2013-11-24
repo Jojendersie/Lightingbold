@@ -153,6 +153,7 @@ void CreateShaders()
 	g_ShaderList->PSPhoton = new Graphic::Shader(  L"shader/Photon.ps", Graphic::Shader::Type::PIXEL );
 	g_ShaderList->PSTexture = new Graphic::Shader(  L"shader/Textured.ps", Graphic::Shader::Type::PIXEL );
 	g_ShaderList->PSRefractionMap = new Graphic::Shader(  L"shader/RefractionMap.ps", Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSBlur = new Graphic::Shader(  L"shader/Blur.ps", Graphic::Shader::Type::PIXEL );
 }
 
 #ifdef DYNAMIC_SHADER_RELOAD
@@ -169,6 +170,7 @@ void ReloadShaders()
 	g_ShaderList->PSPhoton->dynamicReload();
 	g_ShaderList->PSTexture->dynamicReload();
 	g_ShaderList->PSRefractionMap->dynamicReload();
+	g_ShaderList->PSBlur->dynamicReload();
 }
 #endif
 

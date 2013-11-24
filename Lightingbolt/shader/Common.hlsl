@@ -25,7 +25,8 @@ cbuffer Constants : register(b0)
 	float2 c_mapSize;
 	float c_lightScale;
 	float c_playerEnergy;
-	float3 _1;
+	float2 c_deltaCoord;
+	float _1;
 	Material c_materials[8];
 };
 
@@ -59,5 +60,5 @@ int HashInt( int _a )
 // Standard random variable [0,1]
 float RandomSample( float2 _val, int _seed )
 {
-	return HashInt(int(_val.x*2011.364 + _val.y*4501001.21 + _seed + c_time * 1234.456)) * 4.656612873e-10;
+	return HashInt(int(_val.x*211.364 + _val.y*450101.21 + _seed + c_time * 123.456)) * 4.656612873e-10;
 }

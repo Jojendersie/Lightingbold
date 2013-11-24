@@ -28,6 +28,7 @@ namespace Graphic {
 		Graphic::FeedBackBuffer* m_photons;
 		Graphic::RenderTarget* m_refractionTexture;
 		Graphic::RenderTarget* m_photonMap[2];
+		Graphic::RenderTarget* m_blurMap;
 		int m_targetMap;
 	};
 

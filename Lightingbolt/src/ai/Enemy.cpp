@@ -63,7 +63,7 @@ namespace Ai
 
 	void Enemy::update()
 	{
-		//think();
+		think();
 		GameObject::update();
 	}
 } // namespace Ai

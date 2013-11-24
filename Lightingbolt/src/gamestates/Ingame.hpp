@@ -21,11 +21,14 @@ namespace GameStates {
 			Graphic::UniformBuffer* _ShaderConstants) override;
 
 		virtual void Update( double _time, double _deltaTime ) override;
+
+		const Map::Map* getMap() {return map;}
 	private:
 		Graphic::VertexBuffer* m_vertexBuffer;
 		Map::Map *map;
 		Graphic::PhotonMapper* m_photonMapper;
 		Graphic::RenderTarget* m_mapTexture;
+		int m_minEnemies;
 	};
 
 } // namespace GameStates

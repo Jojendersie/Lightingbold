@@ -28,8 +28,8 @@ Ingame::Ingame()
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.511f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.731f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);*/
-
-	int numberOfEnemies = g_rand->Uniform(4,20);
+	int m_minEnemies = 4;
+	int numberOfEnemies = g_rand->Uniform(m_minEnemies,20);
 	for(int i=0;i<numberOfEnemies;++i)
 	{
 		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
@@ -104,6 +104,28 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 
 void Ingame::Update( double _time, double _deltaTime )
 {
+	if(map->getNumberOfObjects() < m_minEnemies*3)
+	{
+		if(g_rand->Uniform(0.0f,1.0f)<0.05f)
+		{
+			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+		}
+	}
+	if(map->getNumberOfObjects() < m_minEnemies*2)
+	{
+		if(g_rand->Uniform(0.0f,1.0f)<0.2f)
+		{
+			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+		}
+	}
+	if(map->getNumberOfObjects() < m_minEnemies)
+	{
+		if(g_rand->Uniform(0.0f,1.0f)<0.4f)
+		{
+			map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+		}
+	}
+
 	map->Update();
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];

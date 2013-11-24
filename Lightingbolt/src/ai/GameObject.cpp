@@ -23,6 +23,10 @@ namespace Ai
 		m_accelerationPerFrame = 0.015f;
 		m_maxAcceleration = 0.0005f;
 		m_friction = 0.975f;
+
+		m_sprint = false;
+		m_maxTime = 0.25f;
+		m_time = 0.0f;
 	}
 
 	void GameObject::setDirection(const Math::Vec2& _newDirection){
@@ -111,7 +115,20 @@ namespace Ai
 		m_direction += acceleration;
 
 		// end we wish to move ^^
-		m_position += m_direction;
+		if(m_sprint)
+		{
+			m_position += m_direction;
+			m_position += m_direction;
+			//m_position += m_direction;
+			if(m_time<0)
+				m_sprint = false;
+			else
+				m_time -= _deltaTime;
+		}
+		else
+		{
+			m_position += m_direction;
+		}
 	}
 
 	void GameObject::checkCollision()

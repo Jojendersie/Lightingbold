@@ -32,6 +32,7 @@ namespace Ai {
 		float getshapeInterpolation() {return m_shapeInterpolation; }
 		void setMaterialIndex(int _index) {m_materialIndex = _index; }
 		int getMaterialIndex() {return m_materialIndex; }
+		void sprint() {m_sprint = true; m_time = m_maxTime;}
 	private:
 		void checkForBoundaries();
 		void movement( double _deltaTime);
@@ -50,6 +51,10 @@ namespace Ai {
 		float m_friction;
 		float m_accelerationPerFrame;
 		
+		bool m_sprint;
+		float m_time;
+		float m_maxTime;
+
 		bool m_alive;
 	protected:
 		Map::Map* m_map;

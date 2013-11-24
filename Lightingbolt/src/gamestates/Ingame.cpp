@@ -63,6 +63,7 @@ void Ingame::MouseMove(int _dx, int _dy)
 void Ingame::KeyDown(int _key)
 {
 	//if(!map->getPlayer()->isAlive())
+	if( _key == 13 )
 	{
 		SwitchGameState(GameStates::GS::INGAME);
 	}
@@ -82,9 +83,10 @@ void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList&
 	// Fill relevant constants
 	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
 	_ShaderConstants->setPlayerEnergy( map->getPlayer()->getEnergy() );
-	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
+	_ShaderConstants->setMaterial(0, 0.0f, Vec3(1.0f, 0.0f, 0.0f));
 	_ShaderConstants->setMaterial(1, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
-	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
+	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.25f, 1.0f));
+	_ShaderConstants->setMaterial(4, 1.0f, Vec3(0.0f, 0.75f, 1.0f));
 
 	m_mapTexture->SetAsTexture(0);
 	m_photonMapper->CreateLightMap( m_vertexBuffer, _time, _renderTargets, _shaders, _ShaderConstants );

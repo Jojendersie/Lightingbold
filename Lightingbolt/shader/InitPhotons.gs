@@ -5,8 +5,8 @@ void main( point Vertex _in[1], uint _primitiveID: SV_PrimitiveID, inout PointSt
 {
 	PhotonOut vertexOut;
 	vertexOut.Position.z = 0.5; vertexOut.Position.w = 1;
-	vertexOut.Energy.xyz = 10.0 * c_materials[int(_in[0].Params.x)].Color;
-	vertexOut.EnergyOut.xyz = float3(0,0,0);
+	vertexOut.Energy = 10*_in[0].Param.x * c_materials[_in[0].Shape.z].Color;
+	vertexOut.EnergyOut = float3(0,0,0);
 	vertexOut.Position.xy = _in[0].Position;
 	for( int i=0; i<84; ++i )
 	{

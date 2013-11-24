@@ -20,11 +20,11 @@ Ingame::Ingame()
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
 	map->getEnemy(0)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
 	map->getEnemy(1)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
 	map->getEnemy(2)->setGoal(Math::Vec2(0));
 
 	/**********/
@@ -83,13 +83,21 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
-		vertices[i].Rotation.y = 1.0;
+		vertices[i].MaterialIndex = g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx1 = g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = g_rand->Uniform(0,3);
+		vertices[i].Energy = map->getEnemy(i)->getEnergy();
+		vertices[i].ShapeInterpolation = g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
-	vertices[number].Rotation.y = 1.0;
+	vertices[number].MaterialIndex = g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx1 = g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = g_rand->Uniform(0,3);
+	vertices[number].Energy = map->getPlayer()->getEnergy();
+	vertices[number].ShapeInterpolation = g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

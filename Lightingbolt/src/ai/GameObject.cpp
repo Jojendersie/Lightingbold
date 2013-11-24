@@ -14,12 +14,10 @@ namespace Ai
 	{
 	}
 
-	GameObject::GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map) : m_map(_map), m_position(_position), m_energy(_energy)
+	GameObject::GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map) : m_map(_map), m_position(_position), m_energy(_energy), m_goal(_position)
 	{
 		m_direction = Math::Vec2(0);
-		m_energy = 1.0f;
-		m_goal = Math::Vec2(0);
-		m_position = Math::Vec2(0);
+
 		setRadius();
 
 		m_accelerationPerFrame = 0.00015f;
@@ -45,7 +43,7 @@ namespace Ai
 
 	void GameObject::setRadius(){
 		// TODO compute
-		m_radius = m_energy;
+		m_radius = sqrt( m_energy) *0.1f;
 	}
 
 	const Math::Vec2& GameObject::getPosition()

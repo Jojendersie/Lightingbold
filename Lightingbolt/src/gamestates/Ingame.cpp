@@ -21,11 +21,8 @@ Ingame::Ingame()
 	/** Test **/
 	map = new Map::Map(1024,768);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
-	map->getEnemy(0)->setGoal(Math::Vec2(0));
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
-	map->getEnemy(1)->setGoal(Math::Vec2(0));
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
-	map->getEnemy(2)->setGoal(Math::Vec2(0));
 
 	/**********/
 }

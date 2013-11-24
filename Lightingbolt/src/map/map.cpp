@@ -18,6 +18,8 @@ namespace Map
 		m_densityMap = new float[_width*_height];
 		
 		m_player = new Ai::GameObject(Math::Vec2(0.0,0.0),0.3f,this);
+		m_player->setShape(0,0,0);
+		m_player->setMaterialIndex(0);
 		InitMap();
 	}
 

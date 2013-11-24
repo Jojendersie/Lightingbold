@@ -18,7 +18,7 @@ namespace Graphic {
 			{ "TEXCOORD", 2, DXGI_FORMAT_R8G8B8A8_UINT, 0, sizeof(float)*6, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 		HRESULT hr = Device::Device->CreateInputLayout(
-			LayoutDesc, 4, _shader->m_shader->GetBufferPointer(), _shader->m_shader->GetBufferSize(), &g_VertexLayout);
+			LayoutDesc, 4, _shader->m_shaderCode, _shader->m_codeSize, &g_VertexLayout);
 		Assert( SUCCEEDED(hr) );
 	}
 
@@ -44,8 +44,8 @@ namespace Graphic {
 			{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(float)*4, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 		HRESULT hr = Device::Device->CreateInputLayout(
-			LayoutDesc, 3, _shader->m_shader->GetBufferPointer(),
-			_shader->m_shader->GetBufferSize(), &g_PhotonVertexLayout);
+			LayoutDesc, 3, _shader->m_shaderCode,
+			_shader->m_codeSize, &g_PhotonVertexLayout);
 		Assert( SUCCEEDED(hr) );
 	}
 

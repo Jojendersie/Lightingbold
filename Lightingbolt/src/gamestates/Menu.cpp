@@ -64,7 +64,7 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 {
 	// Fill relevant constants
-	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
+	_ShaderConstants->setMapSize( Vec2(float(map->getWidth()), float(map->getHeight())) );
 	_ShaderConstants->setPlayerEnergy( map->getPlayer()->getEnergy() );
 	_ShaderConstants->setMaterial(0, 0.2f, Vec3(1.0f, 0.0f, 0.0f));
 	_ShaderConstants->setMaterial(1, 0.6f, Vec3(0.0f, 1.0f, 0.0f));

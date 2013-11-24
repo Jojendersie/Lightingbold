@@ -79,9 +79,9 @@ namespace Ai
 
 	void GameObject::update()
 	{
-		checkCollision();
 		if(isAlive())
 		{
+			checkCollision();
 			movement();
 			checkForBoundaries();
 		}

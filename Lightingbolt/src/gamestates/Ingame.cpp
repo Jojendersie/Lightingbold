@@ -60,9 +60,9 @@ void Ingame::MouseMove(int _dx, int _dy)
 
 void Ingame::KeyDown(int _key)
 {
-	if(!map->getPlayer()->isAlive())
+	//if(!map->getPlayer()->isAlive())
 	{
-		SwitchGameState(GameStates::GS::MENU);
+		SwitchGameState(GameStates::GS::INGAME);
 	}
 }
 
@@ -111,13 +111,13 @@ void Ingame::Update( double _time, double _deltaTime )
 {
 	if(map->getNumberOfObjects() < m_maxEnemies)
 	{
-		if(map->getNumberOfObjects() < m_minEnemies*3)
+		/*if(map->getNumberOfObjects() < m_minEnemies*3)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.05f)
 			{
 				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
 			}
-		}
+		}*/
 		if(map->getNumberOfObjects() < m_minEnemies*2)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.2f)
@@ -125,7 +125,7 @@ void Ingame::Update( double _time, double _deltaTime )
 				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
 			}
 		}
-		if(map->getNumberOfObjects() < m_minEnemies)
+		else if(map->getNumberOfObjects() < m_minEnemies)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.4f)
 			{

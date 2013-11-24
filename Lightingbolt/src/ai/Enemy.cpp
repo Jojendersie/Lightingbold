@@ -11,12 +11,17 @@ namespace Ai
 	Math::Vec2 Enemy::determineReaction(GameObject* _currentEnemy)
 	{
 		float vectorWeight = 1;
+		float optimalSizeRation = 0.75;
 		Math::Vec2 directionVector(_currentEnemy->getPosition()-getPosition());
 		directionVector = directionVector / directionVector.length();
 		float sizeRatio;
 		sizeRatio = _currentEnemy->getEnergy()/getEnergy();
 		if(sizeRatio > 1){
-			vectorWeight *= -1;
+			vectorWeight *= -1 * vectorWeight*vectorWeight*5.0f;
+		}else
+		{
+			float sizeRatioRatioDiff = abs(optimalSizeRation-_currentEnemy->getRadius()/getRadius());
+			vectorWeight *= (1/(sizeRatioRatioDiff*sizeRatioRatioDiff));
 		}
 		return vectorWeight *directionVector;
 	}
@@ -49,11 +54,14 @@ namespace Ai
 
 	Enemy::Enemy()
 	{
-		
+		m_currentThinkSleep = 0.0f;
+		m_maxThinkSleep = 2.0f;
 	}
 
 	Enemy::Enemy(const Math::Vec2& _position, float _energy, Map::Map* _map): GameObject(_position,_energy,_map)
 	{
+		m_currentThinkSleep = 0.0f;
+		m_maxThinkSleep = 1.0f;
 	}
 
 	Enemy::~Enemy()
@@ -61,9 +69,20 @@ namespace Ai
 
 	}
 
+	void Enemy::resetThinkSleep()
+	{
+		m_currentThinkSleep=0.0;
+		m_maxThinkSleep = 0.25f + (double)g_rand->Uniform(0.0f,0.125f);
+	}
+
 	void Enemy::update( double _deltaTime)
 	{
-		think();
+		if(m_currentThinkSleep > m_maxThinkSleep)
+		{
+			resetThinkSleep();
+			think();
+		}
+		m_currentThinkSleep+=_deltaTime;
 		GameObject::update(_deltaTime);
 	}
 } // namespace Ai

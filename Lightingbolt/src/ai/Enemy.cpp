@@ -16,7 +16,10 @@ namespace Ai
 		float sizeRatio;
 		sizeRatio = _currentEnemy->getEnergy()/getEnergy();
 		if(sizeRatio > 1){
-			vectorWeight *= -1;
+			vectorWeight *= -2;
+		}else
+		{
+
 		}
 		return vectorWeight *directionVector;
 	}

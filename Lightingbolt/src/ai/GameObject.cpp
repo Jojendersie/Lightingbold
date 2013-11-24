@@ -122,7 +122,7 @@ namespace Ai
 			{
 				if(g_circleCollision(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius()))
 				{
-					if(getRadius()>m_map->getEnemy(i)->getRadius())
+					if(getRadius() > m_map->getEnemy(i)->getRadius())
 					{
 						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
 						m_map->getEnemy(i)->setAlive(false);

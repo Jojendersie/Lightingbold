@@ -27,6 +27,7 @@ namespace Graphic {
 		ID3D11DepthStencilState* m_depthStencilState;	///< No Z-Test
 		ID3D11BlendState* m_blendStateAlpha;			///< Standard alpha blending
 		ID3D11BlendState* m_blendStateAdd;				///< Pure additive blending
+		ID3D11BlendState* m_blendStateMult;				///< Inverse multiplicative with color
 		ID3D11RasterizerState* m_rasterState;			///< Solid fill mode no culling
 		ID3D11SamplerState* m_linearSampler;				///< Point sampler with clamp
 
@@ -54,7 +55,8 @@ namespace Graphic {
 		enum struct BLEND_MODES
 		{
 			ALPHA,
-			ADDITIVE
+			ADDITIVE,
+			INV_MULT
 		};
 		void setBlendMode( BLEND_MODES _mode );
 

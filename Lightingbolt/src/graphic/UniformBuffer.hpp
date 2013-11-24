@@ -27,6 +27,9 @@ namespace Graphic {
 		/// \brief Determines how long (values near 1) the light stays.
 		///		Negative values activate the tone mapper.
 		void setLightScale( float _scale )			{ m_storage.LightScale = _scale; }
+
+		/// \brief The player energy is the referene for all colors
+		void setPlayerEnergy( float _energy )		{ m_storage.PlayerEnergy = _energy; }
 	private:
 		ID3D11Buffer* m_buffer;	///< DirectX constant buffer
 
@@ -34,6 +37,8 @@ namespace Graphic {
 			float Time;
 			Math::Vec2 MapSize;
 			float LightScale;
+			float PlayerEnergy;
+			float _1,_2,_3;
 			Material Materials[8];
 		} m_storage;
 	};

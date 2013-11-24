@@ -7,6 +7,8 @@
 #include "../graphic/Vertex.hpp"
 #include "../graphic/device.hpp"
 #include "../graphic/VertexBuffer.hpp"
+#include "../graphic/UniformBuffer.hpp"
+#include "../graphic/PhotonMapper.hpp"
 #include "../map/map.hpp"
 #include "../ai/Enemy.hpp"
 #include "../generator/Random.hpp"
@@ -28,11 +30,19 @@ Ingame::Ingame()
 	map->getEnemy(2)->setGoal(Math::Vec2(0));
 
 	/**********/
+
+	m_mapTexture = new Graphic::RenderTarget( map->getWidth(), map->getHeight(),
+		DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW,
+		map->getDensityMap() );
+
+	m_photonMapper = new Graphic::PhotonMapper( 4, 100 );
 }
 
 Ingame::~Ingame()
 {
 	delete m_vertexBuffer;
+	delete m_photonMapper;
+	delete m_mapTexture;
 	delete map;
 }
 
@@ -56,17 +66,31 @@ void Ingame::Scroll(int _delta)
 void Ingame::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _renderTargets,
 				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 {
+	// Fill relevant constants
+	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
+	_ShaderConstants->setPlayerEnergy( map->getPlayer()->getEnergy() );
+	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
+	_ShaderConstants->setMaterial(1, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
+	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
+
+	m_mapTexture->SetAsTexture(0);
+	m_photonMapper->CreateLightMap( m_vertexBuffer, _time, _renderTargets, _shaders, _ShaderConstants );
+
+	// Draw light map to framebuffer
 	_renderTargets.BackBuffer->SetAsTarget();
 	_renderTargets.BackBuffer->Clear( CLEAR_COLOR );
 
-	// Test
+	_ShaderConstants->setLightScale(-0.5f);	// Tone mapper
+	_ShaderConstants->upload();
+	Graphic::Device::Window->drawScreenQuad();
+
+	// Draw blob stuff
+	Graphic::Device::Window->setBlendMode( Graphic::DX11Window::BLEND_MODES::INV_MULT );
 	_shaders.VSPassThrough->set();
 	_shaders.GSQuad->set();
 	_shaders.PSBlob->set();
 	Graphic::Vertex::SetLayout();
-
 	m_vertexBuffer->set();
-
 	Graphic::Device::Context->Draw( map->getNumberOfObjects()+1, 0 );
 
 	Graphic::Device::Window->Present();

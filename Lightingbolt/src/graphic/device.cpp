@@ -180,6 +180,7 @@ namespace Graphic {
 
 		if( m_swapChain ) while( 0 != m_swapChain->Release() );
 		if( m_devContext ) while( 0 != m_devContext->Release() );
+
 #if defined(DEBUG) | defined(_DEBUG) // Quick and dirty - avoid release crash!!!
 		if( m_device ) while( 0 != m_device->Release() );
 #endif

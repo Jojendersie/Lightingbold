@@ -23,12 +23,12 @@ namespace Ai {
 		float getEnergy();
 		void setEnergy(float _newEnergy);
 		float getKineticEnegy();
-		virtual void update();
+		virtual void update( double _deltaTime);
 		float getShinyRadius();
 		bool isAlive() {return m_alive;}
 	private:
 		void checkForBoundaries();
-		void movement();
+		void movement( double _deltaTime);
 		void checkCollision();
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;

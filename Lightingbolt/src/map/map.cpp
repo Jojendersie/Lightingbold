@@ -40,8 +40,8 @@ namespace Map
 				/*m_densityMap[m_width*y+x]  += GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(m_width/4,m_height/2),Math::Vec2(50,30),3);
 				m_densityMap[m_width*y+x]  += GaussAtCoordinate(Math::Vec2(x,y),Math::Vec2(500,m_height/3),Math::Vec2(200,30),-0.5);
 				m_densityMap[m_width*y+x]  += g_rand->Uniform(-0.4f,0.5f);*/
-				m_densityMap[m_width*y+x] += (sin(sqrt((m_width-x)*(m_width-x))*0.03)) *0.25; //+ cos((m_height-y)*(m_height-y))) * 0.5;
-				m_densityMap[m_width*y+x] += (cos(sqrt((m_height-y)*(m_height-y))*0.05)) *0.25;
+				//m_densityMap[m_width*y+x] += (sin(sqrt((m_width-x)*(m_width-x))*0.03)) *0.25; //+ cos((m_height-y)*(m_height-y))) * 0.5;
+				//m_densityMap[m_width*y+x] += (cos(sqrt((m_height-y)*(m_height-y))*0.05)) *0.25;
 			} // for x
 		} // for y
 	}
@@ -52,19 +52,35 @@ namespace Map
 		return _amplidude * pow(2.71828f,-(((sub.x*sub.x)/(2*spread.x*spread.x))+((sub.y*sub.y)/(2*spread.y*spread.y))));
 	}
 
-	void Map::Update()
+	void Map::Update( double _deltaTime)
 	{
+		bool rescale=false;
 		// update the player
-		m_player->update();
-
+		if(m_player->isAlive())
+		{
+			m_player->update(_deltaTime);
+			if(m_player->getEnergy()>1) rescale = true;
+		}
 		// update all other objects
 		for(int i=0;i<m_objects.size();++i)
 		{
 			if(m_objects[i]->isAlive())
-				m_objects[i]->update();
+			{
+				m_objects[i]->update(_deltaTime);
+				if(m_player->getEnergy()>1) rescale = true;
+			}
 			else
 				m_objects.remove(i--);
-		} // objects
+		}// objects
+
+		if(rescale)
+		{
+			for(int i=0;i<m_objects.size();++i)
+			{
+				m_objects[i]->setEnergy(m_objects[i]->getEnergy()*0.75f);
+			}
+			m_player->setEnergy(m_player->getEnergy()*0.75f);
+		}
 	}
 
 	Math::Vec2 Map::RayCast( const Math::Vec2& _position, const Math::Vec2& _direction )

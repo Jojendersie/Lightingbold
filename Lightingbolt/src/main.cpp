@@ -185,6 +185,7 @@ void SwitchGameState( GameStates::GS _State )
 		case GameStates::GS::INGAME: 
 			delete g_StateIngame;
 			g_StateIngame = new GameStates::Ingame;
+			
 			g_State = g_StateIngame; break;
 		case GameStates::GS::MENU: g_State = g_StateMenu; break;
 	}

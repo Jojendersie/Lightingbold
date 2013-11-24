@@ -77,17 +77,17 @@ namespace Ai
 		return m_direction.length();
 	}
 
-	void GameObject::update()
+	void GameObject::update( double _deltaTime)
 	{
-		checkCollision();
 		if(isAlive())
 		{
-			movement();
+			checkCollision();
+			movement(_deltaTime);
 			checkForBoundaries();
 		}
 	}
 
-	void GameObject::movement()
+	void GameObject::movement( double _deltaTime)
 	{
 		//m_direction = m_direction.normalize() * (m_direction.length() *0.9f);
 		// compute current target and how to get there

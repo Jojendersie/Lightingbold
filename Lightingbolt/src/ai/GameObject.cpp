@@ -122,10 +122,16 @@ namespace Ai
 			{
 				if(g_circleCollision(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius()))
 				{
-					if(getRadius()>m_map->getEnemy(i)->getRadius())
+					if(getRadius() > m_map->getEnemy(i)->getRadius())
 					{
 						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
 						m_map->getEnemy(i)->setAlive(false);
+						int nShape1 = m_map->getEnemy(i)->getShape1();
+						int nShape2 = m_map->getEnemy(i)->getShape2();
+						float nInterpolation = m_map->getEnemy(i)->getshapeInterpolation();
+						m_shape1 = (int)floor(m_shape1 + (nShape1-m_shape1)*0.5f+0.5);
+						m_shape2 = (int)floor(m_shape2 + (nShape2-m_shape2)*0.5f+0.5);
+						m_shapeInterpolation = (int)floor(m_shapeInterpolation + (nInterpolation-m_shapeInterpolation)*0.5f+0.5);
 					}
 					else if(getRadius()<m_map->getEnemy(i)->getRadius())
 					{

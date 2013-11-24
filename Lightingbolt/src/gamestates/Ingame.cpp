@@ -19,15 +19,21 @@ namespace GameStates {
 
 Ingame::Ingame() 
 {
-	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 10);
+	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 50);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
+	/*map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.511f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.731f);
-	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);*/
+
+	int numberOfEnemies = g_rand->Uniform(4,20);
+	for(int i=0;i<numberOfEnemies;++i)
+	{
+		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+	}
 
 	/**********/
 

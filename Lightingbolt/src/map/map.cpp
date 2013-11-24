@@ -60,7 +60,10 @@ namespace Map
 		// update all other objects
 		for(int i=0;i<m_objects.size();++i)
 		{
-			m_objects[i]->update();
+			if(m_objects[i]->isAlive())
+				m_objects[i]->update();
+			else
+				m_objects.remove(i--);
 		} // objects
 	}
 

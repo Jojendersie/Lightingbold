@@ -61,9 +61,9 @@ namespace Ai
 
 	}
 
-	void Enemy::update()
+	void Enemy::update( double _deltaTime)
 	{
 		think();
-		GameObject::update();
+		GameObject::update(_deltaTime);
 	}
 } // namespace Ai

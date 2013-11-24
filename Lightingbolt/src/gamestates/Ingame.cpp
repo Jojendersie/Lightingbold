@@ -34,6 +34,8 @@ Ingame::Ingame()
 	for(int i=0;i<numberOfEnemies;++i)
 	{
 		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+		map->getEnemy(i)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
+		map->getEnemy(i)->setMaterialIndex((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5));
 	}
 
 	/**********/
@@ -60,9 +62,9 @@ void Ingame::MouseMove(int _dx, int _dy)
 
 void Ingame::KeyDown(int _key)
 {
-	if(!map->getPlayer()->isAlive())
+	//if(!map->getPlayer()->isAlive())
 	{
-		SwitchGameState(GameStates::GS::MENU);
+		SwitchGameState(GameStates::GS::INGAME);
 	}
 }
 
@@ -111,30 +113,34 @@ void Ingame::Update( double _time, double _deltaTime )
 {
 	if(map->getNumberOfObjects() < m_maxEnemies)
 	{
-		if(map->getNumberOfObjects() < m_minEnemies*3)
+		/*if(map->getNumberOfObjects() < m_minEnemies*3)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.05f)
 			{
 				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
 			}
-		}
+		}*/
 		if(map->getNumberOfObjects() < m_minEnemies*2)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.2f)
 			{
 				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+				map->getEnemy(map->getNumberOfObjects()-1)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
+				map->getEnemy(map->getNumberOfObjects()-1)->setMaterialIndex((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5));
 			}
 		}
-		if(map->getNumberOfObjects() < m_minEnemies)
+		else if(map->getNumberOfObjects() < m_minEnemies)
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.4f)
 			{
 				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+				map->getEnemy(map->getNumberOfObjects()-1)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
+				map->getEnemy(map->getNumberOfObjects()-1)->setMaterialIndex((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5));
 			}
 		}
 	}
 
-	map->Update();
+	map->Update(_deltaTime);
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){
@@ -143,21 +149,21 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
-		vertices[i].MaterialIndex = g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx1 = 0;//g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx2 = 3;//g_rand->Uniform(0,3);
+		vertices[i].MaterialIndex =map->getEnemy(i)->getMaterialIndex();
+		vertices[i].ShapeIdx1 = map->getEnemy(i)->getShape1();//g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = map->getEnemy(i)->getShape2();//g_rand->Uniform(0,3);
 		vertices[i].Energy = map->getEnemy(i)->getEnergy();
-		vertices[i].ShapeInterpolation = 0.5f;//g_rand->Uniform();
+		vertices[i].ShapeInterpolation = map->getEnemy(i)->getshapeInterpolation();//g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
-	vertices[number].MaterialIndex = g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx1 = 1;//g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx2 = 2;//g_rand->Uniform(0,3);
+	vertices[number].MaterialIndex = map->getPlayer()->getMaterialIndex();
+	vertices[number].ShapeIdx1 = map->getPlayer()->getShape1();//g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = map->getPlayer()->getShape2();//g_rand->Uniform(0,3);
 	vertices[number].Energy = map->getPlayer()->getEnergy();
-	vertices[number].ShapeInterpolation = 0.2;//g_rand->Uniform();
+	vertices[number].ShapeInterpolation = map->getPlayer()->getshapeInterpolation();//g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

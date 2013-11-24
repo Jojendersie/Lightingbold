@@ -26,7 +26,7 @@ namespace Map {
 		float Density( const Math::Vec2& _position);
 
 		/// \brief Updates the map
-		void Update();
+		void Update( double _deltaTime);
 
 		void addEnemy(const Math::Vec2& _position, float _radius);
 

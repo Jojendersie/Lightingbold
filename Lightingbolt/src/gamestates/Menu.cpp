@@ -23,6 +23,7 @@ Menu::Menu()
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 100);
 	/** Test **/
 	map = new Map::Map(1024,768);
+
 	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
@@ -96,7 +97,7 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 
 void Menu::Update( double _time, double _deltaTime )
 {
-	map->Update();
+	map->Update(_deltaTime);
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){

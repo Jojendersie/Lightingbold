@@ -9,7 +9,7 @@ float4 main(PSInput _in) : SV_TARGET
 	// groundDensities.x = 1 - dot(_in.TexCoord, _in.TexCoord);
 	
 	// Circle
-	groundDensities.x = dot(_in.TexCoord, _in.TexCoord);
+	groundDensities.x = dot(_in.TexCoord, _in.TexCoord) * 1.5;
 	
 	// Smooth wave
 	groundDensities.y = dot(_in.TexCoord, _in.TexCoord) + sin(angle*12) * 0.1 + 0.1;

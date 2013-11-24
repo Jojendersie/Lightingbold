@@ -149,6 +149,7 @@ void Ingame::Update( double _time, double _deltaTime )
 		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
+		vertices[i].Size.y *= Graphic::Device::Window->Width() / float(Graphic::Device::Window->Height());
 		vertices[i].MaterialIndex =map->getEnemy(i)->getMaterialIndex();
 		vertices[i].ShapeIdx1 = map->getEnemy(i)->getShape1();//g_rand->Uniform(0,3);
 		vertices[i].ShapeIdx2 = map->getEnemy(i)->getShape2();//g_rand->Uniform(0,3);
@@ -159,6 +160,7 @@ void Ingame::Update( double _time, double _deltaTime )
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
+	vertices[number].Size.y *= Graphic::Device::Window->Width() / float(Graphic::Device::Window->Height());
 	vertices[number].MaterialIndex = map->getPlayer()->getMaterialIndex();
 	vertices[number].ShapeIdx1 = map->getPlayer()->getShape1();//g_rand->Uniform(0,3);
 	vertices[number].ShapeIdx2 = map->getPlayer()->getShape2();//g_rand->Uniform(0,3);

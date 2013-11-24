@@ -65,11 +65,15 @@ int main()
 #endif
 
 	// *** INITIALIZATION ************************************************** //
+#if defined(DEBUG) | defined(_DEBUG)
 	Graphic::DX11Window* window = new Graphic::DX11Window( 1024, 768, false );
+#else
+	Graphic::DX11Window* window = new Graphic::DX11Window( 1366, 768, true );
+#endif
 	g_rand = new Generators::Random(0);
 	g_StateMenu = new GameStates::Menu;
 	g_StateIngame = new GameStates::Ingame;
-	g_State = g_StateMenu;
+	g_State = g_StateIngame;
 	g_ShaderConstants = new Graphic::UniformBuffer();
 	window->OnMouseMove = MouseMove;
 	window->OnKeyDown = KeyDown;

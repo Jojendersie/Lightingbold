@@ -69,7 +69,7 @@ namespace Map
 			if(m_objects[i]->isAlive())
 			{
 				m_objects[i]->update(_deltaTime);
-				if(m_player->getEnergy()>1) rescale = true;
+				if(m_objects[i]->getEnergy()>1) rescale = true;
 			}
 			else
 				m_objects.remove(i--);

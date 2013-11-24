@@ -17,6 +17,7 @@ namespace Ai
 		float sizeRatio;
 		sizeRatio = _currentEnemy->getEnergy()/getEnergy();
 		if(sizeRatio > 1){
+			//if(g_rand.)
 			vectorWeight *= -1 * vectorWeight*vectorWeight*5.0f;
 		}else
 		{
@@ -55,13 +56,13 @@ namespace Ai
 	Enemy::Enemy()
 	{
 		m_currentThinkSleep = 0.0f;
-		m_maxThinkSleep = 2.0f;
+		m_maxThinkSleep = 0.1f;
 	}
 
-	Enemy::Enemy(const Math::Vec2& _position, float _energy, Map::Map* _map): GameObject(_position,_energy,_map)
+	Enemy::Enemy(const Math::Vec2& _position, float _energy, Map::Map* _map):GameObject(_position,_energy,_map)
 	{
 		m_currentThinkSleep = 0.0f;
-		m_maxThinkSleep = 1.0f;
+		m_maxThinkSleep = 0.1f;
 	}
 
 	Enemy::~Enemy()

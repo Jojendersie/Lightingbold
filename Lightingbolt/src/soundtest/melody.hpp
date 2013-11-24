@@ -17,7 +17,8 @@ namespace Soundtest
 		Melody(Sound::Sound sound, float bpm, DynArray<Note> notes);
 		~Melody();
 
-		void update(double _deltaTime);
+		void play();
+		bool update(double _deltaTime);
 		void setRepeat(bool repeat);
 	private:
 		void setPitch();

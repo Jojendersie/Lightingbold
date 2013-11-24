@@ -5,8 +5,19 @@ namespace Soundtest
 	Melody::Melody(Sound::Sound sound, float bpm, DynArray<Note> notes):
 		m_curTime(0), m_spb(60.0f/bpm), m_notes(notes), m_index(0), m_repeat(false)
 	{
-		m_source=new Sound::Source(sound, 0.03f, 5);
+		m_source=new Sound::Source(sound, 0.05f, 5);
 		m_source->SetLooping(true);
+	}
+
+	Melody::~Melody()
+	{
+		delete m_source;
+	}
+
+	void Melody::play()
+	{
+		m_curTime=0;
+		m_index=0;
 		if(m_index<m_notes.size())
 		{
 			setPitch();
@@ -18,18 +29,13 @@ namespace Soundtest
 		}
 	}
 
-	Melody::~Melody()
-	{
-		delete m_source;
-	}
-
-	void Melody::update(double _deltaTime)
+	bool Melody::update(double _deltaTime)
 	{
 		m_curTime+=_deltaTime;
 		if(m_index<m_notes.size())
 		{
 			setPitch();
-			if(m_curTime>=m_spb*m_notes[m_index]->m_value)
+			if(m_curTime>m_spb*m_notes[m_index]->m_value)
 			{
 				if(m_index<m_notes.size()-1)
 				{
@@ -37,7 +43,7 @@ namespace Soundtest
 				}
 				else if(m_repeat)
 				{
-					m_index=0;
+					return true;
 				}
 
 				if(m_notes[m_index]->m_played)
@@ -52,13 +58,7 @@ namespace Soundtest
 				m_curTime=0;
 			}
 		}
-		/*else
-		{
-			if(m_repeat)
-			{
-				m_index=0;
-			}
-		}*/
+		return false;
 	}
 
 	void Melody::setRepeat(bool repeat)

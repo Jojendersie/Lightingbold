@@ -67,8 +67,10 @@ int main()
 
 	Soundtest::Melody melody(sound, 110, Soundtest::Song::twosonHigh());
 	melody.setRepeat(true);
+	melody.play();
 	Soundtest::Melody melody2(sound, 110, Soundtest::Song::twosonLow());
 	melody2.setRepeat(true);
+	melody2.play();
 
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
@@ -123,7 +125,11 @@ int main()
 				g_State->Render(dTime, dDeltaTime, *g_RenderTargets, *g_ShaderList, g_ShaderConstants);
 				g_State->Update(dTime, dDeltaTime);
 
-				melody.update(dDeltaTime);
+				if(melody.update(dDeltaTime))
+				{
+					melody.play();
+					melody2.play();
+				}
 				melody2.update(dDeltaTime);
 			}
         }

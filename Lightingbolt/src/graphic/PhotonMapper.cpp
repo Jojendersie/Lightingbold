@@ -17,19 +17,34 @@ namespace Graphic {
 		m_photons = new Graphic::FeedBackBuffer();
 		m_photonMap[0] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32G32B32A32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
 		m_photonMap[1] = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R32G32B32A32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
+		m_refractionTexture = new Graphic::RenderTarget( 512, 512, DXGI_FORMAT_R8G8B8A8_UNORM, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW, nullptr );
 		m_targetMap = 0;
 	}
 
 	PhotonMapper::~PhotonMapper()
 	{
+		delete m_refractionTexture;
 		delete m_photonMap[0];
 		delete m_photonMap[1];
 		delete m_photons;
 	}
 
+	const float CLEAR_REFRACTION[4] = {0.5, 0.5, 0.5, 1.0};
+
 	void PhotonMapper::CreateLightMap(Graphic::VertexBuffer* _individuals, double _time, Graphic::RenderTargetList& _renderTargets,
 				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 	{
+		// Create the refraction map
+		m_refractionTexture->SetAsTarget();
+		m_refractionTexture->Clear(CLEAR_REFRACTION);
+		Graphic::Device::Window->setBlendMode( Graphic::DX11Window::BLEND_MODES::ALPHA );
+		_shaders.VSPassThrough->set();
+		_shaders.GSQuad->set();
+		_shaders.PSRefractionMap->set();
+		Graphic::Vertex::SetLayout();
+		_individuals->set();
+		Graphic::Device::Context->Draw( _individuals->getNum(), 0 );
+
 		m_photonMap[m_targetMap]->SetAsTarget();
 		m_photonMap[m_targetMap]->Clear(CLEAR_COLOR);
 
@@ -39,8 +54,6 @@ namespace Graphic {
 		_shaders.VSPassThrough->set();
 		_shaders.GSInitPhotons->set();
 		_shaders.PSPhoton->set();
-		Graphic::Vertex::SetLayout();
-		_individuals->set();
 		m_photons->enable();
 		for( int i=0; i<m_numPhotons; ++i )
 		{
@@ -53,6 +66,7 @@ namespace Graphic {
 		_shaders.VSPassPhoton->set();
 		_shaders.GSSimulate->set();
 		Graphic::PhotonVertex::setLayout();
+		m_refractionTexture->SetAsTexture(2);
 		for( int i=0; i<m_simSteps; ++i )
 		{
 			m_photons->toggle();
@@ -68,6 +82,9 @@ namespace Graphic {
 		_ShaderConstants->setLightScale(0.98f);
 		_ShaderConstants->upload();
 		Graphic::Device::Window->drawScreenQuad();
+
+		//m_refractionTexture->SetAsTexture(1);
+		//Graphic::Device::Window->drawScreenQuad();
 
 		Device::Context->OMSetRenderTargets( 0, nullptr, nullptr );
 		m_photonMap[m_targetMap]->SetAsTexture(1);

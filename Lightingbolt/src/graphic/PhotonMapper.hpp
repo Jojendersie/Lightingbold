@@ -26,6 +26,7 @@ namespace Graphic {
 		int m_simSteps;
 
 		Graphic::FeedBackBuffer* m_photons;
+		Graphic::RenderTarget* m_refractionTexture;
 		Graphic::RenderTarget* m_photonMap[2];
 		int m_targetMap;
 	};

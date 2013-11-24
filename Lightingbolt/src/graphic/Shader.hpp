@@ -70,8 +70,9 @@ namespace Graphic {
 		Shader* PSBlob;				///< Draw a shaped object.
 		Shader* PSPhoton;			///< Draw a point with some energy
 		Shader* PSTexture;			///< Sample a texture
+		Shader* PSRefractionMap;	///< Draw a refraction map
 
-		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr)	{}
+		ShaderList() : VSPassThrough(nullptr), GSQuad(nullptr), GSInitPhotons(nullptr), GSSimulate(nullptr), PSBlob(nullptr), PSPhoton(nullptr), VSPassPhoton(nullptr), PSRefractionMap(nullptr)	{}
 		~ShaderList()
 		{
 			delete VSPassThrough;
@@ -82,6 +83,7 @@ namespace Graphic {
 			delete PSBlob;
 			delete PSPhoton;
 			delete PSTexture;
+			delete PSRefractionMap;
 		}
 	};
 

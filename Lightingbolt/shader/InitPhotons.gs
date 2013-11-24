@@ -13,8 +13,8 @@ void main( point Vertex _in[1], uint _primitiveID: SV_PrimitiveID, inout PointSt
 	for( int i=0; i<84; ++i )
 	{
 		float rndAngle = RandomSample(_in[0].Position, i * 346) * 6.283185307;
-		vertexOut.Direction = float2(sin(rndAngle),cos(rndAngle)) * 0.01;
-		float rndStep = RandomSample(_in[0].Position, i);
+		vertexOut.Direction = float2(sin(rndAngle),cos(rndAngle));
+		float rndStep = RandomSample(_in[0].Position, i) * 0.01;
 		vertexOut.Position.xy = _in[0].Position + vertexOut.Direction * rndStep;
 		_out.Append(vertexOut);
 	}

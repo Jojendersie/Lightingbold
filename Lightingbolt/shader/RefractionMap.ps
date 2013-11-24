@@ -1,0 +1,24 @@
+#include "Common.hlsl"
+
+float4 main(PSInput _in) : SV_TARGET
+{
+	float4 groundDensities;
+	float angle = atan2(_in.TexCoord.y, _in.TexCoord.x);
+	
+	// Circle
+	groundDensities.x = dot(_in.TexCoord, _in.TexCoord);
+	
+	// Smooth wave
+	groundDensities.y = dot(_in.TexCoord, _in.TexCoord) + sin(angle*12) * 0.1 + 0.1;
+
+	// Trinity
+	groundDensities.z = dot(_in.TexCoord, _in.TexCoord) + sin(angle*3) * 0.5 + 0.5;
+
+	// Star
+	groundDensities.w = dot(_in.TexCoord, _in.TexCoord) * (1+pow(sin(angle*6) * 2.5 + 2.5,0.25));
+	
+	float density = lerp(groundDensities[_in.Shape.x], groundDensities[_in.Shape.y], _in.Param.y);
+	
+	if( density > 1 ) return float4(0,0,0,0);
+	else return float4(c_materials[_in.Shape.z].Refraction, normalize(_in.TexCoord)*0.5+0.5,1);
+}

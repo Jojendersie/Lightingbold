@@ -23,12 +23,9 @@ Menu::Menu()
 	m_vertexBuffer = new Graphic::VertexBuffer(sizeof(Graphic::Vertex), 100);
 	/** Test **/
 	map = new Map::Map(1024,768);
-	map->addEnemy(Math::Vec2(0),0.3);
-	map->getEnemy(0)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(0.25),0.7);
-	map->getEnemy(1)->setGoal(Math::Vec2(0));
-	map->addEnemy(Math::Vec2(0.5),0.5);
-	map->getEnemy(2)->setGoal(Math::Vec2(0));
+	map->addEnemy(Math::Vec2(g_rand->Uniform(0.0f,0.5f),g_rand->Uniform(0.0f,0.5f)),0.05f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.07f);
+	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.011f);
 	/**********/
 	m_mapTexture = new Graphic::RenderTarget( map->getWidth(), map->getHeight(),
 		DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW,
@@ -69,8 +66,8 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 	// Fill relevant constants
 	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
 	_ShaderConstants->setPlayerEnergy( map->getPlayer()->getEnergy() );
-	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
-	_ShaderConstants->setMaterial(1, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
+	_ShaderConstants->setMaterial(0, 0.2f, Vec3(1.0f, 0.0f, 0.0f));
+	_ShaderConstants->setMaterial(1, 0.6f, Vec3(0.0f, 1.0f, 0.0f));
 	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
 
 	m_mapTexture->SetAsTexture(0);
@@ -92,35 +89,37 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 	Graphic::Vertex::SetLayout();
 	m_vertexBuffer->set();
 	Graphic::Device::Context->Draw( map->getNumberOfObjects()+1, 0 );
+	_renderTargets.BackBuffer->SetAsTarget();
 
 	Graphic::Device::Window->Present();
 }
 
 void Menu::Update( double _time, double _deltaTime )
 {
-	
 	map->Update();
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){
+		//vertices[i].Position.x = i*0.25f;
+		//vertices[i].Size = 0.25;
 		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
-		vertices[i].MaterialIndex = g_rand->Uniform(0,2);
-		vertices[i].ShapeIdx1 = 1;//g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx2 = 3;//g_rand->Uniform(0,3);
+		vertices[i].MaterialIndex = i;
+		vertices[i].ShapeIdx1 = 0;//g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = 0;//g_rand->Uniform(0,3);
 		vertices[i].Energy = map->getEnemy(i)->getEnergy();
-		vertices[i].ShapeInterpolation = 0.6;//g_rand->Uniform();
+		vertices[i].ShapeInterpolation = g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
-	vertices[number].MaterialIndex = g_rand->Uniform(0,2);
+	vertices[number].MaterialIndex = 1;
 	vertices[number].ShapeIdx1 = 0;//g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx2 = 2;//g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = 0;//g_rand->Uniform(0,3);
 	vertices[number].Energy = map->getPlayer()->getEnergy();
-	vertices[number].ShapeInterpolation = 0.5f;///g_rand->Uniform();
+	vertices[number].ShapeInterpolation = g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

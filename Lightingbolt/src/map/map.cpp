@@ -51,14 +51,8 @@ namespace Map
 		// update all other objects
 		for(int i=0;i<m_objects.size();++i)
 		{
-			//int direction = 1;
 			m_objects[i]->update();
-			/*Math::Vec2 newPos(m_objects[i]->getPosition());
-			newPos.x = newPos.x + direction *(i%2? 0.005 : -0.005);
-			newPos.y = newPos.y + direction *(i%2? -0.005 : 0.005);
-			m_objects[i]->setPosition(newPos);*/
-		}
-		//m_objects
+		} // objects
 	}
 
 	Math::Vec2 Map::RayCast( const Math::Vec2& _position, const Math::Vec2& _direction )

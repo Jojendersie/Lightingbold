@@ -27,17 +27,16 @@ namespace Ai {
 		float getShinyRadius();
 	private:
 		void checkForBoundaries();
+		void movement();
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;
 		Math::Vec2 m_goal;
 		float m_radius;
 		float m_energy;
 
-		Math::Vec2 m_velocity;
-		Math::Vec2 m_acceleration;
-		float m_maxSpeed;
-		float m_timetoReachMaxSpeed;
+		float m_maxAcceleration;
 		float m_friction;
+		float m_accelerationPerFrame;
 	protected:
 		Map::Map* m_map;
 	};

@@ -92,9 +92,9 @@ namespace Ai
         float distance = difference.length();
 
 		// every step we throw in some friction, to slow the object down
-		m_direction *= 0.97f;//m_friction;
+		m_direction *= m_friction;
 
-		Math::Vec2 acceleration = differenceNormal * 0.00015f;
+		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame;
         //acceleration = acceleration / (distance * distance);
 
 		if(acceleration.length() > m_maxAcceleration) acceleration = acceleration.normalize() * m_maxAcceleration;

@@ -14,13 +14,11 @@ namespace Ai
 	{
 	}
 
-	GameObject::GameObject(Map::Map* _map) : m_map(_map)
+	GameObject::GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map) : m_map(_map), m_position(_position), m_energy(_energy), m_goal(_position)
 	{
 		m_direction = Math::Vec2(0);
-		m_energy = 1.0f;
-		m_goal = Math::Vec2(0);
-		m_position = Math::Vec2(0);
-		m_radius = 0;
+
+		setRadius();
 
 		m_accelerationPerFrame = 0.00015f;
 		m_maxAcceleration = 0.0005f;
@@ -43,8 +41,9 @@ namespace Ai
 		m_position = Math::Vec2(_newPosition);
 	}
 
-	void GameObject::setRadius(float _newRadius){
-		m_radius = _newRadius;
+	void GameObject::setRadius(){
+		// TODO compute
+		m_radius = sqrt( m_energy) *0.1f;
 	}
 
 	const Math::Vec2& GameObject::getPosition()
@@ -64,7 +63,7 @@ namespace Ai
 
 	float GameObject::getRadius()
 	{
-		return m_energy;
+		return m_radius;
 	}
 
 	float GameObject::getEnergy()
@@ -112,21 +111,26 @@ namespace Ai
 
 	void GameObject::checkForBoundaries()
 	{
+		float reflectionSlowdown = 0.9;
 		if (m_position.x > 1.0f)
 		{
 			m_position.x = 1;
+			m_direction.x *= -reflectionSlowdown;
 		}
 		if(m_position.y > 1.0f)
 		{
 			m_position.y = 1;
+			m_direction.y *= -reflectionSlowdown;
 		}
 		if (m_position.x < -1.0f)
 		{
 			m_position.x = -1;
+			m_direction.x *= -reflectionSlowdown;
 		}
 		if(m_position.y < -1.0f)
 		{
 			m_position.y = -1;
+			m_direction.y *= -reflectionSlowdown;
 		}
 	}
 

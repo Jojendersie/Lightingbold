@@ -2,6 +2,7 @@
 
 #include "../predecl.hpp"
 #include "../math/math.hpp"
+#include <cstdint>
 
 namespace Graphic {
 
@@ -10,8 +11,11 @@ namespace Graphic {
 	{
 		Math::Vec2 Position;	///< Screen space position
 		Math::Vec2 Size;		///< Screen space size
-		Math::Vec2 Rotation;	///< (sin(alpha), cos(alpha)) for rotation of the quad in 2D
-		Math::Vec2 Param;		///< Can be used for shape parameters... (usage depends on shader)
+		float Energy;			///< The energy level -> radius and brightness
+		float ShapeInterpolation;	///< Factor in [0,1] (others might be interesting too)
+		int8_t ShapeIdx1;		///< One of 4 shapes
+		int8_t ShapeIdx2;		///< An other of 4 shapes
+		int8_t MaterialIndex;	///< The material in the uniform buffer contains the refraction (BRDF?)
 
 		/// \brief Create the vertex layout for this vertex. Call this onth
 		///		after a device was created.

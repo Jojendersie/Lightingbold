@@ -15,7 +15,7 @@ namespace Graphic {
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float)*2, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "TEXCOORD", 1, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float)*4, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 2, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(float)*6, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "TEXCOORD", 2, DXGI_FORMAT_R8G8B8A8_UINT, 0, sizeof(float)*6, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 		HRESULT hr = Device::Device->CreateInputLayout(
 			LayoutDesc, 4, _shader->m_shader->GetBufferPointer(), _shader->m_shader->GetBufferSize(), &g_VertexLayout);

@@ -152,7 +152,6 @@ namespace Graphic {
 		Vertex quad;
 		quad.Position = 0.0f;
 		quad.Size = 1.0f;
-		quad.Rotation.x = 0.0f; quad.Rotation.y = 1.0f;
 		m_screenQuad->upload(&quad, 1);
 	}
 

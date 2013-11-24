@@ -10,6 +10,9 @@
 #include "../graphic/PhotonMapper.hpp"
 #include "../map/map.hpp"
 #include "../ai/Enemy.hpp"
+#include "../generator/Random.hpp"
+
+extern Generators::Random* g_rand;
 
 namespace GameStates {
 
@@ -83,6 +86,15 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 	_ShaderConstants->upload();
 	Graphic::Device::Window->drawScreenQuad();
 
+	// Draw blob stuff
+	Graphic::Device::Window->setBlendMode( Graphic::DX11Window::BLEND_MODES::ALPHA );
+	_shaders.VSPassThrough->set();
+	_shaders.GSQuad->set();
+	_shaders.PSBlob->set();
+	Graphic::Vertex::SetLayout();
+	m_vertexBuffer->set();
+	Graphic::Device::Context->Draw( map->getNumberOfObjects()+1, 0 );
+
 	Graphic::Device::Window->Present();
 }
 
@@ -96,14 +108,21 @@ void Menu::Update( double _time, double _deltaTime )
 		vertices[i].Position.x = ((map->getEnemy(i)->getPosition().x));
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
-		vertices[i].Rotation.y = 1.0;
-		vertices[i].Param.x = float(i);
+		vertices[i].MaterialIndex = g_rand->Uniform(0,2);
+		vertices[i].ShapeIdx1 = g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = g_rand->Uniform(0,3);
+		vertices[i].Energy = map->getEnemy(i)->getEnergy();
+		vertices[i].ShapeInterpolation = g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
-	vertices[number].Rotation.y = 1.0;
+	vertices[number].MaterialIndex = g_rand->Uniform(0,2);
+	vertices[number].ShapeIdx1 = g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = g_rand->Uniform(0,3);
+	vertices[number].Energy = map->getPlayer()->getEnergy();
+	vertices[number].ShapeInterpolation = g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

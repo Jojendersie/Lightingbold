@@ -16,7 +16,7 @@ namespace Ai
 
 	GameObject::GameObject(const Math::Vec2& _position, float _energy,Map::Map* _map) : m_map(_map), m_position(_position), m_energy(_energy), m_goal(_position)
 	{
-		m_direction = Math::Vec2(0);
+		m_direction = 0;
 
 		setRadius();
 
@@ -27,10 +27,11 @@ namespace Ai
 		m_sprint = false;
 		m_maxTime = 0.25f;
 		m_time = 0.0f;
+		m_alive = true;
 	}
 
 	void GameObject::setDirection(const Math::Vec2& _newDirection){
-		m_direction = Math::Vec2(_newDirection);
+		m_direction = _newDirection;
 	}
 
 	void GameObject::setEnergy(float _newEnergy){
@@ -39,11 +40,11 @@ namespace Ai
 	}
 
 	void GameObject::setGoal(const Math::Vec2& _newGoal){
-		m_goal = Math::Vec2(_newGoal);
+		m_goal = _newGoal;
 	}
 
 	void GameObject::setPosition(const Math::Vec2& _newPosition){
-		m_position = Math::Vec2(_newPosition);
+		m_position = _newPosition;
 	}
 
 	void GameObject::setRadius(){

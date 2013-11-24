@@ -66,11 +66,9 @@ void Menu::Scroll(int _delta)
 void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _renderTargets,
 				   Graphic::ShaderList& _shaders, Graphic::UniformBuffer* _ShaderConstants)
 {
-	//_time *= 0;
 	// Fill relevant constants
 	_ShaderConstants->setMapSize( Vec2(map->getWidth(), map->getHeight()) );
-//	_ShaderConstants->setTime(float(_time));
-	//_ShaderConstants->upload();
+	_ShaderConstants->setPlayerEnergy( map->getPlayer()->getEnergy() );
 	_ShaderConstants->setMaterial(0, 1.0f, Vec3(1.0f, 0.0f, 0.0f));
 	_ShaderConstants->setMaterial(1, 1.0f, Vec3(0.0f, 1.0f, 0.0f));
 	_ShaderConstants->setMaterial(2, 1.0f, Vec3(0.0f, 0.0f, 1.0f));
@@ -87,7 +85,7 @@ void Menu::Render( double _time, double _deltaTime, Graphic::RenderTargetList& _
 	Graphic::Device::Window->drawScreenQuad();
 
 	// Draw blob stuff
-	Graphic::Device::Window->setBlendMode( Graphic::DX11Window::BLEND_MODES::ALPHA );
+	Graphic::Device::Window->setBlendMode( Graphic::DX11Window::BLEND_MODES::INV_MULT );
 	_shaders.VSPassThrough->set();
 	_shaders.GSQuad->set();
 	_shaders.PSBlob->set();
@@ -109,20 +107,20 @@ void Menu::Update( double _time, double _deltaTime )
 		vertices[i].Position.y = ((map->getEnemy(i)->getPosition().y));
 		vertices[i].Size = map->getEnemy(i)->getRadius();
 		vertices[i].MaterialIndex = g_rand->Uniform(0,2);
-		vertices[i].ShapeIdx1 = g_rand->Uniform(0,3);
-		vertices[i].ShapeIdx2 = g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx1 = 1;//g_rand->Uniform(0,3);
+		vertices[i].ShapeIdx2 = 3;//g_rand->Uniform(0,3);
 		vertices[i].Energy = map->getEnemy(i)->getEnergy();
-		vertices[i].ShapeInterpolation = g_rand->Uniform();
+		vertices[i].ShapeInterpolation = 0.6;//g_rand->Uniform();
 	}
 
 	vertices[number].Position.x = ((map->getPlayer()->getPosition().x));
 	vertices[number].Position.y = ((map->getPlayer()->getPosition().y));
 	vertices[number].Size = map->getPlayer()->getRadius();
 	vertices[number].MaterialIndex = g_rand->Uniform(0,2);
-	vertices[number].ShapeIdx1 = g_rand->Uniform(0,3);
-	vertices[number].ShapeIdx2 = g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx1 = 0;//g_rand->Uniform(0,3);
+	vertices[number].ShapeIdx2 = 2;//g_rand->Uniform(0,3);
 	vertices[number].Energy = map->getPlayer()->getEnergy();
-	vertices[number].ShapeInterpolation = g_rand->Uniform();
+	vertices[number].ShapeInterpolation = 0.5f;///g_rand->Uniform();
 
 	m_vertexBuffer->upload(vertices, number+1);
 	delete[] vertices;

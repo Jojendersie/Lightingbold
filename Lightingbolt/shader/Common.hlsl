@@ -24,6 +24,8 @@ cbuffer Constants : register(b0)
 	float c_time;
 	float2 c_mapSize;
 	float c_lightScale;
+	float c_playerEnergy;
+	float3 _1;
 	Material c_materials[8];
 };
 

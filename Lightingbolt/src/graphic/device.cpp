@@ -164,6 +164,7 @@ namespace Graphic {
 		if( m_depthStencilState ) m_depthStencilState->Release();
 		if( m_blendStateAlpha ) m_blendStateAlpha->Release();
 		if( m_blendStateAdd ) m_blendStateAdd->Release();
+		if( m_blendStateMult ) m_blendStateMult->Release();
 		if( m_rasterState ) m_rasterState->Release();
 		if( m_linearSampler ) m_linearSampler->Release();
 
@@ -269,11 +270,19 @@ namespace Graphic {
 		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendStateAlpha );
 		Assert( SUCCEEDED( hr ) );
+		// Additive
 		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
 		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendStateAdd );
+		Assert( SUCCEEDED( hr ) );
+		// Negative multiplication
+		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_COLOR;
+		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ZERO;
+		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+		hr = Device::Device->CreateBlendState( &BlendDesc, &m_blendStateMult );
 		Assert( SUCCEEDED( hr ) );
 
 		// Solid fill mode no culling
@@ -317,8 +326,9 @@ namespace Graphic {
 	{
 		if( _mode == BLEND_MODES::ALPHA )
 			Device::Context->OMSetBlendState( m_blendStateAlpha, nullptr, 0xffffffff );
-		else
+		else if( _mode == BLEND_MODES::ADDITIVE )
 			Device::Context->OMSetBlendState( m_blendStateAdd, nullptr, 0xffffffff );
+		else Device::Context->OMSetBlendState( m_blendStateMult, nullptr, 0xffffffff );
 	}
 
 	void DX11Window::drawScreenQuad()

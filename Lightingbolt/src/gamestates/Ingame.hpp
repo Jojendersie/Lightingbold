@@ -24,6 +24,8 @@ namespace GameStates {
 	private:
 		Graphic::VertexBuffer* m_vertexBuffer;
 		Map::Map *map;
+		Graphic::PhotonMapper* m_photonMapper;
+		Graphic::RenderTarget* m_mapTexture;
 	};
 
 } // namespace GameStates

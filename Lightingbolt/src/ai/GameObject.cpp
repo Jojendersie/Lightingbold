@@ -113,21 +113,26 @@ namespace Ai
 
 	void GameObject::checkForBoundaries()
 	{
+		float reflectionSlowdown = 0.9;
 		if (m_position.x > 1.0f)
 		{
 			m_position.x = 1;
+			m_direction.x *= -reflectionSlowdown;
 		}
 		if(m_position.y > 1.0f)
 		{
 			m_position.y = 1;
+			m_direction.y *= -reflectionSlowdown;
 		}
 		if (m_position.x < -1.0f)
 		{
 			m_position.x = -1;
+			m_direction.x *= -reflectionSlowdown;
 		}
 		if(m_position.y < -1.0f)
 		{
 			m_position.y = -1;
+			m_direction.y *= -reflectionSlowdown;
 		}
 	}
 

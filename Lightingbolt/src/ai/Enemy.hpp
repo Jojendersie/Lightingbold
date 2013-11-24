@@ -13,7 +13,7 @@ namespace Ai
 		~Enemy();
 		void think();
 		Math::Vec2 Enemy::determineReaction(GameObject* _currentEnemy);
-		virtual void update();
+		virtual void update( double _deltaTime);
 	private:
 	};
 }

@@ -134,7 +134,7 @@ void Ingame::Update( double _time, double _deltaTime )
 		}
 	}
 
-	map->Update();
+	map->Update(_deltaTime);
 	int number = map->getNumberOfObjects();
 	Graphic::Vertex *vertices= new Graphic::Vertex[number+1];
 	for(int i = 0;i<number;i++){

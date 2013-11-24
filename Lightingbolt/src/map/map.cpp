@@ -52,13 +52,13 @@ namespace Map
 		return _amplidude * pow(2.71828f,-(((sub.x*sub.x)/(2*spread.x*spread.x))+((sub.y*sub.y)/(2*spread.y*spread.y))));
 	}
 
-	void Map::Update()
+	void Map::Update( double _deltaTime)
 	{
 		bool rescale=false;
 		// update the player
 		if(m_player->isAlive())
 		{
-			m_player->update();
+			m_player->update(_deltaTime);
 			if(m_player->getEnergy()>1) rescale = true;
 		}
 		// update all other objects
@@ -66,7 +66,7 @@ namespace Map
 		{
 			if(m_objects[i]->isAlive())
 			{
-				m_objects[i]->update();
+				m_objects[i]->update(_deltaTime);
 				if(m_player->getEnergy()>1) rescale = true;
 			}
 			else

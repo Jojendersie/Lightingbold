@@ -20,7 +20,7 @@ namespace Ai
 
 		setRadius();
 
-		m_accelerationPerFrame = 0.00015f;
+		m_accelerationPerFrame = 0.015f;
 		m_maxAcceleration = 0.0005f;
 		m_friction = 0.975f;
 	}
@@ -99,7 +99,7 @@ namespace Ai
 		// every step we throw in some friction, to slow the object down
 		m_direction *= m_friction;
 
-		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame;
+		Math::Vec2 acceleration = differenceNormal * m_accelerationPerFrame * _deltaTime;
         //acceleration = acceleration / (distance * distance);
 
 		if(acceleration.length() > m_maxAcceleration) acceleration = acceleration.normalize() * m_maxAcceleration;
@@ -126,6 +126,12 @@ namespace Ai
 					{
 						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
 						m_map->getEnemy(i)->setAlive(false);
+						int nShape1 = m_map->getEnemy(i)->getShape1();
+						int nShape2 = m_map->getEnemy(i)->getShape2();
+						float nInterpolation = m_map->getEnemy(i)->getshapeInterpolation();
+						m_shape1 = (int)floor(m_shape1 + (nShape1-m_shape1)*0.5f+0.5);
+						m_shape2 = (int)floor(m_shape2 + (nShape2-m_shape2)*0.5f+0.5);
+						m_shapeInterpolation = (int)floor(m_shapeInterpolation + (nInterpolation-m_shapeInterpolation)*0.5f+0.5);
 					}
 					else if(getRadius()<m_map->getEnemy(i)->getRadius())
 					{

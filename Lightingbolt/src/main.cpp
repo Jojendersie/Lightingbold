@@ -21,6 +21,17 @@
 
 #include "soundtest/soundmanager.hpp"
 
+#include "shader/Blob.h"
+#include "shader/Blur.h"
+#include "shader/InitPhotons.h"
+#include "shader/PassPhoton.h"
+#include "shader/Photon.h"
+#include "shader/Quad.h"
+#include "shader/Quad_gs.h"
+#include "shader/RefractionMap.h"
+#include "shader/SimPhotons.h"
+#include "shader/Textured.h"
+
 // *** FUNCTION DECLARATIONS *********************************************** //
 void CreateRenderTargets();
 void CreateShaders();
@@ -54,11 +65,15 @@ int main()
 #endif
 
 	// *** INITIALIZATION ************************************************** //
+#if defined(DEBUG) | defined(_DEBUG)
 	Graphic::DX11Window* window = new Graphic::DX11Window( 1024, 768, false );
+#else
+	Graphic::DX11Window* window = new Graphic::DX11Window( 1366, 768, true );
+#endif
 	g_rand = new Generators::Random(0);
 	g_StateMenu = new GameStates::Menu;
 	g_StateIngame = new GameStates::Ingame;
-	g_State = g_StateMenu;
+	g_State = g_StateIngame;
 	g_ShaderConstants = new Graphic::UniformBuffer();
 	window->OnMouseMove = MouseMove;
 	window->OnKeyDown = KeyDown;
@@ -144,6 +159,7 @@ void CreateShaders()
 {
 	g_ShaderList = new Graphic::ShaderList;
 
+#if defined( DEBUG ) || defined( _DEBUG )
 	g_ShaderList->VSPassThrough = new Graphic::Shader(  L"shader/Quad.vs", Graphic::Shader::Type::VERTEX );
 	Graphic::Vertex::InitLayout( g_ShaderList->VSPassThrough );
 	g_ShaderList->VSPassPhoton = new Graphic::Shader(  L"shader/PassPhoton.vs", Graphic::Shader::Type::VERTEX );
@@ -158,6 +174,26 @@ void CreateShaders()
 	g_ShaderList->PSBlob = new Graphic::Shader(  L"shader/Blob.ps", Graphic::Shader::Type::PIXEL );
 	g_ShaderList->PSPhoton = new Graphic::Shader(  L"shader/Photon.ps", Graphic::Shader::Type::PIXEL );
 	g_ShaderList->PSTexture = new Graphic::Shader(  L"shader/Textured.ps", Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSRefractionMap = new Graphic::Shader(  L"shader/RefractionMap.ps", Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSBlur = new Graphic::Shader(  L"shader/Blur.ps", Graphic::Shader::Type::PIXEL );
+#else
+	g_ShaderList->VSPassThrough = new Graphic::Shader(  Quad_vs, sizeof(Quad_vs), Graphic::Shader::Type::VERTEX );
+	Graphic::Vertex::InitLayout( g_ShaderList->VSPassThrough );
+	g_ShaderList->VSPassPhoton = new Graphic::Shader(  PassPhoton_vs, sizeof(PassPhoton_vs), Graphic::Shader::Type::VERTEX );
+	Graphic::PhotonVertex::initLayout( g_ShaderList->VSPassPhoton );
+
+	g_ShaderList->GSQuad = new Graphic::Shader(  Quad_gs, sizeof(Quad_gs), Graphic::Shader::Type::GEOMETRY );
+	g_ShaderList->GSInitPhotons = new Graphic::Shader(  InitPhotons_gs, sizeof(InitPhotons_gs), Graphic::Shader::Type::GEOMETRY,
+		Graphic::PhotonVertex::getOutputLayoutDesc(), Graphic::PhotonVertex::getOutputLayoutNum() );
+	g_ShaderList->GSSimulate = new Graphic::Shader(  SimPhotons_gs, sizeof(SimPhotons_gs), Graphic::Shader::Type::GEOMETRY,
+		Graphic::PhotonVertex::getOutputLayoutDesc(), Graphic::PhotonVertex::getOutputLayoutNum() );
+
+	g_ShaderList->PSBlob = new Graphic::Shader(  Blob_ps, sizeof(Blob_ps), Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSPhoton = new Graphic::Shader(  Photon_ps, sizeof(Photon_ps), Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSTexture = new Graphic::Shader(  Textured_ps, sizeof(Textured_ps), Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSRefractionMap = new Graphic::Shader(  RefractionMap_ps, sizeof(RefractionMap_ps), Graphic::Shader::Type::PIXEL );
+	g_ShaderList->PSBlur = new Graphic::Shader(  Blur_ps, sizeof(Blur_ps), Graphic::Shader::Type::PIXEL );
+#endif
 }
 
 #ifdef DYNAMIC_SHADER_RELOAD
@@ -173,6 +209,8 @@ void ReloadShaders()
 	g_ShaderList->PSBlob->dynamicReload();
 	g_ShaderList->PSPhoton->dynamicReload();
 	g_ShaderList->PSTexture->dynamicReload();
+	g_ShaderList->PSRefractionMap->dynamicReload();
+	g_ShaderList->PSBlur->dynamicReload();
 }
 #endif
 

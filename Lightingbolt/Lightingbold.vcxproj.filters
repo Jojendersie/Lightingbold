@@ -36,6 +36,9 @@
     <Filter Include="Source Files\soundtest">
       <UniqueIdentifier>{4ba99ff7-9e06-4fb7-906d-124ac762811c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{ca25dc29-d27c-4fca-93b0-f4080d2503dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -190,5 +193,37 @@
     <ClInclude Include="src\soundtest\soundmanager.hpp">
       <Filter>Source Files\soundtest</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\Blob.ps">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Blur.ps">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\InitPhotons.gs">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\PassPhoton.vs">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Photon.ps">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Quad.gs">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Quad.vs">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\RefractionMap.ps">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\SimPhotons.gs">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\Textured.ps">
+      <Filter>shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

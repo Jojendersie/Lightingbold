@@ -11,17 +11,47 @@
 #endif
 
 namespace Graphic {
+#if defined( DEBUG ) || defined( _DEBUG )
 	Shader::Shader( const wchar_t* _fileName, Type _type,
 			D3D11_SO_DECLARATION_ENTRY* _outLayout, int _layoutSize ) :
 		m_fileName(_fileName),
 		m_type(_type),
 		m_shader(nullptr),
 		m_vertexShader(nullptr),
+		m_shaderCode(nullptr),
+		m_codeSize(0),
 		m_outLayoutDesc(_outLayout),
 		m_outLayoutNum(_layoutSize)
 	{
 		load();
 	}
+#else
+	Shader::Shader( const BYTE* _shaderCode, int _bytes, Type _type,
+			D3D11_SO_DECLARATION_ENTRY* _outLayout, int _layoutSize) :
+		m_fileName(L""),
+		m_type(_type),
+		m_vertexShader(nullptr),
+		m_shader(nullptr),
+		m_shaderCode(_shaderCode),
+		m_codeSize(_bytes),
+		m_outLayoutDesc(_outLayout),
+		m_outLayoutNum(_layoutSize)
+	{
+		switch( m_type )
+		{
+		case Type::VERTEX: Device::Device->CreateVertexShader( _shaderCode, _bytes, nullptr, &m_vertexShader ); break;
+		case Type::GEOMETRY:
+			if( m_outLayoutDesc )
+			{
+				Device::Device->CreateGeometryShaderWithStreamOutput( _shaderCode, _bytes,
+					m_outLayoutDesc, m_outLayoutNum, nullptr, 0, 0, nullptr, &m_geometryShader );
+			} else
+				Device::Device->CreateGeometryShader( _shaderCode, _bytes, nullptr, &m_geometryShader );
+			break;
+		case Type::PIXEL: Device::Device->CreatePixelShader( _shaderCode, _bytes, nullptr, &m_pixelShader ); break;
+		} 
+	}
+#endif
 
 	Shader::~Shader()
 	{
@@ -32,6 +62,7 @@ namespace Graphic {
 		m_vertexShader = nullptr;
 	}
 
+#if defined( DEBUG ) || defined( _DEBUG )
 	void Shader::load()
 	{
 		HRESULT hr;
@@ -47,9 +78,7 @@ namespace Graphic {
 
 
 		uint flags = D3DCOMPILE_ENABLE_STRICTNESS;
-#if defined( DEBUG ) || defined( _DEBUG )
 		flags |= D3DCOMPILE_DEBUG;
-#endif
 		// Prefer higher CS shader profile when possible as CS 5.0 provides better performance on 11-class hardware.
 		LPCSTR profile = "cs_5_0";
 		switch( m_type )
@@ -79,6 +108,8 @@ namespace Graphic {
 #ifdef DYNAMIC_SHADER_RELOAD
 			std::cout << "Successfully loaded shader.\n";
 #endif
+			m_shaderCode = (BYTE*)m_shader->GetBufferPointer();
+			m_codeSize = m_shader->GetBufferSize();
 			switch( m_type )
 			{
 			case Type::VERTEX: hr = Device::Device->CreateVertexShader( m_shader->GetBufferPointer(), m_shader->GetBufferSize(), nullptr, &m_vertexShader ); break;
@@ -96,6 +127,7 @@ namespace Graphic {
 			Assert( SUCCEEDED(hr) );
 		}
 	}
+#endif
 
 
 	void Shader::set()

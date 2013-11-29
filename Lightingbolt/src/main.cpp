@@ -58,13 +58,13 @@ void Scroll(int _delta)				{ g_State->Scroll(_delta); }
 
 int main()
 {
-	Soundtest::SoundManager sound;
-
 	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	//_CrtSetBreakAlloc(153);
+//	_CrtSetBreakAlloc(159);
 #endif
+
+	Soundtest::SoundManager sound;
 
 	// *** INITIALIZATION ************************************************** //
 #if defined(DEBUG) | defined(_DEBUG)

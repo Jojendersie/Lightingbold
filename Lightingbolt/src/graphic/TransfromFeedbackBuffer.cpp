@@ -10,14 +10,14 @@ namespace Graphic {
 		// TODO other usage (no CPU updates)
 		D3D11_BUFFER_DESC bufferDesc =
 		{
-			sizeof(PhotonVertex) * 1000,
+			sizeof(PhotonVertex) * 3000,
 			D3D11_USAGE_DEFAULT,
 			D3D11_BIND_STREAM_OUTPUT | D3D11_BIND_VERTEX_BUFFER,
 			0,
 			0,
 			0
 		};
-		// Create two identic buffers to toggle in between
+		// Create two identical buffers to toggle in between
 		Device::Device->CreateBuffer( &bufferDesc, nullptr, &m_buffers[0] );
 		Device::Device->CreateBuffer( &bufferDesc, nullptr, &m_buffers[1] );
 	}

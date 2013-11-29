@@ -28,12 +28,12 @@ Ingame::Ingame()
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.511f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.731f);
 	map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),0.1f);*/
-	m_minEnemies = 4;
-	m_maxEnemies = 20;
+	m_minEnemies = 6;
+	m_maxEnemies = 30;
 	int numberOfEnemies = g_rand->Uniform(m_minEnemies,m_maxEnemies);
 	for(int i=0;i<numberOfEnemies;++i)
 	{
-		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
+		map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform())*2.0f-1.0f,g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()-0.05f));
 		map->getEnemy(i)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
 		map->getEnemy(i)->setMaterialIndex((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5));
 	}
@@ -44,7 +44,7 @@ Ingame::Ingame()
 		DXGI_FORMAT_R32_FLOAT, Graphic::RenderTarget::CREATION_FLAGS::NO_DEPTH | Graphic::RenderTarget::CREATION_FLAGS::TARGET_TEXTURE_VIEW,
 		map->getDensityMap() );
 
-	m_photonMapper = new Graphic::PhotonMapper( 4, 100 );
+	m_photonMapper = new Graphic::PhotonMapper( 3, 100 );
 }
 
 Ingame::~Ingame()
@@ -131,7 +131,7 @@ void Ingame::Update( double _time, double _deltaTime )
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.2f)
 			{
-				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()+0.15f));
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform())*2.0f-1.0f,g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()+0.15f));
 				map->getEnemy(map->getNumberOfObjects()-1)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
 				map->getEnemy(map->getNumberOfObjects()-1)->setMaterialIndex((g_rand->Uniform(0,3)));
 			}
@@ -140,7 +140,7 @@ void Ingame::Update( double _time, double _deltaTime )
 		{
 			if(g_rand->Uniform(0.0f,1.0f)<0.4f)
 			{
-				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform()),g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()+0.15f));
+				map->addEnemy(Math::Vec2(g_rand->Uniform(),g_rand->Uniform())*2.0f-1.0f,g_rand->Uniform(0.08f,map->getPlayer()->getEnergy()+0.15f));
 				map->getEnemy(map->getNumberOfObjects()-1)->setShape((int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),(int)floor(g_rand->Uniform(0.0f,3.0f)+0.5),g_rand->Uniform(0.0f,1.0f));
 				map->getEnemy(map->getNumberOfObjects()-1)->setMaterialIndex((g_rand->Uniform(0,3)));
 			}

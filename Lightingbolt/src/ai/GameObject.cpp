@@ -119,7 +119,7 @@ namespace Ai
 		// that is our new movement
 		m_direction += acceleration;
 
-		// end we wish to move ^^
+		// and we wish to move ^^
 		if(m_sprint)
 		{
 			m_position += m_direction;

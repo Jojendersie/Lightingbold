@@ -31,6 +31,7 @@ namespace Ai
 	{
 		GameObject* bestEnemy = nullptr;
 		Math::Vec2 newGoal(0);
+		
 		if(g_circleCollision(m_map->getPlayer()->getPosition(),m_map->getPlayer()->getShinyRadius(),getPosition(),getShinyRadius()))
 		{
 			newGoal += determineReaction(m_map->getPlayer());

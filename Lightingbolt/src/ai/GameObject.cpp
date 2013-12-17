@@ -88,6 +88,9 @@ namespace Ai
 
 	void GameObject::update( double _deltaTime)
 	{
+		// TODO mayby change so that you lose energy for movement
+		setEnergy(getEnergy() - 0.01*_deltaTime);
+
 		if(isAlive())
 		{
 			checkCollision(_deltaTime);

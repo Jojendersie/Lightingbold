@@ -10,6 +10,7 @@ namespace Soundtest
 		char *note=Soundtest::Signal::getSine(frequency);
 
 		m_sound=new Sound::Sound(note, Soundtest::Signal::getLength(frequency));
+		delete[] note;
 
 		m_high=new Melody(*m_sound, 110, Song::twosonHigh());
 		m_high->setRepeat(true);

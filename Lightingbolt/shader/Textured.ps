@@ -2,6 +2,7 @@
 
 Texture2D g_lightTexture : register(t1);
 SamplerState g_linearSampler : register(s0);
+//Texture2D g_mapTexture : register(t0);
 
 float4 main(PSInput _in) : SV_TARGET
 {
@@ -10,5 +11,7 @@ float4 main(PSInput _in) : SV_TARGET
 	float3 color = g_lightTexture.Sample(g_linearSampler, coord*0.5+0.5).xyz;
 	float light = length(color);
 	light = ((c_lightScale < 0) ? -log(1+light)*c_lightScale/light : c_lightScale);
-	return float4( color * light, 1);
+	float4 colorOut = float4( color * light, 1);
+	//colorOut.x += g_mapTexture.Sample(g_linearSampler, coord*0.5+0.5).x * 0.25;
+	return colorOut;
 }

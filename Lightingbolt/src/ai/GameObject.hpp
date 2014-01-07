@@ -36,7 +36,12 @@ namespace Ai {
 	private:
 		void checkForBoundaries();
 		void movement( double _deltaTime);
-		void checkCollision();
+		
+		// collision
+		void checkCollision(double _deltaTime);
+		double m_timeColliding;
+		float m_minEnergy;
+
 		Math::Vec2 m_position;
 		Math::Vec2 m_direction;
 		Math::Vec2 m_goal;

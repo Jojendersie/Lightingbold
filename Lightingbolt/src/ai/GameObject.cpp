@@ -28,6 +28,8 @@ namespace Ai
 		m_maxTime = 0.25f;
 		m_time = 0.0f;
 		m_alive = true;
+		m_timeColliding = 0.0;
+		m_minEnergy = 0.05;
 	}
 
 	void GameObject::setDirection(const Math::Vec2& _newDirection){
@@ -36,6 +38,8 @@ namespace Ai
 
 	void GameObject::setEnergy(float _newEnergy){
 		m_energy = _newEnergy;
+		if(m_energy < m_minEnergy)
+			setAlive(false);
 		setRadius();
 	}
 
@@ -84,9 +88,12 @@ namespace Ai
 
 	void GameObject::update( double _deltaTime)
 	{
+		// energy drain over time is now replaced by energy drain depending on movement calculated in th emovement method
+		//setEnergy(getEnergy() - 0.01*_deltaTime);
+
 		if(isAlive())
 		{
-			checkCollision();
+			checkCollision(_deltaTime);
 			movement(_deltaTime);
 			checkForBoundaries();
 		}
@@ -115,11 +122,17 @@ namespace Ai
 		// that is our new movement
 		m_direction += acceleration;
 
-		// end we wish to move ^^
+		// compute the energy drain depending on the movement
+		float energyDrain = m_direction.lengthSq() * 5;
+
+		if(energyDrain > 0 )
+			energyDrain = energyDrain;
+		// and we wish to move ^^
 		if(m_sprint)
 		{
 			m_position += m_direction;
 			m_position += m_direction;
+			energyDrain *= 3;
 			//m_position += m_direction;
 			if(m_time<0)
 				m_sprint = false;
@@ -130,30 +143,66 @@ namespace Ai
 		{
 			m_position += m_direction;
 		}
+
+		setEnergy(getEnergy() - energyDrain);
 	}
 
-	void GameObject::checkCollision()
+	void GameObject::checkCollision(double _deltaTime)
 	{
+		if(m_map->getPlayer() != this && m_map->getPlayer()->isAlive())
+		{
+			if(getRadius() > m_map->getPlayer()->getRadius())
+			{
+				float percentageOverlap = g_circlePercentageOverlap(getPosition(),getRadius(),m_map->getPlayer()->getPosition(),m_map->getPlayer()->getRadius());
+				if(percentageOverlap >= 0)
+				{
+					float enemyEnergy = m_map->getPlayer()->getEnergy();
+					float stealEnergy = (enemyEnergy * percentageOverlap) * 0.1;
+
+					setEnergy(getEnergy() + stealEnergy);
+					m_map->getPlayer()->setEnergy(enemyEnergy-stealEnergy);
+				}
+			}
+		}
 		for(int i=0;i<m_map->getNumberOfObjects();++i)
 		{
 			if(m_map->getEnemy(i) != this && m_map->getEnemy(i)->isAlive())
 			{
-				if(g_circleCollision(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius()))
+				if(getRadius() > m_map->getEnemy(i)->getRadius())
 				{
-					if(getRadius() > m_map->getEnemy(i)->getRadius())
+					float percentageOverlap = g_circlePercentageOverlap(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius());
+					if(percentageOverlap >= 0)
 					{
-						setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
-						m_map->getEnemy(i)->setAlive(false);
-						int nShape1 = m_map->getEnemy(i)->getShape1();
+						float enemyEnergy = m_map->getEnemy(i)->getEnergy();
+						float stealEnergy = (enemyEnergy * percentageOverlap) * 0.1;
+
+						setEnergy(getEnergy() + stealEnergy);
+						m_map->getEnemy(i)->setEnergy(enemyEnergy-stealEnergy);
+					}
+				}
+				//if(g_circleCollision(getPosition(),getRadius(),m_map->getEnemy(i)->getPosition(),m_map->getEnemy(i)->getRadius()))
+				//{
+				//	m_timeColliding+=_deltaTime;
+				//	if(getRadius() > m_map->getEnemy(i)->getRadius())
+				//	{
+						// energy of enemy
+				//		float enemyEnergy = m_map->getEnemy(i)->getEnergy();
+				//		float stealEnergy = m_timeColliding * 100 * enemyEnergy;
+
+				//		setEnergy(getEnergy() + stealEnergy);
+				//		m_map->getEnemy(i)->setEnergy(enemyEnergy-stealEnergy);
+						/*setEnergy(getEnergy()+m_map->getEnemy(i)->getEnergy());
+						m_map->getEnemy(i)->setAlive(false);*/
+						/*int nShape1 = m_map->getEnemy(i)->getShape1();
 						int nShape2 = m_map->getEnemy(i)->getShape2();
 						float nInterpolation = m_map->getEnemy(i)->getshapeInterpolation();
 						m_shape1 = (int)floor(m_shape1 + (nShape1-m_shape1)*0.5f+0.5);
 						m_shape2 = (int)floor(m_shape2 + (nShape2-m_shape2)*0.5f+0.5);
-						m_shapeInterpolation = (int)floor(m_shapeInterpolation + (nInterpolation-m_shapeInterpolation)*0.5f+0.5);
-					}
-					else if(getRadius()<m_map->getEnemy(i)->getRadius())
+						m_shapeInterpolation = (int)floor(m_shapeInterpolation + (nInterpolation-m_shapeInterpolation)*0.5f+0.5);*/
+				//	}
+					/*else if(getRadius()<m_map->getEnemy(i)->getRadius())
 					{
-						m_alive=false;
+						//m_alive=false;
 					}
 					else if(getDiretion().length() >= m_map->getEnemy(i)->getDiretion().length())
 					{
@@ -163,8 +212,12 @@ namespace Ai
 					else
 					{
 						m_alive=false;
-					}
-				}
+					}*/
+				//}
+				//else
+				//{
+				//	m_timeColliding = 0.0;
+				//}
 			}
 		}
 	}

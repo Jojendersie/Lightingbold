@@ -20,6 +20,7 @@ namespace Map
 		m_player = new Ai::GameObject(Math::Vec2(0.0,0.0),0.3f,this);
 		m_player->setShape(0,0,0);
 		m_player->setMaterialIndex(0);
+		//m_player->setAlive(true);
 		InitMap();
 	}
 
@@ -56,13 +57,14 @@ namespace Map
 
 	void Map::Update( double _deltaTime)
 	{
+		if(!getPlayer()->isAlive()) return;
 		bool rescale=false;
 		// update the player
-		if(m_player->isAlive())
-		{
+		//if(m_player->isAlive())
+		//{
 			m_player->update(_deltaTime);
 			if(m_player->getEnergy()>1) rescale = true;
-		}
+		//}
 		// update all other objects
 		for(int i=0;i<m_objects.size();++i)
 		{
@@ -85,18 +87,6 @@ namespace Map
 		}
 	}
 
-	Math::Vec2 Map::RayCast( const Math::Vec2& _position, const Math::Vec2& _direction )
-	{
-		return Math::Vec2(0);
-	}
-
-		
-	Math::Vec2 Map::Gradient( const Math::Vec2& _position )
-	{
-		return Math::Vec2(0);
-	}
-
-		
 	float Map::Density( const Math::Vec2& _position)
 	{
 		return m_densityMap[m_width*(int)_position.y+(int)_position.x];

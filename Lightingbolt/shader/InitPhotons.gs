@@ -7,7 +7,8 @@ void main( point Vertex _in[1], uint _primitiveID: SV_PrimitiveID, inout PointSt
 	vertexOut.Position.z = 0.5; vertexOut.Position.w = 1;
 	// Color from energy difference
 	float dif = (c_playerEnergy - _in[0].Param.x) * 5;
-	float3 color = (dif < 0) ? lerp(float3(1,1,1),float3(0.3,0.6,1), -dif) : lerp(float3(1,1,1),float3(0.6,1.0,0.3), dif);
+	float3 color = (dif < 0) ? float3(0.3,0.6,1) : float3(0.6,1.0,0.3);
+	color = lerp( float3(1,1,1), color, pow(abs(dif), 0.1) );
 	vertexOut.Energy = 10.0 * _in[0].Param.x * color;
 	vertexOut.EnergyOut = vertexOut.Energy * 0.02;
 	for( int i=0; i<84; ++i )

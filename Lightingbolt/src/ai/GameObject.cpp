@@ -88,8 +88,8 @@ namespace Ai
 
 	void GameObject::update( double _deltaTime)
 	{
-		// TODO mayby change so that you lose energy for movement
-		setEnergy(getEnergy() - 0.01*_deltaTime);
+		// energy drain over time is now replaced by energy drain depending on movement calculated in th emovement method
+		//setEnergy(getEnergy() - 0.01*_deltaTime);
 
 		if(isAlive())
 		{
@@ -122,11 +122,17 @@ namespace Ai
 		// that is our new movement
 		m_direction += acceleration;
 
+		// compute the energy drain depending on the movement
+		float energyDrain = m_direction.lengthSq() * 5;
+
+		if(energyDrain > 0 )
+			energyDrain = energyDrain;
 		// and we wish to move ^^
 		if(m_sprint)
 		{
 			m_position += m_direction;
 			m_position += m_direction;
+			energyDrain *= 3;
 			//m_position += m_direction;
 			if(m_time<0)
 				m_sprint = false;
@@ -137,6 +143,8 @@ namespace Ai
 		{
 			m_position += m_direction;
 		}
+
+		setEnergy(getEnergy() - energyDrain);
 	}
 
 	void GameObject::checkCollision(double _deltaTime)

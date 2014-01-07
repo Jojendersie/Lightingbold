@@ -87,18 +87,6 @@ namespace Map
 		}
 	}
 
-	Math::Vec2 Map::RayCast( const Math::Vec2& _position, const Math::Vec2& _direction )
-	{
-		return Math::Vec2(0);
-	}
-
-		
-	Math::Vec2 Map::Gradient( const Math::Vec2& _position )
-	{
-		return Math::Vec2(0);
-	}
-
-		
 	float Map::Density( const Math::Vec2& _position)
 	{
 		return m_densityMap[m_width*(int)_position.y+(int)_position.x];
